@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameInfoActivity"
+    android:padding="50dp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/game_title"
+        android:text="Title"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/year"
+        android:text="Year"
+        android:layout_below="@+id/game_title"
+        android:textStyle="bold"
+        android:textSize="20sp">
+
+    </TextView>
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,2 @@
+rootProject.name='HowLongYouPlay'
+include ':app'

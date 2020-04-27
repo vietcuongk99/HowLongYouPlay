@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "329140002532",
+    "firebase_url": "https://game-log-5c3d5.firebaseio.com",
+    "project_id": "game-log-5c3d5",
+    "storage_bucket": "game-log-5c3d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329140002532:android:6082fb4170792b795896f1",
+        "android_client_info": {
+          "package_name": "com.kdc.gamelog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329140002532-car3hun3dh7cob5ng1ej9i87uoudsg5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMBemJTJsHnEkAlZRcg_1ZCy5GZCfH8NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329140002532-car3hun3dh7cob5ng1ej9i87uoudsg5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329140002532:android:4d24231e162824bf5896f1",
+        "android_client_info": {
+          "package_name": "com.kdc.howlongyouplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329140002532-car3hun3dh7cob5ng1ej9i87uoudsg5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMBemJTJsHnEkAlZRcg_1ZCy5GZCfH8NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329140002532-car3hun3dh7cob5ng1ej9i87uoudsg5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
