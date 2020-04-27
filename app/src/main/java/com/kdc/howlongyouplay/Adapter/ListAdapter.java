@@ -34,6 +34,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         searchResultFull = new ArrayList<>(gameLogList);
     }
 
+    public ListAdapter(List<GameLog> gameLogList) {
+        this.gameLogList = gameLogList;
+    }
 
     @NonNull
     @Override
@@ -50,7 +53,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         final GameLog gameLog = gameLogList.get(position);
         holder.year.setText(gameLogList.get(position).getYear());
         holder.game_title.setText(gameLogList.get(position).getGame_title());
-        final String key = gameLogList.get(position).getLogID();
+        final String key = gameLogList.get(position).getId_log();
 
         // xử lý sự kiện khi click vào một log trong danh sách
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +127,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             super(itemView);
 
             game_title = itemView.findViewById(R.id.game_title);
-            year = itemView.findViewById(R.id.year);
+            year = itemView.findViewById(R.id.time);
         }
     }
 

@@ -116,7 +116,7 @@ public class SearchActivity extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                     GameLog gameLog = snapshot.getValue(GameLog.class);
-                    gameLog.setLogID(snapshot.getKey());
+                    gameLog.setId_log(snapshot.getKey());
                     gameLogList.add(gameLog);
 
                 }

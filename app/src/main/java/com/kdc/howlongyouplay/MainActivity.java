@@ -11,10 +11,27 @@ import android.view.MenuItem;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.kdc.howlongyouplay.Adapter.LogAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private LogAdapter logAdapter;
+    private ArrayList<GameLog> LogList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("How Long To Beat");
+
+        recyclerView = findViewById(R.id.list_item);
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        LogList = new ArrayList<>();
+
+        getLogList();
+
 
 
     }
@@ -52,4 +78,41 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
+
+
+
+    // lấy ra danh sách gamelog để hiển thị
+    private void getLogList() {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String user_id = firebaseUser.getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                LogList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    GameLog gameLog = snapshot.getValue(GameLog.class);
+                    gameLog.setId_log(snapshot.getKey());
+                    LogList.add(gameLog);
+
+                }
+
+
+                logAdapter = new LogAdapter(getBaseContext(),  LogList);
+                recyclerView.setAdapter(logAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
 }

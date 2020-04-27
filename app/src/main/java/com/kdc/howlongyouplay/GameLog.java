@@ -5,7 +5,7 @@ package com.kdc.howlongyouplay;
 
 public class GameLog {
     private String game_title;
-    private String play_time;
+    private String played_time;
     private String userid;
     private String id_log;
     private String year;
@@ -20,42 +20,46 @@ public class GameLog {
         this.year  = year;
     }
 
-
+    public GameLog(String game_title, String played_time, String year) {
+        this.game_title = game_title;
+        this.played_time  = played_time;
+        this.year = year;
+    }
 
     public String getGame_title() {
         return game_title;
-    }
-
-    public String getPlay_time() {
-        return play_time;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public String getLogID() {
-        return id_log;
-    }
-
-    public String getYear() {
-        return year;
     }
 
     public void setGame_title(String game_title) {
         this.game_title = game_title;
     }
 
-    public void setPlay_time(String play_time) {
-        this.play_time = play_time;
+    public String getPlayed_time() {
+        return played_time;
+    }
+
+    public void setPlayed_time(String played_time) {
+        this.played_time = played_time;
+    }
+
+    public String getUserid() {
+        return userid;
     }
 
     public void setUserid(String userid) {
         this.userid = userid;
     }
 
-    public void setLogID(String id_log) {
+    public String getId_log() {
+        return id_log;
+    }
+
+    public void setId_log(String id_log) {
         this.id_log = id_log;
+    }
+
+    public String getYear() {
+        return year;
     }
 
     public void setYear(String year) {

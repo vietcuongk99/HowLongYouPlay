@@ -11,25 +11,73 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/game_title"
-        android:text="Title"
+        android:id="@+id/title_action"
+        android:text="Thêm bản ghi mới"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:gravity="center">
 
     </TextView>
 
-    <TextView
+
+    <LinearLayout
+        android:id="@+id/gamelog_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/year"
-        android:text="Year"
-        android:layout_below="@+id/game_title"
-        android:textStyle="bold"
-        android:textSize="20sp">
+        android:layout_below="@+id/title_action"
+        android:padding="30dp"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/game_title"
+            android:text="Title"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp">
 
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/year"
+            android:text="Year"
+            android:layout_below="@+id/game_title"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp">
+
+        </TextView>
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:hint="nhập thời gian chơi"
+            android:id="@+id/played_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:met_floatingLabel="normal"
+            android:layout_marginTop="10dp">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+
+
+
+
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Thêm">
+
+        </Button>
+
+    </LinearLayout>
 
 
 
