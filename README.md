@@ -3,4 +3,4 @@
 
 đây là phiên bản dành cho người dùng phổ thông
 
-phiên bản dành cho admin: https://github.com/vietcuongk99/HowLongYouPlay
+phiên bản dành cho admin: https://github.com/vietcuongk99/GameLog
