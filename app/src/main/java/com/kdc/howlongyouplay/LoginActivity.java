@@ -3,11 +3,16 @@ package com.kdc.howlongyouplay;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btn_login;
 
     FirebaseAuth auth;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -35,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.login_button);
 
+
         // xử lý sự kiện khi nhấn nút Login
         btn_login.setOnClickListener(new View.OnClickListener() {
 
@@ -43,11 +50,21 @@ public class LoginActivity extends AppCompatActivity {
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
 
+
+
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
                     // hiển thị thông báo
                     Toast.makeText(LoginActivity.this, "Bạn cần điền đầy đủ email và password", Toast.LENGTH_SHORT).show();
                 }
                 else {
+
+                    dialog = ProgressDialog.show(LoginActivity.this,
+                            "Loading Login",
+                            "Bình tĩnh nhé, hệ thống đang xử lý...",
+                            true);
+
+                    dialog.setCanceledOnTouchOutside(true);
+
                     auth.signInWithEmailAndPassword(txt_email, txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -57,17 +74,33 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        dialog.dismiss();
                                         finish();
                                     }
                                     else {
                                         // hiển thị thông báo
-                                        Toast.makeText(LoginActivity.this, "Đăng nhập lỗi", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        Toast.makeText(LoginActivity.this,
+                                                "Đăng nhập lỗi, mời nhập lại email/mật khẩu",
+                                                Toast.LENGTH_SHORT).show();
+
                                     }
                                 }
                             });
                 }
             }
         });
-
     }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        if(dialog!=null && dialog.isShowing()) {
+//            dialog.dismiss();
+//        }
+//        dialog = null;
+//    }
+
+
+
 }

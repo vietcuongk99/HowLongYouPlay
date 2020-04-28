@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.list_item);
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         LogList = new ArrayList<>();
 
         getLogList();
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                logAdapter = new LogAdapter(getBaseContext(),  LogList);
+                logAdapter = new LogAdapter(MainActivity.this,  LogList);
                 recyclerView.setAdapter(logAdapter);
 
             }

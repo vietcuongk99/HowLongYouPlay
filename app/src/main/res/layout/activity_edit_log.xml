@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_action"
-            android:padding="30dp"
+            android:padding="40dp"
             android:orientation="vertical"
             android:gravity="center">
 

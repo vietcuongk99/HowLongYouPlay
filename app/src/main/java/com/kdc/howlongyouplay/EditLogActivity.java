@@ -82,29 +82,37 @@ public class EditLogActivity extends AppCompatActivity {
                 new_time = time_update.getText().toString();
                 databaseReference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id).child(log_id);
 
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("played_time", new_time);
+//                if(new_time.equals("")) {
+//                    Toast.makeText(EditLogActivity.this, "Bạn phải nhập gì đó chứ", Toast.LENGTH_SHORT).show();
+//                }
+//                else { }
 
-                databaseReference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("played_time", new_time);
 
-                        if(task.isSuccessful()) {
-                            Intent intent = new Intent(EditLogActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
+                    databaseReference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if(task.isSuccessful()) {
+                                Intent intent = new Intent(EditLogActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+
+                                Toast.makeText(EditLogActivity.this, "Sửa thành công", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+
+                            else {
+                                Toast.makeText(EditLogActivity.this, "Lỗi", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+
                         }
+                    });
 
-                        else {
-                            Toast.makeText(EditLogActivity.this, "Lỗi", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-
-                    }
-                });
-
-            }
+                }
         });
 
 

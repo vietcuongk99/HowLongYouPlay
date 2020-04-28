@@ -42,8 +42,6 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,12 +57,8 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
         gameLogList = new ArrayList<>();
         readList();
-
-
 
     }
 
@@ -81,8 +75,9 @@ public class SearchActivity extends AppCompatActivity {
 
 
                 listAdapter.getFilter().filter(query);
-
+                // hiển thị list trong recyclerView
                 recyclerView.setAdapter(listAdapter);
+                recyclerView.setVisibility(View.VISIBLE);
 
                 return false;
             }
@@ -90,6 +85,15 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                if(newText == null || newText.length() == 0) {
+                    recyclerView.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    listAdapter.getFilter().filter(newText);
+                    // hiển thị list trong recyclerView
+                    recyclerView.setAdapter(listAdapter);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
 
                 return false;
             }
@@ -106,9 +110,9 @@ public class SearchActivity extends AppCompatActivity {
 
     // lấy ra danh sách các gamelog có trong csdl
     private void readList() {
-//        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("List");
 
+        // lấy ra danh sách GameLog và sử dụng listAdapter
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -120,7 +124,6 @@ public class SearchActivity extends AppCompatActivity {
                     gameLogList.add(gameLog);
 
                 }
-
 
                 listAdapter = new ListAdapter(SearchActivity.this, gameLogList);
 

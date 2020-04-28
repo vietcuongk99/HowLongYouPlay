@@ -32,7 +32,8 @@
             android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
             android:hint="@string/email"
-            app:met_floatingLabel="normal">
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextColor="#A67AE4">
 
         </com.rengwuxian.materialedittext.MaterialEditText>
 
@@ -43,7 +44,8 @@
             android:inputType="textPassword"
             android:layout_marginTop="10dp"
             android:hint="@string/password"
-            app:met_floatingLabel="normal">
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextColor="#A67AE4">
 
         </com.rengwuxian.materialedittext.MaterialEditText>
 

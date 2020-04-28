@@ -3,6 +3,7 @@ package com.kdc.howlongyouplay;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -71,6 +72,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     // phương thức register() đăng ký tài khoản
     private void register(final String username, final String email, String password) {
+        final ProgressDialog dialog = ProgressDialog
+                .show(RegisterActivity.this,
+                        "Loading Register",
+                        "Bình tĩnh nhé, hệ thống đang xử lý...",
+                        true);
+
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -96,16 +103,23 @@ public class RegisterActivity extends AppCompatActivity {
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        dialog.dismiss();
                                         finish();
                                     }
                                     else {
                                         // hiển thị thông báo trên màn hình RegisterActivity
+                                        dialog.dismiss();
                                         Toast.makeText(RegisterActivity.this, "Không thể đăng ký với tài khoản này", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
 
 
+                        }
+
+                        else {
+                            dialog.dismiss();
+                            Toast.makeText(RegisterActivity.this, "Email này đã được đăng ký, mời nhập lại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
