@@ -38,7 +38,7 @@ public class GameInfoActivity extends AppCompatActivity {
     private Button submit_btn;
     private FirebaseAuth mAuth;
 
-    private String title, year_release, game_id, user_id, played_time;
+    private String title, year_release, user_id, played_time, id_game;
 
     private ArrayList<GameLog> logList;
 
@@ -80,15 +80,17 @@ public class GameInfoActivity extends AppCompatActivity {
         // luân chuyển dữ liệu sang activity khác
         title = intent.getExtras().get("game_title").toString();
         year_release = intent.getExtras().get("year").toString();
-        game_id = intent.getExtras().get("id").toString();
+        id_game = intent.getExtras().get("game_id").toString();
+
+
+        //Hiển thị id của game đã chọn qua Log
+        Log.d("ID Game", "ID game được chọn: " + id_game);
 
 
         // đặt nội dung cho TextView
         game_title.setText(title);
         year.setText(year_release);
 
-        // kiểm tra id của log game (id của game đó)
-        Log.d("ID: ", "ID: " + game_id);
 
         //lấy ra danh sách Log để so sánh
         logList = new ArrayList<>();
@@ -100,10 +102,10 @@ public class GameInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 played_time = time.getText().toString();
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                        .child("Logs").child(user_id).child(game_id);
+                        .child("Logs").child(user_id);
 
 
-                if (!checkSameLog(logList, game_id)) {
+                if (!checkSameLog(logList, title)) {
                     Toast.makeText(GameInfoActivity.this, "Bạn không thể thêm 2 bản ghi cho cùng 1 game", Toast.LENGTH_SHORT)
                             .show();
                 } else {
@@ -112,7 +114,13 @@ public class GameInfoActivity extends AppCompatActivity {
                     hashMap.put("game_title", title);
                     hashMap.put("played_time", played_time);
 
-                    databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    DatabaseReference blank_record = databaseReference.push();
+
+
+                    String key_record = blank_record.getKey();
+
+
+                    blank_record.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
@@ -142,10 +150,13 @@ public class GameInfoActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkSameLog(ArrayList<GameLog> gameLogs, String game_id) {
+
+    // kiểm tra xem game được chọn đã có trong log của người dùng hiện tại chưa
+    // nếu chưa trả về true
+    private boolean checkSameLog(ArrayList<GameLog> gameLogs, String title) {
 
         for(int i = 0; i<gameLogs.size(); i++) {
-            if(gameLogs.get(i).getId_log().equals(game_id)) {
+            if(gameLogs.get(i).getGame_title().equals(title)) {
                 return false;
             }
         }
@@ -155,11 +166,11 @@ public class GameInfoActivity extends AppCompatActivity {
     }
 
 
-    // lấy ra danh sách các gamelog có trong csdl
+    // lấy ra danh sách các log của người dùng hiện tại có trong csdl
     private void readList() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
 
-        // lấy ra danh sách GameLog và sử dụng listAdapter
+        // lấy ra danh sách GameLog và sử dụng LogAdapter
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

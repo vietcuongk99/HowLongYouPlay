@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -66,9 +69,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
         holder.time.setText(gameLog.getPlayed_time());
         holder.game_title.setText(gameLog.getGame_title());
         final String key = gameLog.getId_log();
+//        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+//                .child("Logs").child(user_id);
 
         // xử lý sự kiện khi click vào nút sửa
-        holder.itemView.findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
+        holder.edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -76,7 +82,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                 Intent intent = new Intent(mContext, EditLogActivity.class);
                 intent.putExtra("game_title", gameLog.getGame_title());
                 intent.putExtra("play_time", gameLog.getPlayed_time());
-                intent.putExtra("id", key);
+                intent.putExtra("id", gameLog.getId_log());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 mContext.startActivity(intent);
@@ -85,22 +91,21 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
         });
 
         // xử lý sự kiện khi nhất nút xóa
-        holder.itemView.findViewById(R.id.delete_btn).setOnClickListener(new View.OnClickListener() {
+        holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                        .child("Logs").child(user_id);
+                
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
                 alertDialog.setTitle("Xóa log").setMessage("Bạn muốn xóa bản log này ?");
 
                 //tạo nút xác nhận xóa và xử lý sự kiện
                 alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                                .child("Logs").child(user_id);
+                    public void onClick(final DialogInterface dialog, int which) {
 
                         databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -113,9 +118,11 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
+                                                    dialog.dismiss();
                                                     Toast.makeText(mContext, "Xóa thành công", Toast.LENGTH_SHORT).show();
                                                 }
                                                 else {
+                                                    dialog.dismiss();
                                                     Toast.makeText(mContext, "Xóa lỗi", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
@@ -132,15 +139,18 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
                     }
                 });
+
+
                 // tạo nút hủy và xử lý sự kiện
                 alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
+                @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        alertDialog.setCancelable(true);
+                        dialog.dismiss();
                     }
                 });
-
+                alertDialog.setCancelable(true);
                 alertDialog.show();
+
 
             }
         });
@@ -156,12 +166,16 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
         private TextView game_title;
         private TextView time;
+        private ImageButton edit_button;
+        private ImageButton delete_button;
 
         public MyLogViewHolder(View itemView) {
             super(itemView);
 
             game_title = itemView.findViewById(R.id.game_title);
             time = itemView.findViewById(R.id.time);
+            edit_button = itemView.findViewById(R.id.edit_btn);
+            delete_button = itemView.findViewById(R.id.delete_btn);
         }
     }
 

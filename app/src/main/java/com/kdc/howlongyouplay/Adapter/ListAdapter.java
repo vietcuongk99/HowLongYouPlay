@@ -64,7 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                 Intent intent = new Intent(mContext, GameInfoActivity.class);
                 intent.putExtra("game_title", gameLog.getGame_title());
                 intent.putExtra("year", gameLog.getYear());
-                intent.putExtra("id", key);
+                intent.putExtra("game_id", gameLog.getId_game());
 
                 mContext.startActivity(intent);
 

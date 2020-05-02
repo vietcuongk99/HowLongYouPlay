@@ -9,6 +9,7 @@ public class GameLog {
     private String userid;
     private String id_log;
     private String year;
+    private String id_game;
 
     public GameLog() {
 
@@ -64,5 +65,13 @@ public class GameLog {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getId_game() {
+        return id_game;
+    }
+
+    public void setId_game(String id_game) {
+        this.id_game = id_game;
     }
 }
