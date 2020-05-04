@@ -2,8 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_game"
@@ -11,8 +10,7 @@
         android:layout_height="40dp"
         android:src="@mipmap/ic_launcher"
         android:layout_margin="15dp"
-        android:layout_centerVertical="true">
-    </de.hdodenhof.circleimageview.CircleImageView>
+        android:layout_centerVertical="true" />
 
 
     <RelativeLayout
@@ -21,26 +19,23 @@
         android:id="@+id/information"
         android:layout_toEndOf="@+id/icon_game"
         android:layout_centerVertical="true">
+
         <TextView
             android:id="@+id/game_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Game"
+            android:text="@string/game_title"
             android:textSize="20sp"
-            android:textStyle="bold">
-
-        </TextView>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="time"
+            android:text="@string/time"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_below="@+id/game_title">
-
-        </TextView>
+            android:layout_below="@+id/game_title" />
 
     </RelativeLayout>
 
@@ -57,18 +52,17 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@mipmap/edit"
-            android:layout_marginRight="10dp"
-            android:background="@android:color/transparent">
-
-        </ImageButton>
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/edit_btn" />
 
         <ImageButton
             android:id="@+id/delete_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@mipmap/delete"
-            android:background="@android:color/transparent">
-        </ImageButton>
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/delete_btn" />
 
     </LinearLayout>
 

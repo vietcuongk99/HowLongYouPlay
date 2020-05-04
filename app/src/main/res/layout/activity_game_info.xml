@@ -19,22 +19,18 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/MenuStyle"
             app:titleTextColor="#FFFFFF"
-            android:layout_marginBottom="30dp">
-
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_marginBottom="30dp" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_action"
-            android:text="Thêm bản ghi mới"
+            android:text="@string/title_action"
             android:textStyle="bold"
             android:textSize="20sp"
             android:gravity="center"
-            android:layout_alignParentTop="true">
-
-        </TextView>
+            android:layout_alignParentTop="true" />
 
         <LinearLayout
             android:id="@+id/gamelog_detail"
@@ -42,43 +38,35 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/title_action"
             android:padding="40dp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_title"
-                android:text="Title"
+                android:text="@string/game_title"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp">
-
-            </TextView>
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/year"
-                android:text="Year"
-                android:layout_below="@+id/game_title"
+                android:text="@string/year"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp">
-
-            </TextView>
+                android:textSize="20sp" />
 
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:hint="nhập thời gian chơi"
+                android:hint="@string/played_time_input"
                 android:id="@+id/played_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 app:met_floatingLabel="normal"
-                android:layout_marginTop="10dp">
-
-            </com.rengwuxian.materialedittext.MaterialEditText>
+                android:layout_marginTop="10dp" />
 
 
             <Button
@@ -86,10 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Thêm"
-                android:layout_gravity="center">
-
-            </Button>
+                android:text="@string/submit_btn"
+                android:layout_gravity="center" />
 
         </LinearLayout>
 

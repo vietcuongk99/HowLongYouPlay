@@ -21,17 +21,13 @@
             android:background="#505EAA"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/MenuStyle"
-            app:titleTextColor="#FFFFFF">
-
-        </androidx.appcompat.widget.Toolbar>
+            app:titleTextColor="#FFFFFF" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:background="#FFFFFF" />
 
 
 

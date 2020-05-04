@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_app_foreground"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
-    </ImageView>
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/icon_app" />
 
     <TextView
         android:id="@+id/welcome_to_gamelog"
@@ -21,10 +21,9 @@
         android:layout_height="wrap_content"
         android:text="@string/welcome_to_gamelog"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/icon_app">
-    </TextView>
+        android:layout_below="@+id/icon_app" />
 
     <LinearLayout
         android:layout_below="@+id/welcome_to_gamelog"
@@ -40,9 +39,7 @@
             android:id="@+id/email"
             android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
-            android:hint="@string/email">
-
-        </com.rengwuxian.materialedittext.MaterialEditText>
+            android:hint="@string/email" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
@@ -50,17 +47,13 @@
             android:id="@+id/password"
             android:inputType="textPassword"
             android:layout_marginTop="10dp"
-            android:hint="@string/password">
-
-        </com.rengwuxian.materialedittext.MaterialEditText>
+            android:hint="@string/password" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:id="@+id/login_button">
-
-        </Button>
+            android:id="@+id/login_button" />
 
 
     </LinearLayout>
