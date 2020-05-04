@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                                         // hiển thị thông báo
                                         dialog.dismiss();
                                         Toast.makeText(LoginActivity.this,
-                                                "Đăng nhập lỗi, mời nhập lại email/mật khẩu",
+                                                "Đăng nhập lỗi, mời nhập lại email/mật khẩu hoặc kiểm tra kết nối mạng",
                                                 Toast.LENGTH_SHORT).show();
 
                                     }

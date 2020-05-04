@@ -4,17 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
+
+    <ImageView
+        android:id="@+id/icon_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_app_foreground"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+    </ImageView>
 
     <TextView
         android:id="@+id/join_to_gamelog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Join us and Control your time"
+        android:text="Đăng ký tài khoản"
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp">
+        android:layout_below="@id/icon_app">
     </TextView>
 
     <LinearLayout
@@ -23,7 +32,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_centerVertical="true"
         android:padding="16dp">
 
         <com.rengwuxian.materialedittext.MaterialEditText

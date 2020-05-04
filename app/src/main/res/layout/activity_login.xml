@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:id="@+id/icon_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_app_foreground"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+    </ImageView>
+
     <TextView
         android:id="@+id/welcome_to_gamelog"
         android:layout_width="wrap_content"
@@ -14,7 +23,7 @@
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp">
+        android:layout_below="@+id/icon_app">
     </TextView>
 
     <LinearLayout
@@ -31,9 +40,7 @@
             android:id="@+id/email"
             android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
-            android:hint="@string/email"
-            app:met_floatingLabel="normal"
-            app:met_floatingLabelTextColor="#A67AE4">
+            android:hint="@string/email">
 
         </com.rengwuxian.materialedittext.MaterialEditText>
 
@@ -43,9 +50,7 @@
             android:id="@+id/password"
             android:inputType="textPassword"
             android:layout_marginTop="10dp"
-            android:hint="@string/password"
-            app:met_floatingLabel="normal"
-            app:met_floatingLabelTextColor="#A67AE4">
+            android:hint="@string/password">
 
         </com.rengwuxian.materialedittext.MaterialEditText>
 
