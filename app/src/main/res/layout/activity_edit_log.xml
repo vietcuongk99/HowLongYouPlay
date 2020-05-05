@@ -17,19 +17,7 @@
             android:background="#505EAA"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/MenuStyle"
-            app:titleTextColor="#FFFFFF"
-            android:layout_marginBottom="30dp" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/title_action"
-            android:text="Sửa bản ghi"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_alignParentTop="true"
-            android:gravity="center" />
+            app:titleTextColor="#FFFFFF" />
 
 
         <LinearLayout
@@ -37,9 +25,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_action"
-            android:padding="40dp"
+            android:padding="30dp"
             android:orientation="vertical"
             android:gravity="center">
+
+            <ImageView
+                android:id="@+id/image_game"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:layout_width="match_parent"

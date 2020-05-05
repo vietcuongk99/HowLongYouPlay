@@ -78,11 +78,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
             @Override
             public void onClick(View v) {
 
-                // dùng intent để pass dữ liệu sang GameInfoActivity
+                // dùng intent để pass dữ liệu cho từng bản ghi trong danh sách
                 Intent intent = new Intent(mContext, EditLogActivity.class);
                 intent.putExtra("game_title", gameLog.getGame_title());
                 intent.putExtra("play_time", gameLog.getPlayed_time());
                 intent.putExtra("id", gameLog.getId_log());
+                intent.putExtra("img_url", gameLog.getImg_url());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 mContext.startActivity(intent);
@@ -176,9 +177,8 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
             time = itemView.findViewById(R.id.time);
             edit_button = itemView.findViewById(R.id.edit_btn);
             delete_button = itemView.findViewById(R.id.delete_btn);
+
         }
     }
-
-
 
 }

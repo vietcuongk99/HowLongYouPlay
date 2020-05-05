@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.Adapter.ListAdapter;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +38,10 @@ public class GameInfoActivity extends AppCompatActivity {
     private Intent intent;
     private MaterialEditText time;
     private Button submit_btn;
+    private ImageView imageView;
     private FirebaseAuth mAuth;
 
-    private String title, year_release, user_id, played_time, id_game;
+    private String title, year_release, user_id, played_time, id_game, img_url;
 
     private ArrayList<GameLog> logList;
 
@@ -48,7 +51,7 @@ public class GameInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_info);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Thêm bản ghi mới");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -73,14 +76,17 @@ public class GameInfoActivity extends AppCompatActivity {
         intent = getIntent();
         time = (MaterialEditText) findViewById(R.id.played_time);
         submit_btn = (Button) findViewById(R.id.submit_btn);
+        imageView = (ImageView) findViewById(R.id.image_game);
 
         mAuth = FirebaseAuth.getInstance();
         user_id = mAuth.getCurrentUser().getUid();
 
-        // luân chuyển dữ liệu sang activity khác
+        // lấy dữ liệu qua intent khi click vào một game bất kì trong danh sách tìm kiếm
         title = intent.getExtras().get("game_title").toString();
         year_release = intent.getExtras().get("year").toString();
         id_game = intent.getExtras().get("game_id").toString();
+        img_url = intent.getExtras().get("img_url").toString();
+
 
 
         //Hiển thị id của game đã chọn qua Log
@@ -90,6 +96,9 @@ public class GameInfoActivity extends AppCompatActivity {
         // đặt nội dung cho TextView
         game_title.setText(title);
         year.setText(year_release);
+
+        //đặt hình ảnh cho ImageView
+        Picasso.get().load(img_url).into(imageView);
 
 
         //lấy ra danh sách Log để so sánh
@@ -113,6 +122,7 @@ public class GameInfoActivity extends AppCompatActivity {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("game_title", title);
                     hashMap.put("played_time", played_time);
+                    hashMap.put("img_url", img_url);
 
                     DatabaseReference blank_record = databaseReference.push();
 

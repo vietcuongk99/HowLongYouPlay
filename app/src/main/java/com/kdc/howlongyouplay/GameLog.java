@@ -10,6 +10,9 @@ public class GameLog {
     private String id_log;
     private String year;
     private String id_game;
+    private String img_url;
+
+
 
     public GameLog() {
 
@@ -73,5 +76,13 @@ public class GameLog {
 
     public void setId_game(String id_game) {
         this.id_game = id_game;
+    }
+
+    public String getImg_url() {
+        return img_url;
+    }
+
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
     }
 }

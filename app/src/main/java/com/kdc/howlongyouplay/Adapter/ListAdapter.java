@@ -65,6 +65,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                 intent.putExtra("game_title", gameLog.getGame_title());
                 intent.putExtra("year", gameLog.getYear());
                 intent.putExtra("game_id", gameLog.getId_game());
+                intent.putExtra("img_url", gameLog.getImg_url());
 
                 mContext.startActivity(intent);
 

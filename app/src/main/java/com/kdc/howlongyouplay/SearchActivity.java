@@ -89,16 +89,12 @@ public class SearchActivity extends AppCompatActivity {
                     recyclerView.setVisibility(View.INVISIBLE);
                 }
                 else {
-                    if(listAdapter.getFilter().equals(null)) {
-                        Toast.makeText(SearchActivity.this, "Hệ thống chưa xử lý danh sách tìm kiếm, vui lòng đợi",Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                    else {
+
                         listAdapter.getFilter().filter(newText);
                         // hiển thị list trong recyclerView
                         recyclerView.setAdapter(listAdapter);
                         recyclerView.setVisibility(View.VISIBLE);
-                    }
+
                 }
 
                 return false;

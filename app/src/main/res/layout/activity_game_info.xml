@@ -18,27 +18,23 @@
             android:background="#505EAA"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/MenuStyle"
-            app:titleTextColor="#FFFFFF"
-            android:layout_marginBottom="30dp" />
+            app:titleTextColor="#FFFFFF" />
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/title_action"
-            android:text="@string/title_action"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_alignParentTop="true" />
 
         <LinearLayout
             android:id="@+id/gamelog_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/title_action"
-            android:padding="40dp"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_game"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:layout_width="match_parent"

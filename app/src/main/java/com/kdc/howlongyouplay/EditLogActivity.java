@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -28,10 +30,11 @@ public class EditLogActivity extends AppCompatActivity {
     private Intent intent;
     private MaterialEditText time_update;
     private Button update_btn;
+    private ImageView imageView;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
-    private String title, old_time, log_id, user_id, new_time;
+    private String title, old_time, log_id, user_id, new_time, img_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class EditLogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_log);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Sửa bản ghi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -58,14 +61,18 @@ public class EditLogActivity extends AppCompatActivity {
 
         game_title = findViewById(R.id.game_title);
         time = findViewById(R.id.time);
+        imageView = findViewById(R.id.image_game);
         intent = getIntent();
 
         title = intent.getExtras().get("game_title").toString();
         old_time = intent.getExtras().get("play_time").toString();
         log_id = intent.getExtras().get("id").toString();
+        img_url = intent.getExtras().get("img_url").toString();
+
 
         game_title.setText(title);
         time.setText(old_time);
+        Picasso.get().load(img_url).into(imageView);
 
         Log.d("ID: ", "ID: " + log_id);
 
