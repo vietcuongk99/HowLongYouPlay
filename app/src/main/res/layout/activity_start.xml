@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/start_view"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".StartActivity"
-    android:background="@mipmap/bg"
-    android:backgroundTintMode="src_over"
-    android:backgroundTint="#B3FFFFFF">
+    tools:context=".StartActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="How Long You Play"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="50dp"
-            android:textColor="#0A0A0B"/>
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/bg"
+            android:tintMode="src_over"
+            android:tint="#B3FFFFFF"
+            android:scaleType="centerCrop">
+        </ImageView>
 
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/login"
-            android:text="@string/login"/>
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/register"
-            android:text="@string/register"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="How Long You Play"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="50dp"
+                    android:textColor="#0A0A0B"/>
 
-</LinearLayout>
+                <Button
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/login"
+                    android:text="@string/login"/>
+                <Button
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/register"
+                    android:text="@string/register"/>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

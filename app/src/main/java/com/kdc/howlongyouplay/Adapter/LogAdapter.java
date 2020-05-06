@@ -1,22 +1,21 @@
 package com.kdc.howlongyouplay.Adapter;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,15 +27,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.EditLogActivity;
-import com.kdc.howlongyouplay.GameInfoActivity;
 import com.kdc.howlongyouplay.GameLog;
 import com.kdc.howlongyouplay.MainActivity;
 import com.kdc.howlongyouplay.R;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.lang.annotation.Annotation;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 import java.util.List;
 
-// class có nhiệm vụ sắp xếp dữ liệu theo layout có sẵn
+// class có nhiệm vụ sắp xếp từng bản ghi trong danh sách theo layout có sẵn
 // chưa hiểu lắm
 
 public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>{
@@ -56,9 +58,8 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
     @NonNull
     @Override
     public MyLogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.gamelog_item, parent, false);
-
-        view.findViewById(R.id.group_action).setVisibility(View.VISIBLE);
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.gamelog_item, parent, false);
+//        view.findViewById(R.id.group_action).setVisibility(View.VISIBLE);
 
         return new LogAdapter.MyLogViewHolder(view);
     }
@@ -66,92 +67,140 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
     @Override
     public void onBindViewHolder(@NonNull LogAdapter.MyLogViewHolder holder, int position) {
         final GameLog gameLog = LogList.get(position);
-        holder.time.setText(gameLog.getPlayed_time());
-        holder.game_title.setText(gameLog.getGame_title());
+        //gán nội dung cho từng phần tử trong holder
+        holder.header_title_card.setText(gameLog.getGame_title());
+        Picasso.get().load(gameLog.getImg_url()).into(holder.background);
+
+        // key của bản log cho game tương ứng
         final String key = gameLog.getId_log();
-//        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-//                .child("Logs").child(user_id);
 
-        // xử lý sự kiện khi click vào nút sửa
-        holder.edit_button.setOnClickListener(new View.OnClickListener() {
+
+
+        // hiển thị dialog chứa nội dung khi click vào một game trong danh sách cá nhân
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
 
-                // dùng intent để pass dữ liệu cho từng bản ghi trong danh sách
-                Intent intent = new Intent(mContext, EditLogActivity.class);
-                intent.putExtra("game_title", gameLog.getGame_title());
-                intent.putExtra("play_time", gameLog.getPlayed_time());
-                intent.putExtra("id", gameLog.getId_log());
-                intent.putExtra("img_url", gameLog.getImg_url());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //gán custom layout và header cho dialog
+                LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+                View item_dialog_header = layoutInflater.inflate(R.layout.item_dialog_header, null);
+                View item_dialog_view = layoutInflater.inflate(R.layout.item_dialog_view, null);
+                dialog.setCustomTitle(item_dialog_header);
+                dialog.setView(item_dialog_view);
 
-                mContext.startActivity(intent);
+                // khai báo và gán nội dung cho từng phần tử trong dialog
+                TextView title = (TextView) item_dialog_header.findViewById(R.id.title_header);
+                Button edit_btn = (Button) item_dialog_view.findViewById(R.id.edit_btn);
+                Button delete_btn = (Button) item_dialog_view.findViewById(R.id.delete_btn);
+                TextView played_time = (TextView) item_dialog_view.findViewById(R.id.played_time);
+                TextView status = (TextView) item_dialog_view.findViewById(R.id.play_status);
+                TextView device = (TextView) item_dialog_view.findViewById(R.id.device);
 
-            }
-        });
 
-        // xử lý sự kiện khi nhất nút xóa
-        holder.delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                title.setText(gameLog.getGame_title());
+                status.setText(mContext.getResources().getString(R.string.status, mContext.getResources().getString(R.string.zero)));
+                device.setText(mContext.getResources().getString(R.string.device, mContext.getResources().getString(R.string.zero)));
+                if(gameLog.getPlayed_time().equals("")) {
+                    played_time.setText(mContext.getResources().getString(R.string.played_time,
+                            mContext.getResources().getString(R.string.zero)));
+                }
+                else {
+                    played_time.setText(mContext.getResources().getString(R.string.played_time, gameLog.getPlayed_time()));
+                }
 
-                final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                        .child("Logs").child(user_id);
-                
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
-                alertDialog.setTitle("Xóa log").setMessage("Bạn muốn xóa bản log này ?");
 
-                //tạo nút xác nhận xóa và xử lý sự kiện
-                alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                // xử lý sự kiện khi nhất nút sửa
+                edit_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(final DialogInterface dialog, int which) {
+                    public void onClick(View v) {
 
-                        databaseReference.addValueEventListener(new ValueEventListener() {
+                        // dùng intent để pass dữ liệu cho từng bản ghi trong danh sách
+                        Intent intent = new Intent(mContext, EditLogActivity.class);
+                        intent.putExtra("game_title", gameLog.getGame_title());
+                        intent.putExtra("play_time", gameLog.getPlayed_time());
+                        intent.putExtra("id", gameLog.getId_log());
+                        intent.putExtra("img_url", gameLog.getImg_url());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        mContext.startActivity(intent);
+
+                    }
+                });
+
+                // xử lý sự kiện khi nhất nút xóa
+                delete_btn.setOnClickListener(new View.OnClickListener() {
+                    AlertDialog.Builder mDialog = dialog;
+                    @Override
+                    public void onClick(View v) {
+
+                        final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                .child("Logs").child(user_id);
+
+                        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+                        alertDialog.setTitle("Xóa log").setMessage("Bạn muốn xóa bản log này ?");
+
+                        //tạo nút xác nhận xóa và xử lý sự kiện
+                        alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            public void onClick(final DialogInterface dialogInterface, int which) {
 
-                                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    if(snapshot.getKey().equals(key)) {
-                                        databaseReference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    dialog.dismiss();
-                                                    Toast.makeText(mContext, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                                                }
-                                                else {
-                                                    dialog.dismiss();
-                                                    Toast.makeText(mContext, "Xóa lỗi", Toast.LENGTH_SHORT).show();
-                                                }
+                                        for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+
+                                            if(snapshot.getKey().equals(key)) {
+                                                databaseReference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            dialogInterface.dismiss();
+                                                            Toast.makeText(mContext, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(mContext, MainActivity.class);
+                                                            mContext.startActivity(intent);
+
+                                                        }
+                                                        else {
+                                                            dialogInterface.dismiss();
+                                                            Toast.makeText(mContext, "Xóa lỗi", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(mContext, MainActivity.class);
+                                                            mContext.startActivity(intent);
+                                                        }
+                                                    }
+                                                });
                                             }
-                                        });
+                                        }
                                     }
-                                }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
 
                             }
                         });
 
+
+                        // tạo nút hủy và xử lý sự kiện
+                        alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        alertDialog.setCancelable(true);
+                        alertDialog.show();
+
                     }
                 });
 
+                dialog.show();
 
-                // tạo nút hủy và xử lý sự kiện
-                alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                alertDialog.setCancelable(true);
-                alertDialog.show();
-
+                dialog.setCancelable(true);
 
             }
         });
@@ -165,18 +214,14 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
     public static class MyLogViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView game_title;
-        private TextView time;
-        private ImageButton edit_button;
-        private ImageButton delete_button;
+        private ImageView background;
+        private TextView header_title_card;
 
         public MyLogViewHolder(View itemView) {
             super(itemView);
 
-            game_title = itemView.findViewById(R.id.game_title);
-            time = itemView.findViewById(R.id.time);
-            edit_button = itemView.findViewById(R.id.edit_btn);
-            delete_button = itemView.findViewById(R.id.delete_btn);
+            header_title_card = itemView.findViewById(R.id.header_title_card);
+            background = itemView.findViewById(R.id.item_bg);
 
         }
     }

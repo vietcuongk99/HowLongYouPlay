@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
     tools:context=".EditLogActivity">
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#505EAA"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/MenuStyle"
-            app:titleTextColor="#FFFFFF" />
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
 
-
-        <LinearLayout
-            android:id="@+id/update_log"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title_action"
-            android:padding="30dp"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/image_game"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter" />
-
-            <TextView
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/game_title"
-                android:text="Title"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp" />
+                android:background="#505EAA"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/MenuStyle"
+                app:titleTextColor="#FFFFFF" />
 
-            <TextView
+
+            <LinearLayout
+                android:id="@+id/update_log"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/time"
-                android:text="Time"
-                android:layout_below="@+id/game_title"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp" />
+                android:layout_below="@+id/title_action"
+                android:padding="30dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/image_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="#CED8DF"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/game_title"
+                    android:text="Title"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time"
+                    android:text="Time"
+                    android:layout_below="@+id/game_title"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp" />
 
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:hint="nhập thời gian thay đổi"
-                android:id="@+id/new_played_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                app:met_floatingLabel="normal"
-                android:layout_marginTop="10dp" />
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:hint="nhập thời gian thay đổi"
+                    android:id="@+id/new_played_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    app:met_floatingLabel="normal"
+                    android:layout_marginTop="10dp" />
 
 
-            <Button
-                android:id="@+id/update_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Xác nhận" />
+                <Button
+                    android:id="@+id/update_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Xác nhận" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

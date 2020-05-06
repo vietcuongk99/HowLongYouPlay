@@ -9,17 +9,24 @@
 
 
     <string name="icon_app">IconApp</string>
-    <string name="year">Year</string>
+    <string name="year">Năm phát hành: %1$s</string>
     <string name="played_time_input">nhập thời gian chơi</string>
     <string name="submit_btn">Thêm</string>
     <string name="game_title">Game title</string>
     <string name="title_action">Thêm bản ghi mới</string>
     <string name="check_internet">Ứng dụng yêu cầu kết nối mạng, kiểm tra lại kết nối mạng trước khi bắt đầu sử dụng</string>
     <string name="start">Bắt đầu</string>
-    <string name="list_title">Danh sách của bạn</string>
+    <string name="list_title">Danh sách game của bạn</string>
     <string name="edit_btn">Nút sửa log</string>
     <string name="delete_btn">Nút xóa Log</string>
     <string name="game">Game</string>
-    <string name="time">Played time</string>
+    <string name="time">Thời gian chơi: %1$s</string>
+    <string name="played_time">Thời gian chơi: %1$s</string>
+    <string name="device">Thiết bị: %1$s</string>
+    <string name="status">Tình trạng: %1$s</string>
+    <string name="delete">Xóa</string>
+    <string name="edit">Sửa</string>
+    <string name="card_background">ảnh game thu gọn</string>
+    <string name="zero">chưa có</string>
 
 </resources>

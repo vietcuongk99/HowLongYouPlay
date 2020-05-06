@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kdc.howlongyouplay.GameInfoActivity;
 import com.kdc.howlongyouplay.GameLog;
 import com.kdc.howlongyouplay.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // class có nhiệm vụ sắp xếp dữ liệu theo layout có sẵn
 // chưa hiểu lắm
+//giải thích tương tự với LogAdapter
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> implements Filterable{
 
@@ -51,9 +54,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
 
         final GameLog gameLog = gameLogList.get(position);
-        holder.year.setText(gameLogList.get(position).getYear());
-        holder.game_title.setText(gameLogList.get(position).getGame_title());
-        final String key = gameLogList.get(position).getId_log();
+        holder.header_title_card.setText(gameLog.getGame_title());
+        Picasso.get().load(gameLog.getImg_url()).into(holder.background);
+
+        final String key = gameLog.getId_log();
 
         // xử lý sự kiện khi click vào một log trong danh sách
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -121,14 +125,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView game_title;
-        private TextView year;
+        private ImageView background;
+        private TextView header_title_card;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            game_title = itemView.findViewById(R.id.game_title);
-            year = itemView.findViewById(R.id.time);
+            background = itemView.findViewById(R.id.item_bg);
+            header_title_card = itemView.findViewById(R.id.header_title_card);
         }
     }
 

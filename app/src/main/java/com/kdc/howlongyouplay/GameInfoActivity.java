@@ -95,7 +95,7 @@ public class GameInfoActivity extends AppCompatActivity {
 
         // đặt nội dung cho TextView
         game_title.setText(title);
-        year.setText(year_release);
+        year.setText(getApplicationContext().getResources().getString(R.string.year, year_release));
 
         //đặt hình ảnh cho ImageView
         Picasso.get().load(img_url).into(imageView);

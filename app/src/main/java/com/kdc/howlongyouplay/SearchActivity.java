@@ -69,6 +69,7 @@ public class SearchActivity extends AppCompatActivity {
         MenuItem mSearch = menu.findItem(R.id.search_view_btn);
         SearchView mSearchView = (SearchView) mSearch.getActionView();
         mSearchView.onActionViewExpanded();
+        mSearchView.setMaxWidth(Integer.MAX_VALUE);
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

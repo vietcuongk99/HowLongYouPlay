@@ -1,74 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
     tools:context=".RegisterActivity">
 
-    <ImageView
-        android:id="@+id/icon_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_app_foreground"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/icon_app">
-    </ImageView>
-
-    <TextView
-        android:id="@+id/join_to_gamelog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đăng ký tài khoản"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/icon_app" />
-
-    <LinearLayout
-        android:layout_below="@+id/join_to_gamelog"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/username"
-            android:inputType="text"
-            android:layout_marginTop="10dp"
-            android:hint="@string/username"
-            app:met_floatingLabel="normal" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/email"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="10dp"
-            android:hint="@string/email"
-            app:met_floatingLabel="normal" />
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/password"
-            android:inputType="textPassword"
-            android:layout_marginTop="10dp"
-            android:hint="@string/password"
-            app:met_floatingLabel="normal" />
-
-        <Button
+        <ImageView
+            android:id="@+id/icon_app"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:id="@+id/register_button" />
+            android:src="@mipmap/ic_app_foreground"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/icon_app">
+        </ImageView>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/join_to_gamelog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng ký tài khoản"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/icon_app" />
+
+        <LinearLayout
+            android:layout_below="@+id/join_to_gamelog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/username"
+                android:inputType="text"
+                android:layout_marginTop="10dp"
+                android:hint="@string/username"
+                app:met_floatingLabel="normal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/email"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="10dp"
+                android:hint="@string/email"
+                app:met_floatingLabel="normal" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"
+                android:hint="@string/password"
+                app:met_floatingLabel="normal" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register"
+                android:id="@+id/register_button" />
+
+        </LinearLayout>
 
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

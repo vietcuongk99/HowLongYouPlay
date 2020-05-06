@@ -71,7 +71,15 @@ public class EditLogActivity extends AppCompatActivity {
 
 
         game_title.setText(title);
-        time.setText(old_time);
+
+        if(old_time.equals("")) {
+            time.setText(getApplicationContext().getResources().getString(R.string.played_time,
+                    getApplicationContext().getResources().getString(R.string.zero)));
+        }
+        else {
+            time.setText(getApplicationContext().getResources().getString(R.string.played_time, old_time));
+        }
+
         Picasso.get().load(img_url).into(imageView);
 
         Log.d("ID: ", "ID: " + log_id);
