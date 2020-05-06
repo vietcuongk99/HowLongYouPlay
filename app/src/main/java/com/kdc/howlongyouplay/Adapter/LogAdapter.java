@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.internal.$Gson$Preconditions;
 import com.kdc.howlongyouplay.EditLogActivity;
 import com.kdc.howlongyouplay.GameLog;
 import com.kdc.howlongyouplay.MainActivity;
@@ -75,7 +76,6 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
         final String key = gameLog.getId_log();
 
 
-
         // hiển thị dialog chứa nội dung khi click vào một game trong danh sách cá nhân
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,13 +101,15 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                 title.setText(gameLog.getGame_title());
                 status.setText(mContext.getResources().getString(R.string.status, mContext.getResources().getString(R.string.zero)));
                 device.setText(mContext.getResources().getString(R.string.device, mContext.getResources().getString(R.string.zero)));
-                if(gameLog.getPlayed_time().equals("")) {
+                if (gameLog.getPlayed_time().equals("")) {
                     played_time.setText(mContext.getResources().getString(R.string.played_time,
                             mContext.getResources().getString(R.string.zero)));
-                }
-                else {
+                } else {
                     played_time.setText(mContext.getResources().getString(R.string.played_time, gameLog.getPlayed_time()));
                 }
+
+                final AlertDialog builder = dialog.show();
+                builder.setCanceledOnTouchOutside(true);
 
 
                 // xử lý sự kiện khi nhất nút sửa
@@ -128,20 +130,24 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                     }
                 });
 
+
                 // xử lý sự kiện khi nhất nút xóa
                 delete_btn.setOnClickListener(new View.OnClickListener() {
-                    AlertDialog.Builder mDialog = dialog;
+
                     @Override
                     public void onClick(View v) {
 
+                        // đóng giao diện dialog
+                        builder.dismiss();
                         final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                                 .child("Logs").child(user_id);
 
+                        // tạo giao diện xác nhận thao tác xóa
                         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
                         alertDialog.setTitle("Xóa log").setMessage("Bạn muốn xóa bản log này ?");
 
-                        //tạo nút xác nhận xóa và xử lý sự kiện
+                        //tạo nút đồng ý xóa và xử lý sự kiện
                         alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialogInterface, int which) {
@@ -159,15 +165,11 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                                                         if (task.isSuccessful()) {
                                                             dialogInterface.dismiss();
                                                             Toast.makeText(mContext, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                                                            Intent intent = new Intent(mContext, MainActivity.class);
-                                                            mContext.startActivity(intent);
 
                                                         }
                                                         else {
                                                             dialogInterface.dismiss();
                                                             Toast.makeText(mContext, "Xóa lỗi", Toast.LENGTH_SHORT).show();
-                                                            Intent intent = new Intent(mContext, MainActivity.class);
-                                                            mContext.startActivity(intent);
                                                         }
                                                     }
                                                 });
@@ -197,15 +199,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
                     }
                 });
-
-                dialog.show();
-
-                dialog.setCancelable(true);
-
             }
         });
-
     }
+
+
+
 
     @Override
     public int getItemCount() {

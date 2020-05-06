@@ -21,7 +21,8 @@
             android:background="#505EAA"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/MenuStyle"
-            app:titleTextColor="#FFFFFF" />
+            app:titleTextColor="#FFFFFF"
+            app:title=""/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_result"
