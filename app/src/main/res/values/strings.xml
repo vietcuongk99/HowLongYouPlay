@@ -34,6 +34,8 @@
     <string name="add">Thêm</string>
     <string name="user_name">Tên:</string>
     <string name="user_infor">Mô tả bản thân: </string>
-    <string name="gender">Giới tính</string>
+    <string name="gender">Giới tính:</string>
+    <string name="not_define">chưa xác định</string>
+    <string name="close">đóng</string>
 
 </resources>

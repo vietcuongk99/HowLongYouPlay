@@ -63,7 +63,8 @@ public class LoginActivity extends AppCompatActivity {
                             "Bình tĩnh nhé, hệ thống đang xử lý...",
                             true);
 
-                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.setCancelable(false);
 
                     auth.signInWithEmailAndPassword(txt_email, txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

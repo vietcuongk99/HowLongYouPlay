@@ -8,6 +8,7 @@ public class User {
     private String avatar_url;
     private String information;
     private String gender;
+    private String id;
 
     public User() {
 
@@ -65,5 +66,13 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

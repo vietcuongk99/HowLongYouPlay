@@ -77,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                         "Loading Register",
                         "Bình tĩnh nhé, hệ thống đang xử lý...",
                         true);
+        dialog.setCanceledOnTouchOutside(false);
 
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -93,17 +94,20 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("email", email);
+                            hashMap.put("gender", "");
+                            hashMap.put("information", "");
                             hashMap.put("role", "normal_user");
+                            hashMap.put("avatar_url", "default");
 
                             reference.child("Users").child(userid).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
                                         // chuyển sang màn hình MainActivity
+                                        dialog.dismiss();
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
-                                        dialog.dismiss();
                                         finish();
                                     }
                                     else {

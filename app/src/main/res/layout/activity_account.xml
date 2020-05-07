@@ -37,10 +37,8 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="centerCrop">
-
-                </de.hdodenhof.circleimageview.CircleImageView>
+                    android:src="@mipmap/ic_app_foreground"
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/username"
@@ -73,7 +71,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:text="%1$s"/>
 
                 <TextView
                     android:id="@+id/infor"
@@ -90,7 +89,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:text="%1$s" />
 
                 <LinearLayout
                     android:id="@+id/group_action"
@@ -120,12 +120,8 @@
 
                 </LinearLayout>
 
-
             </LinearLayout>
         </ScrollView>
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
 
 </RelativeLayout>
