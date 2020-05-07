@@ -139,11 +139,11 @@ public class GameInfoActivity extends AppCompatActivity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
-                                Toast.makeText(GameInfoActivity.this, "Bạn đã thêm Log thành công", Toast.LENGTH_SHORT)
+                                Toast.makeText(GameInfoActivity.this, "Bạn đã thêm thành công", Toast.LENGTH_SHORT)
                                         .show();
 
                             } else {
-                                Toast.makeText(GameInfoActivity.this, "Bạn đã thêm Log cho game này rồi, vui lòng xem lại danh sách", Toast.LENGTH_SHORT)
+                                Toast.makeText(GameInfoActivity.this, "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                                         .show();
                             }
 

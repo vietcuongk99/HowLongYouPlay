@@ -49,7 +49,6 @@ public class SearchActivity extends AppCompatActivity {
                 Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
-
             }
         });
 

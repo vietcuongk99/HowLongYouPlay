@@ -72,24 +72,30 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/scrollView">
 
-        <Button
+        <ImageButton
             android:id="@+id/edit_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#58E45F"
-            android:text="@string/edit">
+            android:src="@mipmap/edit"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/edit_btn">
 
-        </Button>
-        <Button
+        </ImageButton>
+
+
+        <ImageButton
             android:id="@+id/delete_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/delete"
-            android:background="#F12F21">
+            android:src="@mipmap/delete"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/delete_btn">
 
-        </Button>
+        </ImageButton>
 
     </LinearLayout>
 

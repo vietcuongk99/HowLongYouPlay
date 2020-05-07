@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:id="@+id/title_header_card"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="20dp">
+
+        </TextView>
+
+    </LinearLayout>
 
 
-
-    <TextView
-        android:id="@+id/title_header"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/statistical_btn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textSize="20sp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp">
+        android:layout_weight="1"
+        android:contentDescription="@string/statistical"
+        android:src="@mipmap/statistic">
 
-    </TextView>
+    </ImageButton>
 
-</RelativeLayout>
+    <ImageButton
+        android:id="@+id/add_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/add"
+        android:src="@mipmap/add">
+
+    </ImageButton>
+</LinearLayout>

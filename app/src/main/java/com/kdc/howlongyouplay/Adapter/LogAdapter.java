@@ -90,9 +90,9 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                 dialog.setView(item_dialog_view);
 
                 // khai báo và gán nội dung cho từng phần tử trong dialog
-                TextView title = (TextView) item_dialog_header.findViewById(R.id.title_header);
-                Button edit_btn = (Button) item_dialog_view.findViewById(R.id.edit_btn);
-                Button delete_btn = (Button) item_dialog_view.findViewById(R.id.delete_btn);
+                TextView title = (TextView) item_dialog_header.findViewById(R.id.title_text);
+                ImageButton edit_btn = item_dialog_view.findViewById(R.id.edit_btn);
+                ImageButton delete_btn =  item_dialog_view.findViewById(R.id.delete_btn);
                 TextView played_time = (TextView) item_dialog_view.findViewById(R.id.played_time);
                 TextView status = (TextView) item_dialog_view.findViewById(R.id.play_status);
                 TextView device = (TextView) item_dialog_view.findViewById(R.id.device);
@@ -202,6 +202,8 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
             }
         });
     }
+
+
 
 
 

@@ -10,14 +10,26 @@
         app:showAsAction="always"
         />
 
+    <item
+        android:id="@+id/edit_profile"
+        android:title="Cài đặt tài khoản"
+        app:showAsAction="never" />
 
     <item
-        android:id="@+id/logout"
-        android:title="Logout"
-        app:showAsAction="never"/>
+        android:id="@+id/persona_statistic"
+        android:title="Thống kê cá nhân"
+        app:showAsAction="never" />
+
 
     <item
         android:id="@+id/about"
-        android:title="About"
+        android:title="Thông tin"
         app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/logout"
+        android:title="Đăng xuất"
+        app:showAsAction="never"/>
+
 </menu>

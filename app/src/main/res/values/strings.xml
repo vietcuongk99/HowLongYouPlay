@@ -28,5 +28,11 @@
     <string name="edit">Sửa</string>
     <string name="card_background">ảnh game thu gọn</string>
     <string name="zero">chưa có</string>
+    <string name="statistical_btn">nút thống kê</string>
+    <string name="title">Title</string>
+    <string name="statistical">thống kê</string>
+    <string name="add">Thêm</string>
+    <string name="user_name">Tên:</string>
+    <string name="user_infor">Thông tin bản thân: </string>
 
 </resources>

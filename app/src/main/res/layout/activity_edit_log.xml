@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fillViewport="true"
     tools:context=".EditLogActivity">
-    <RelativeLayout
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF">
+            android:layout_height="wrap_content"
+            android:background="#505EAA"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/MenuStyle"
+            app:titleTextColor="#FFFFFF" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+        <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#505EAA"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/MenuStyle"
-                app:titleTextColor="#FFFFFF" />
-
-
+                android:layout_height="match_parent"
+                android:fillViewport="true">
             <LinearLayout
                 android:id="@+id/update_log"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/title_action"
+                android:layout_height="match_parent"
                 android:padding="30dp"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/image_game"
@@ -56,7 +54,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/time"
                     android:text="Time"
-                    android:layout_below="@+id/game_title"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
                     android:textSize="20sp" />
@@ -80,8 +77,8 @@
                     android:text="Xác nhận" />
 
             </LinearLayout>
+        </ScrollView>
 
-        </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>
