@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("email", email);
-                            hashMap.put("gender", "");
+//                            hashMap.put("gender", "");
                             hashMap.put("information", "");
                             hashMap.put("role", "normal_user");
                             hashMap.put("avatar_url", "default");

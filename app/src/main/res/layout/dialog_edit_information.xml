@@ -33,6 +33,7 @@
                 android:layout_marginBottom="10dp" />
 
             <RadioGroup
+                android:id="@+id/gender_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -70,7 +71,6 @@
                 app:met_floatingLabel="normal"
                 android:hint="Mô tả bản thân"/>
 
-
         </LinearLayout>
 
 
@@ -82,7 +82,7 @@
             android:layout_below="@+id/user_details">
 
             <ImageButton
-                android:id="@+id/submit_btn"
+                android:id="@+id/accept_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

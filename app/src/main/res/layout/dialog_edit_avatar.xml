@@ -41,25 +41,25 @@
 
     </ScrollView>
 
-
-    <!--<ProgressBar
+    <ProgressBar
         android:id="@+id/progress_horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_below="@+id/choose_image"
-        android:layout_marginBottom="10dp">
+        android:layout_below="@+id/scrollView"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true">
 
-    </ProgressBar>-->
+    </ProgressBar>
 
     <LinearLayout
         android:id="@+id/group_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/scrollView">
+        android:layout_below="@+id/progress_horizontal">
 
         <ImageButton
-            android:id="@+id/submit_btn"
+            android:id="@+id/add_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
