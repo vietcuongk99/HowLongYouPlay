@@ -7,6 +7,7 @@ public class User {
     private String role;
     private String avatar_url;
     private String information;
+    private String gender;
 
     public User() {
 
@@ -56,5 +57,13 @@ public class User {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

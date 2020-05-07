@@ -33,6 +33,7 @@
     <string name="statistical">thống kê</string>
     <string name="add">Thêm</string>
     <string name="user_name">Tên:</string>
-    <string name="user_infor">Thông tin bản thân: </string>
+    <string name="user_infor">Mô tả bản thân: </string>
+    <string name="gender">Giới tính</string>
 
 </resources>

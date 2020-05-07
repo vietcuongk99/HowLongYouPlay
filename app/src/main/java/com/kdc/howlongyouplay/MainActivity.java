@@ -75,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 finish();
                 return true;
+
+            case R.id.edit_profile:
+                startActivity(new Intent(MainActivity.this, AccountActivity.class));
+                finish();
+                return true;
         }
         return false;
     }
