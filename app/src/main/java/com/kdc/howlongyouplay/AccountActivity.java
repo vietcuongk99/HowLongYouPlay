@@ -50,6 +50,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private ImageButton edit_infor_btn, edit_avatar_btn;
     private CircleImageView user_avatar;
+    private ImageView user_page_img;
     private TextView user_infor;
     private TextView user_name;
     private TextView user_gender;
@@ -91,6 +92,7 @@ public class AccountActivity extends AppCompatActivity {
         user_infor = findViewById(R.id.user_infor);
         user_gender = findViewById(R.id.user_gender);
         user_avatar = findViewById(R.id.user_avatar);
+        user_page_img = findViewById(R.id.user_page_img);
         edit_infor_btn = findViewById(R.id.edit_infor_btn);
         edit_avatar_btn = findViewById(R.id.edit_avatar_btn);
 
@@ -112,6 +114,7 @@ public class AccountActivity extends AppCompatActivity {
                     if(!avatar_url.equals("default")) {
                         user_name.setText(username);
                         Picasso.get().load(avatar_url).into(user_avatar);
+                        Picasso.get().load(avatar_url).into(user_page_img);
 
 
                         if (information.equals("")) {

@@ -39,9 +39,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp">
                     <ImageView
+                        android:id="@+id/user_page_img"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:background="#7C83AA">
+                        android:src="#D8E5EF"
+                        android:tintMode="src_over"
+                        android:tint="#B3FFFFFF"
+                        android:scaleType="centerCrop">
 
                     </ImageView>
 
@@ -195,12 +199,6 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
-
-
-
 
 
 
