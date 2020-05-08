@@ -33,7 +33,8 @@
                 android:id="@+id/gamelog_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="#B1ABAB">
                 <!--ảnh bìa và ảnh đại diện -->
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -63,7 +64,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="#FFFFFF"
                     android:layout_margin="20dp">
@@ -166,9 +167,8 @@
             android:id="@+id/group_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_alignParentBottom="true"
-            android:background="#FFFFFF"
+            android:background="#505EAA"
             android:orientation="horizontal">
 
             <ImageButton

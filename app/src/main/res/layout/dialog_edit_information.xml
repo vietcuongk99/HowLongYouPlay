@@ -1,94 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center_horizontal">
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
 
-        <LinearLayout
-            android:id="@+id/user_details"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/new_username"
+            <LinearLayout
+                android:id="@+id/user_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:met_floatingLabel="normal"
-                android:layout_marginBottom="10dp"
-                android:hint="Tên của bạn" />
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:paddingVertical="20dp">
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/new_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:met_floatingLabel="normal"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Tên của bạn" />
 
-                <TextView
-                    android:id="@+id/user_gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/gender"
-                    android:textSize="20sp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:paddingVertical="20dp">
 
-                <RadioGroup
-                    android:id="@+id/gender_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/user_gender">
-
-                    <RadioButton
-                        android:id="@+id/male"
+                    <TextView
+                        android:id="@+id/user_gender"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Nam"
+                        android:layout_height="match_parent"
+                        android:text="@string/gender"
                         android:textSize="20sp"
-                        android:checked="true" />
+                        android:layout_alignParentStart="true" />
 
-
-                    <RadioButton
-                        android:id="@+id/female"
+                    <RadioGroup
+                        android:id="@+id/gender_group"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Nữ"
-                        android:textSize="20sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/user_gender">
+
+                        <RadioButton
+                            android:id="@+id/male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nam"
+                            android:textSize="20sp"
+                            android:checked="true" />
 
 
-                    <RadioButton
-                        android:id="@+id/lgbt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Khác"
-                        android:textSize="20sp" />
+                        <RadioButton
+                            android:id="@+id/female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nữ"
+                            android:textSize="20sp" />
 
-                </RadioGroup>
 
-            </RelativeLayout>
+                        <RadioButton
+                            android:id="@+id/lgbt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Khác"
+                            android:textSize="20sp" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/new_infor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:met_floatingLabel="normal"
-                android:hint="Mô tả bản thân" />
+                    </RadioGroup>
 
-        </LinearLayout>
+                </RelativeLayout>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/new_infor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:met_floatingLabel="normal"
+                    android:hint="Mô tả bản thân" />
+
+            </LinearLayout>
+
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/group_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user_details">
+            android:layout_alignParentBottom="true"
+            android:background="#6A729C">
 
             <ImageButton
                 android:id="@+id/accept_btn"
@@ -113,8 +122,10 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-</ScrollView>
+
+
+</RelativeLayout>
 
 

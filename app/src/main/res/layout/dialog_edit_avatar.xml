@@ -16,26 +16,49 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/new_avatar"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:background="#D8E5EF"
-                android:scaleType="centerCrop"
-                android:layout_marginBottom="10dp"/>
-
-            <Button
-                android:id="@+id/choose_image"
-                android:layout_width="150dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_below="@+id/new_avatar"
+                android:id="@+id/choose_img"
                 android:layout_centerHorizontal="true"
-                android:text="chọn ảnh"
-                android:textStyle="normal">
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginBottom="10dp">
 
-            </Button>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/new_avatar"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="#D8E5EF"
+                    android:scaleType="centerCrop">
+
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+                <TextView
+                    android:id="@+id/action_choose_img"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ấn vào đây để chọn ảnh"
+                    android:layout_centerInParent="true"
+                    android:textStyle="normal"
+                    android:textSize="20sp"
+                    android:textAlignment="center">
+                </TextView>
+
+            </RelativeLayout>
+
+
+<!--            <Button-->
+<!--                android:id="@+id/choose_image"-->
+<!--                android:layout_width="150dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_below="@+id/choose_img"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:text="chọn ảnh"-->
+<!--                android:textStyle="normal">-->
+
+<!--            </Button>-->
 
         </RelativeLayout>
 
@@ -57,7 +80,8 @@
         android:id="@+id/group_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progress_horizontal">
+        android:layout_below="@+id/progress_horizontal"
+        android:background="#6A729C">
 
         <ImageButton
             android:id="@+id/add_btn"

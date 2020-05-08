@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +61,10 @@ public class AccountActivity extends AppCompatActivity {
     private StorageReference firebaseStorage;
     private FirebaseAuth mAuth;
 
+    private RelativeLayout choose_img;
     private ImageView new_avatar;
     private String newName, newInfor, genderPicked;
+    private TextView action_choose_img;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
@@ -170,9 +173,11 @@ public class AccountActivity extends AppCompatActivity {
 
                 ImageButton add_btn = view.findViewById(R.id.add_btn);
                 ImageButton close_btn = view.findViewById(R.id.close_btn);
-                Button choose_image = view.findViewById(R.id.choose_image);
+//                Button choose_image = view.findViewById(R.id.choose_image);
                 final ProgressBar progressBar = view.findViewById(R.id.progress_horizontal);
                 new_avatar = view.findViewById(R.id.new_avatar);
+                choose_img = view.findViewById(R.id.choose_img);
+                action_choose_img = view.findViewById(R.id.action_choose_img);
 
                 //hiển thị dialog
                 builder.setTitle("Thay đổi ảnh đại diện");
@@ -181,12 +186,23 @@ public class AccountActivity extends AppCompatActivity {
                  final AlertDialog dialog = builder.show();
 
                 // xử lý sự kiện khi click nút chọn ảnh
-                choose_image.setOnClickListener(new View.OnClickListener() {
+//                choose_image.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        chooseImage();
+//                    }
+//                });
+
+                // xử lý sự kiện khi click vào khung ảnh
+                choose_img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        action_choose_img.setVisibility(View.GONE);
                         chooseImage();
                     }
                 });
+
+
 
                 // xử lý sự kiện khi nhấn xác nhân/đóng
                 add_btn.setOnClickListener(new View.OnClickListener() {
