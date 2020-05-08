@@ -21,59 +21,68 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:met_floatingLabel="normal"
-                android:hint="Tên thay thế"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:hint="Tên của bạn" />
 
-            <TextView
-                android:id="@+id/user_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gender"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp" />
-
-            <RadioGroup
-                android:id="@+id/gender_group"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:paddingVertical="20dp">
 
-                <RadioButton
-                    android:id="@+id/male"
+                <TextView
+                    android:id="@+id/user_gender"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nam"
-                    android:textSize="20sp" />
+                    android:layout_height="match_parent"
+                    android:text="@string/gender"
+                    android:textSize="20sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
 
-
-                <RadioButton
-                    android:id="@+id/female"
+                <RadioGroup
+                    android:id="@+id/gender_group"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nữ"
-                    android:textSize="20sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/user_gender">
+
+                    <RadioButton
+                        android:id="@+id/male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nam"
+                        android:textSize="20sp"
+                        android:checked="true" />
 
 
-                <RadioButton
-                    android:id="@+id/lgbt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Khác"
-                    android:textSize="20sp" />
+                    <RadioButton
+                        android:id="@+id/female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nữ"
+                        android:textSize="20sp" />
 
-            </RadioGroup>
+
+                    <RadioButton
+                        android:id="@+id/lgbt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Khác"
+                        android:textSize="20sp" />
+
+                </RadioGroup>
+
+            </RelativeLayout>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/new_infor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:met_floatingLabel="normal"
-                android:hint="Mô tả bản thân"/>
+                android:hint="Mô tả bản thân" />
 
         </LinearLayout>
-
-
 
         <LinearLayout
             android:id="@+id/group_action"

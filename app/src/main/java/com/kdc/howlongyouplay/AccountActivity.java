@@ -11,10 +11,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -55,9 +58,9 @@ public class AccountActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageReference firebaseStorage;
     private FirebaseAuth mAuth;
-    private ImageView new_avatar;
-    private String newName, newInfor;
 
+    private ImageView new_avatar;
+    private String newName, newInfor, genderPicked;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
@@ -104,6 +107,7 @@ public class AccountActivity extends AppCompatActivity {
                     String username = dataSnapshot.child("username").getValue().toString();
                     String information = dataSnapshot.child("information").getValue().toString();
                     String avatar_url = dataSnapshot.child("avatar_url").getValue().toString();
+                    String gender = dataSnapshot.child("gender").getValue().toString();
 
                     if(!avatar_url.equals("default")) {
                         user_name.setText(username);
@@ -115,6 +119,13 @@ public class AccountActivity extends AppCompatActivity {
                         } else {
                             user_infor.setText(information);
                         }
+
+                        if (gender.equals("")) {
+                            user_gender.setText(getApplicationContext().getResources().getString(R.string.not_define));
+                        } else {
+                            user_gender.setText(gender);
+                        }
+
                     }
                     else {
                         user_name.setText(username);
@@ -125,6 +136,13 @@ public class AccountActivity extends AppCompatActivity {
                         } else {
                             user_infor.setText(information);
                         }
+
+                        if (gender.equals("")) {
+                            user_gender.setText(getApplicationContext().getResources().getString(R.string.not_define));
+                        } else {
+                            user_gender.setText(gender);
+                        }
+
 
                     }
                 }
@@ -157,9 +175,9 @@ public class AccountActivity extends AppCompatActivity {
                 builder.setTitle("Thay đổi ảnh đại diện");
                 builder.setView(view);
                 builder.setCancelable(false);
-                final AlertDialog dialog = builder.show();
+                 final AlertDialog dialog = builder.show();
 
-
+                // xử lý sự kiện khi click nút chọn ảnh
                 choose_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -167,6 +185,7 @@ public class AccountActivity extends AppCompatActivity {
                     }
                 });
 
+                // xử lý sự kiện khi nhấn xác nhân/đóng
                 add_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -191,10 +210,35 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(AccountActivity.this);
-                View view = LayoutInflater.from(AccountActivity.this).inflate(R.layout.dialog_edit_information, null);
+                final View view = LayoutInflater.from(AccountActivity.this).inflate(R.layout.dialog_edit_information, null);
 
                 final MaterialEditText new_name = view.findViewById(R.id.new_username);
                 final MaterialEditText new_infor = view.findViewById(R.id.new_infor);
+
+                final RadioGroup genderGroup = view.findViewById(R.id.gender_group);
+                RadioButton male_picked = view.findViewById(R.id.male);
+                RadioButton female_picked = view.findViewById(R.id.female);
+                RadioButton other_gender_picked = view.findViewById(R.id.lgbt);
+
+                //kiểm tra thay đổi khi lựa chọn giới tính trong genderGroup
+                male_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        onChangeGenderPicked(buttonView, isChecked);
+                    }
+                });
+                female_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        onChangeGenderPicked(buttonView, isChecked);
+                    }
+                });
+                other_gender_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        onChangeGenderPicked(buttonView, isChecked);
+                    }
+                });
 
                 ImageButton accept_btn = view.findViewById(R.id.accept_btn);
                 ImageButton close_btn = view.findViewById(R.id.close_btn);
@@ -205,30 +249,43 @@ public class AccountActivity extends AppCompatActivity {
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
 
-
-
                 //xử lý sự kiện khi nhấn nút chấp nhận
                 accept_btn.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
 
+                        //gán giá trị cho các String tương ứng
                         newName = new_name.getText().toString();
                         newInfor = new_infor.getText().toString();
 
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("username", newName);
-                        hashMap.put("information", newInfor);
+                        int i = genderGroup.getCheckedRadioButtonId();
+                        RadioButton checkedButton = view.findViewById(i);
+                        genderPicked  = checkedButton.getText().toString();
+
+                        if(TextUtils.isEmpty(newName) || TextUtils.isEmpty(newInfor)) {
+                            Toast.makeText(v.getContext(), "Bạn cần điền tên và phần mô tả bản thân", Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            //tạo hashMap cập nhật dữ liệu
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("username", newName);
+                            hashMap.put("information", newInfor);
+                            hashMap.put("gender", genderPicked);
 
 
-                        databaseReference.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                dialog.dismiss();
-                                Toast.makeText(AccountActivity.this, "Cập nhật thông tin cá nhân thành công", Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
+                            databaseReference.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    dialog.dismiss();
+                                    Toast.makeText(AccountActivity.this, "Cập nhật thông tin cá nhân thành công", Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            });
+
+                        }
+
+
                     }
                 });
 
@@ -239,8 +296,6 @@ public class AccountActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
-
 
             }
         });
@@ -352,6 +407,14 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
+
+
+    //nhận biết thay đổi khi chọn button trong RadioGroup
+    private void onChangeGenderPicked(CompoundButton compoundButton, boolean isChecked) {
+        RadioButton radio = (RadioButton) compoundButton;
+
+        Log.d("Giới tính: ", radio.getText().toString() + isChecked);
+    }
 
 
 }
