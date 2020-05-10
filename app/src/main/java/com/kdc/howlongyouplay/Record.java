@@ -1,7 +1,7 @@
 package com.kdc.howlongyouplay;
 
 public class Record {
-    private String game_id;
+    private String log_id;
     private String record_id;
     private String hour;
     private String minute;
@@ -14,12 +14,12 @@ public class Record {
     public Record() {
     }
 
-    public String getGame_id() {
-        return game_id;
+    public String getLog_id() {
+        return log_id;
     }
 
-    public void setGame_id(String game_id) {
-        this.game_id = game_id;
+    public void setLog_id(String log_id) {
+        this.log_id = log_id;
     }
 
     public String getRecord_id() {

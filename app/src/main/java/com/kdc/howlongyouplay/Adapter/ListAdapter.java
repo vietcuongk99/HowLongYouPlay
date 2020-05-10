@@ -59,7 +59,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
         final String key = gameLog.getId_log();
 
-        // xử lý sự kiện khi click vào một log trong danh sách
+        // xử lý sự kiện khi click vào một game trong danh sách tìm kiếm
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -54,24 +54,25 @@ public class GameRecordsActivity extends AppCompatActivity {
     private ArrayList<Record> recordList;
     private RecordAdapter recordAdapter;
 
-    private String game_title, log_id, user_id, img_url, records,
-            hour_value, minute_value, second_value, note_detail, status_picked, date_created, date_modifield;
+    private String game_title, log_id, user_id, img_url,
+            hour_value, minute_value, second_value, note_detail, status_picked, date_created;
+    private int total_record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_records);
-
+        // lấy dữ liệu từ LogAdapter tương ứng
         intent = getIntent();
         game_title = intent.getExtras().get("game_title").toString();
         log_id = intent.getExtras().get("id").toString();
         img_url = intent.getExtras().get("img_url").toString();
-        records = intent.getExtras().get("records").toString();
+
+        // khai báo và gán giá trị các thuộc tính, phần tử tương ứng
         mAuth = FirebaseAuth.getInstance();
         user_id = mAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference()
-                .child("Logs").child(user_id).child(log_id);
-
+                .child("Logs").child(user_id);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -92,26 +93,27 @@ public class GameRecordsActivity extends AppCompatActivity {
         add_record_btn = findViewById(R.id.add_record_btn);
         statistic_btn = findViewById(R.id.statistical_btn);
         recyclerView = findViewById(R.id.list_record);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(GameRecordsActivity.this));
-
 
         Picasso.get().load(img_url).into(imageView);
         Log.d("ID: ", "ID: " + log_id);
 
+
+        // hiển thị danh sách record
         recordList = new ArrayList<>();
         getRecordList();
 
-
+        // xử lý sự kiện cho nút thêm record
         add_record_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                // tạo builder và các phần tử liên quan
                 final AlertDialog.Builder builder = new AlertDialog.Builder(GameRecordsActivity.this);
 
                 LayoutInflater layoutInflater = LayoutInflater.from(GameRecordsActivity.this);
-                final View view = layoutInflater.from(GameRecordsActivity.this).inflate(R.layout.dialog_add_record, null);
+                final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
                 ImageButton accept_btn = view.findViewById(R.id.accept_btn);
                 ImageButton close_btn = view.findViewById(R.id.close_btn);
@@ -149,16 +151,27 @@ public class GameRecordsActivity extends AppCompatActivity {
                 accept_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int new_records = Integer.parseInt(records) + 1;
-                        String new_record = String.valueOf(new_records);
+
                         Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MM-yyyy" + ", " + "HH:mm:ss a");
                         String time = timeFormat.format(calendar.getTime());
-                        hour_value = hour.getText().toString();
-                        minute_value = minute.getText().toString();
-                        second_value = second.getText().toString();
                         note_detail = note.getText().toString();
                         date_created = time;
+                        if(hour.getText().toString().equals("")) {
+                            hour_value = "00";
+                        } else {
+                            hour_value = hour.getText().toString();
+                        }
+                        if(minute.getText().toString().equals("")) {
+                            minute_value = "00";
+                        } else {
+                            minute_value = minute.getText().toString();
+                        }
+                        if(second.getText().toString().equals("")) {
+                            second_value = "00";
+                        } else {
+                            second_value = second.getText().toString();
+                        }
 
 
                         int i = statusGroup.getCheckedRadioButtonId();
@@ -174,21 +187,27 @@ public class GameRecordsActivity extends AppCompatActivity {
                         hashMap.put("status", status_picked);
                         hashMap.put("note", note_detail);
                         hashMap.put("date_created", date_created);
+                        hashMap.put("date_modified", "");
 
-                        DatabaseReference blank_record = databaseReference.child("records").push();
+                        DatabaseReference blank_record = databaseReference.child(log_id).child("records").push();
 
                         blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(GameRecordsActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                                Toast.makeText(GameRecordsActivity.this, "Thêm thành công", Toast.LENGTH_SHORT)
+                                        .show();
                             }
                         });
 
-
-
+                        // cộng thêm 1 bản ghi vào tổng số bản ghi và cập nhật total_record
+                        total_record = recordList.size();
+                        int new_records = total_record + 1;
+                        String new_record = String.valueOf(new_records);
                         final HashMap<String, Object> hashMap_2 = new HashMap<>();
                         hashMap_2.put("total_record", new_record);
-                        databaseReference.updateChildren(hashMap_2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        databaseReference.child(log_id).updateChildren(hashMap_2)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(GameRecordsActivity.this, "Cập nhật số bản ghi thành công", Toast.LENGTH_SHORT)
@@ -217,7 +236,7 @@ public class GameRecordsActivity extends AppCompatActivity {
         Log.d("Trạng thái: ", radio.getText().toString() + isChecked);
     }
 
-    // lấy ra danh sách bản ghi của game tương ứng
+    // lấy ra danh sách record của game tương ứng
     private void getRecordList() {
 
         final String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -232,6 +251,7 @@ public class GameRecordsActivity extends AppCompatActivity {
 
                     Record record = snapshot.getValue(Record.class);
                     record.setRecord_id(snapshot.getKey());
+                    record.setLog_id(log_id);
                     recordList.add(record);
 
                 }
@@ -248,4 +268,6 @@ public class GameRecordsActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

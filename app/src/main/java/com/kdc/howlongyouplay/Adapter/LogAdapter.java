@@ -89,13 +89,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
 
                 title.setText(gameLog.getGame_title());
-                add_date.setText(gameLog.getAdd_date());
-                records.setText(gameLog.getTotal_record());
+                add_date.setText(mContext.getResources().getString(R.string.add_date, gameLog.getAdd_date()));
+                records.setText(mContext.getResources().getString(R.string.game_records, gameLog.getTotal_record()));
                 final AlertDialog builder = dialog.show();
                 builder.setCanceledOnTouchOutside(true);
 
-
-                // xử lý sự kiện khi nhất nút xem các bản log liên quan
+                // xử lý sự kiện khi nhất nút xem các record của game tương ứng
                 watch_records_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -105,7 +104,6 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                         intent.putExtra("game_title", gameLog.getGame_title());
                         intent.putExtra("id", gameLog.getId_log());
                         intent.putExtra("img_url", gameLog.getImg_url());
-                        intent.putExtra("records", gameLog.getTotal_record());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         mContext.startActivity(intent);
@@ -114,7 +112,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
                 });
 
 
-                // xử lý sự kiện khi nhất nút xóa
+                // xử lý sự kiện khi nhất nút xóa game
                 delete_btn.setOnClickListener(new View.OnClickListener() {
 
                     @Override

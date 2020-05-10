@@ -43,5 +43,7 @@
     <string name="game_records">Số bản ghi: %1$s</string>
     <string name="watch_records">xem records</string>
     <string name="zero_value">00</string>
+    <string name="format_time">%1$s:%2$s:%3$s</string>
+    <string name="status_value">%1$s</string>
 
 </resources>

@@ -4,8 +4,8 @@
     android:id="@+id/gamelog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
     android:layout_marginBottom="10dp"
     app:cardPreventCornerOverlap="false">
 
@@ -18,72 +18,18 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/group_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:layout_margin="15dp">
-
-                <TextView
-                    android:id="@+id/title_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Thời gian chơi:"
-                    android:textSize="20sp"
-                    android:textStyle="normal">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/title_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Trạng thái:"
-                    android:textSize="20sp"
-                    android:textStyle="normal"
-                    android:layout_below="@+id/title_1">
-
-                </TextView>
-
-                <!--<TextView
-                    android:id="@+id/title_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày thêm:"
-                    android:textSize="20sp"
-                    android:textStyle="normal"
-                    android:layout_below="@+id/title_2">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/title_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sửa lần cuối:"
-                    android:textSize="20sp"
-                    android:textStyle="normal"
-                    android:layout_below="@+id/title_3">
-
-                </TextView>-->
-
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/group_value"
                 android:layout_width="0dp"
                 android:layout_weight="1.5"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="%1$s"
+                    android:text="@string/format_time"
                     android:textSize="20sp"
                     android:textStyle="normal">
                 </TextView>
@@ -92,7 +38,7 @@
                     android:id="@+id/status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="%1$s"
+                    android:text="@string/status_value"
                     android:textSize="20sp"
                     android:textStyle="normal"
                     android:layout_below="@+id/time">
@@ -120,6 +66,32 @@
                     android:layout_below="@+id/date_created">
 
                 </TextView>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/edit_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/edit"
+                    android:layout_alignParentStart="true">
+
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/delete_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/delete"
+                    android:layout_toEndOf="@+id/edit_btn">
+
+                </ImageButton>
 
             </RelativeLayout>
 

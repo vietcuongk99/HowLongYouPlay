@@ -73,9 +73,6 @@ public class GameInfoActivity extends AppCompatActivity {
         });
 
 
-
-
-
         game_title = findViewById(R.id.game_title);
         year = findViewById(R.id.year);
         intent = getIntent();
@@ -86,7 +83,8 @@ public class GameInfoActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user_id = mAuth.getCurrentUser().getUid();
 
-        // lấy dữ liệu qua intent khi click vào một game bất kì trong danh sách tìm kiếm
+        // lấy dữ liệu khi click vào một game bất kì trong danh sách tìm kiếm
+        //LogAdapter
         title = intent.getExtras().get("game_title").toString();
         year_release = intent.getExtras().get("year").toString();
         id_game = intent.getExtras().get("game_id").toString();
@@ -134,7 +132,6 @@ public class GameInfoActivity extends AppCompatActivity {
                     DatabaseReference blank_record = databaseReference.push();
 
                     String key_record = blank_record.getKey();
-
 
                     blank_record.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
