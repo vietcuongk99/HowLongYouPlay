@@ -16,7 +16,7 @@
         <activity
             android:name=".StartActivity"
             android:parentActivityName=".InternetReqActivity" />
-        <activity android:name=".EditLogActivity" />
+        <activity android:name=".GameRecordsActivity" />
         <activity android:name=".GameInfoActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".MainActivity" />

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/gamelog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="10dp"
+    app:cardPreventCornerOverlap="false">
+
+    <!-- nội dung hiển thị trên card -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/record_detail"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/group_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_margin="15dp">
+
+                <TextView
+                    android:id="@+id/title_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian chơi:"
+                    android:textSize="20sp"
+                    android:textStyle="normal">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/title_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trạng thái:"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:layout_below="@+id/title_1">
+
+                </TextView>
+
+                <!--<TextView
+                    android:id="@+id/title_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày thêm:"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:layout_below="@+id/title_2">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/title_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sửa lần cuối:"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:layout_below="@+id/title_3">
+
+                </TextView>-->
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/group_value"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="%1$s"
+                    android:textSize="20sp"
+                    android:textStyle="normal">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="%1$s"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:layout_below="@+id/time">
+
+                </TextView>
+
+                <!--<TextView
+                    android:id="@+id/date_created"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="%1$s"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:layout_below="@+id/status">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/date_modified"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="%1$s"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:layout_below="@+id/date_created">
+
+                </TextView>-->
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:id="@+id/group_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <ImageButton
+                android:id="@+id/edit_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/edit"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent">
+
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/delete_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/delete"
+                android:background="@android:color/transparent">
+            </ImageButton>
+
+        </LinearLayout>-->
+
+
+
+
+</androidx.cardview.widget.CardView>

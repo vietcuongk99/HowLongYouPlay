@@ -37,5 +37,11 @@
     <string name="gender">Giới tính:</string>
     <string name="not_define">chưa xác định</string>
     <string name="close">đóng</string>
+    <string name="developer">Phát triển: %1$s</string>
+    <string name="pulisher">Phát hành: %1$s</string>
+    <string name="add_date">Ngày thêm: %1$s</string>
+    <string name="game_records">Số bản ghi: %1$s</string>
+    <string name="watch_records">xem records</string>
+    <string name="zero_value">00</string>
 
 </resources>

@@ -17,14 +17,15 @@
             android:text="@string/title"
             android:textSize="20sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="10dp">
 
         </TextView>
 
     </LinearLayout>
 
 
-    <ImageButton
+    <!--<ImageButton
         android:id="@+id/statistical_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -42,5 +43,5 @@
         android:contentDescription="@string/add"
         android:src="@mipmap/add">
 
-    </ImageButton>
+    </ImageButton>-->
 </LinearLayout>

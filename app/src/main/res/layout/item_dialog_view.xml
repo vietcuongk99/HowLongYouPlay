@@ -34,32 +34,22 @@
             android:padding="20dp">
 
             <TextView
-                android:id="@+id/played_time"
+                android:id="@+id/add_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/played_time"
+                android:text="@string/add_date"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/play_status"
+                android:id="@+id/game_records"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/status"
+                android:text="@string/game_records"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/device"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/device"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
 
 
         </LinearLayout>
@@ -73,14 +63,14 @@
         android:layout_below="@+id/scrollView">
 
         <ImageButton
-            android:id="@+id/edit_btn"
+            android:id="@+id/watch_records_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/edit"
+            android:src="@mipmap/file"
             android:clickable="true"
             android:focusable="true"
-            android:contentDescription="@string/edit_btn">
+            android:contentDescription="@string/watch_records">
 
         </ImageButton>
 

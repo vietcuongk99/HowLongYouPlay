@@ -5,14 +5,13 @@ package com.kdc.howlongyouplay;
 
 public class GameLog {
     private String game_title;
-    private String played_time;
     private String userid;
     private String id_log;
     private String year;
     private String id_game;
     private String img_url;
-
-
+    private String add_date;
+    private String total_record;
 
     public GameLog() {
 
@@ -24,11 +23,6 @@ public class GameLog {
         this.year  = year;
     }
 
-    public GameLog(String game_title, String played_time, String year) {
-        this.game_title = game_title;
-        this.played_time  = played_time;
-        this.year = year;
-    }
 
     public String getGame_title() {
         return game_title;
@@ -36,14 +30,6 @@ public class GameLog {
 
     public void setGame_title(String game_title) {
         this.game_title = game_title;
-    }
-
-    public String getPlayed_time() {
-        return played_time;
-    }
-
-    public void setPlayed_time(String played_time) {
-        this.played_time = played_time;
     }
 
     public String getUserid() {
@@ -84,5 +70,21 @@ public class GameLog {
 
     public void setImg_url(String img_url) {
         this.img_url = img_url;
+    }
+
+    public String getAdd_date() {
+        return add_date;
+    }
+
+    public void setAdd_date(String add_date) {
+        this.add_date = add_date;
+    }
+
+    public String getTotal_record() {
+        return total_record;
+    }
+
+    public void setTotal_record(String total_record) {
+        this.total_record = total_record;
     }
 }

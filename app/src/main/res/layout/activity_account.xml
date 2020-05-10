@@ -67,20 +67,21 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="#FFFFFF"
-                    android:layout_margin="20dp">
+                    android:layout_margin="30dp"
+                    android:padding="20dp">
 
                     <LinearLayout
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="20dp">
 
                         <TextView
                             android:id="@+id/username"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_marginTop="10dp"
                             android:text="@string/user_name"
                             android:textSize="20sp"
                             android:textStyle="normal" />
@@ -90,7 +91,6 @@
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -99,14 +99,14 @@
                         android:id="@+id/my_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/name">
+                        android:layout_below="@+id/name"
+                        android:layout_marginBottom="20dp">
 
                         <TextView
                             android:id="@+id/gender"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_marginTop="10dp"
                             android:text="@string/gender"
                             android:textSize="20sp"
                             android:textStyle="normal" />
@@ -116,7 +116,6 @@
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:text="%1$s"/>
@@ -134,7 +133,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_marginTop="10dp"
                             android:text="@string/user_infor"
                             android:textSize="20sp"
                             android:textStyle="normal" />
@@ -144,7 +142,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:layout_marginTop="10dp"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:text="%1$s" />
@@ -191,7 +188,6 @@
                 android:src="@mipmap/edit_image"
                 android:layout_gravity="center_horizontal">
             </ImageButton>
-
 
 
         </LinearLayout>

@@ -1,15 +1,12 @@
 package com.kdc.howlongyouplay.Adapter;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,17 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.internal.$Gson$Preconditions;
-import com.kdc.howlongyouplay.EditLogActivity;
+import com.kdc.howlongyouplay.GameRecordsActivity;
 import com.kdc.howlongyouplay.GameLog;
-import com.kdc.howlongyouplay.MainActivity;
 import com.kdc.howlongyouplay.R;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
 import java.util.List;
 
 // class có nhiệm vụ sắp xếp từng bản ghi trong danh sách theo layout có sẵn
@@ -91,38 +82,30 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
                 // khai báo và gán nội dung cho từng phần tử trong dialog
                 TextView title = (TextView) item_dialog_header.findViewById(R.id.title_text);
-                ImageButton edit_btn = item_dialog_view.findViewById(R.id.edit_btn);
+                TextView add_date = (TextView) item_dialog_view.findViewById(R.id.add_date);
+                TextView records = (TextView) item_dialog_view.findViewById(R.id.game_records);
+                ImageButton watch_records_btn = item_dialog_view.findViewById(R.id.watch_records_btn);
                 ImageButton delete_btn =  item_dialog_view.findViewById(R.id.delete_btn);
-                TextView played_time = (TextView) item_dialog_view.findViewById(R.id.played_time);
-                TextView status = (TextView) item_dialog_view.findViewById(R.id.play_status);
-                TextView device = (TextView) item_dialog_view.findViewById(R.id.device);
 
 
                 title.setText(gameLog.getGame_title());
-                status.setText(mContext.getResources().getString(R.string.status, mContext.getResources().getString(R.string.zero)));
-                device.setText(mContext.getResources().getString(R.string.device, mContext.getResources().getString(R.string.zero)));
-                if (gameLog.getPlayed_time().equals("")) {
-                    played_time.setText(mContext.getResources().getString(R.string.played_time,
-                            mContext.getResources().getString(R.string.zero)));
-                } else {
-                    played_time.setText(mContext.getResources().getString(R.string.played_time, gameLog.getPlayed_time()));
-                }
-
+                add_date.setText(gameLog.getAdd_date());
+                records.setText(gameLog.getTotal_record());
                 final AlertDialog builder = dialog.show();
                 builder.setCanceledOnTouchOutside(true);
 
 
-                // xử lý sự kiện khi nhất nút sửa
-                edit_btn.setOnClickListener(new View.OnClickListener() {
+                // xử lý sự kiện khi nhất nút xem các bản log liên quan
+                watch_records_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         // dùng intent để pass dữ liệu cho từng bản ghi trong danh sách
-                        Intent intent = new Intent(mContext, EditLogActivity.class);
+                        Intent intent = new Intent(mContext, GameRecordsActivity.class);
                         intent.putExtra("game_title", gameLog.getGame_title());
-                        intent.putExtra("play_time", gameLog.getPlayed_time());
                         intent.putExtra("id", gameLog.getId_log());
                         intent.putExtra("img_url", gameLog.getImg_url());
+                        intent.putExtra("records", gameLog.getTotal_record());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         mContext.startActivity(intent);
@@ -224,5 +207,6 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
         }
     }
+
 
 }

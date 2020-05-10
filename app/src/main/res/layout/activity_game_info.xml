@@ -22,15 +22,16 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:id="@+id/gamelog_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="30dp">
+                    android:padding="20dp">
 
                     <ImageView
                         android:id="@+id/image_game"
@@ -59,8 +60,17 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/developer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/developer"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                    <com.rengwuxian.materialedittext.MaterialEditText
+
+                    <!--<com.rengwuxian.materialedittext.MaterialEditText
                         android:id="@+id/played_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -76,10 +86,45 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:text="@string/submit_btn" />
+                        android:text="@string/submit_btn" />-->
 
                 </LinearLayout>
             </ScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/group_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#505EAA"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/add_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/edit_btn"
+                android:src="@mipmap/add"
+                android:layout_gravity="center_horizontal"
+                tools:ignore="NestedWeights">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/statistical_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/edit_btn"
+                android:src="@mipmap/statistical"
+                android:layout_gravity="center_horizontal">
+            </ImageButton>
+
+
+        </LinearLayout>
+
+
         </com.google.android.material.appbar.AppBarLayout>
 
 

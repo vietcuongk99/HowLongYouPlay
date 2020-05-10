@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,10 @@ import com.kdc.howlongyouplay.Adapter.ListAdapter;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 // hiển thị nội dung khi click vào 1 log
@@ -40,8 +44,9 @@ public class GameInfoActivity extends AppCompatActivity {
     private Button submit_btn;
     private ImageView imageView;
     private FirebaseAuth mAuth;
+    private ImageButton add_btn, statistical_btn;
 
-    private String title, year_release, user_id, played_time, id_game, img_url;
+    private String title, year_release, user_id, id_game, img_url;
 
     private ArrayList<GameLog> logList;
 
@@ -74,9 +79,9 @@ public class GameInfoActivity extends AppCompatActivity {
         game_title = findViewById(R.id.game_title);
         year = findViewById(R.id.year);
         intent = getIntent();
-        time = (MaterialEditText) findViewById(R.id.played_time);
-        submit_btn = (Button) findViewById(R.id.submit_btn);
         imageView = (ImageView) findViewById(R.id.image_game);
+        add_btn = findViewById(R.id.add_btn);
+        statistical_btn = findViewById(R.id.statistical_btn);
 
         mAuth = FirebaseAuth.getInstance();
         user_id = mAuth.getCurrentUser().getUid();
@@ -86,7 +91,6 @@ public class GameInfoActivity extends AppCompatActivity {
         year_release = intent.getExtras().get("year").toString();
         id_game = intent.getExtras().get("game_id").toString();
         img_url = intent.getExtras().get("img_url").toString();
-
 
 
         //Hiển thị id của game đã chọn qua Log
@@ -103,29 +107,31 @@ public class GameInfoActivity extends AppCompatActivity {
 
         //lấy ra danh sách Log để so sánh
         logList = new ArrayList<>();
-        readList();
+        readLogList();
 
-        // xử lý sự kiện cho nút submit
-        submit_btn.setOnClickListener(new View.OnClickListener() {
+        // xử lý sự kiện cho nút add
+        add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                played_time = time.getText().toString();
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                         .child("Logs").child(user_id);
 
 
                 if (!checkSameLog(logList, title)) {
-                    Toast.makeText(GameInfoActivity.this, "Bạn không thể thêm 2 bản ghi cho cùng 1 game", Toast.LENGTH_SHORT)
+                    Toast.makeText(GameInfoActivity.this, "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                             .show();
                 } else {
 
                     HashMap<String, Object> hashMap = new HashMap<>();
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MM-yyyy" + ", " + "HH:mm:ss a");
+                    String time = timeFormat.format(calendar.getTime());
                     hashMap.put("game_title", title);
-                    hashMap.put("played_time", played_time);
                     hashMap.put("img_url", img_url);
+                    hashMap.put("total_record", "0");
+                    hashMap.put("add_date", time);
 
                     DatabaseReference blank_record = databaseReference.push();
-
 
                     String key_record = blank_record.getKey();
 
@@ -176,8 +182,8 @@ public class GameInfoActivity extends AppCompatActivity {
     }
 
 
-    // lấy ra danh sách các log của người dùng hiện tại có trong csdl
-    private void readList() {
+    // lấy ra danh sách game có trong danh sách của người dùng hiện tại
+    private void readLogList() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
 
         // lấy ra danh sách GameLog và sử dụng LogAdapter
