@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:imagecrop="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageViewerActivity">
+
+    <com.naver.android.helloyako.imagecrop.view.ImageCropView
+
+        android:id="@+id/full_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        imagecrop:outsideLayerColor="#99000000"
+        imagecrop:setInnerGridMode="on"
+        imagecrop:gridInnerStroke="1dp"
+        imagecrop:gridInnerColor="#66ffffff"
+        imagecrop:setOuterGridMode="on"
+        imagecrop:gridOuterStroke="1dp"
+        imagecrop:gridOuterColor="#ffffff">
+
+    </com.naver.android.helloyako.imagecrop.view.ImageCropView>
+
+</RelativeLayout>

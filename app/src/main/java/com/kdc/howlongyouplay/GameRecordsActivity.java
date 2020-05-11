@@ -100,6 +100,20 @@ public class GameRecordsActivity extends AppCompatActivity {
         Log.d("ID: ", "ID: " + log_id);
 
 
+        //xử lý sự kiện khi click vào ảnh game
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameRecordsActivity.this, ImageViewerActivity.class);
+                intent.putExtra("img_url", img_url);
+                intent.putExtra("game_title", game_title);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         // hiển thị danh sách record
         recordList = new ArrayList<>();
         getRecordList();
@@ -253,7 +267,6 @@ public class GameRecordsActivity extends AppCompatActivity {
                     record.setRecord_id(snapshot.getKey());
                     record.setLog_id(log_id);
                     recordList.add(record);
-
                 }
 
 

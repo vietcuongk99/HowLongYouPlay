@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kdc.howlongyouplay">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="ANDROID.PERMISSION.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="ANDROID.PERMISSION.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,8 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AccountActivity"></activity>
+        <activity android:name=".ImageViewerActivity"></activity>
+        <activity android:name=".AccountActivity" />
         <activity
             android:name=".StartActivity"
             android:parentActivityName=".InternetReqActivity" />

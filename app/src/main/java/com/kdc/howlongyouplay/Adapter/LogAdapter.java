@@ -126,7 +126,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyLogViewHolder>
 
                         // tạo giao diện xác nhận thao tác xóa
                         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
-                        alertDialog.setTitle("Xóa log").setMessage("Bạn muốn xóa bản log này ?");
+                        alertDialog.setTitle("Xóa game").setMessage("Tất cả record liên quan tới game này sẽ bị xóa theo, bạn chắc chứ ?");
 
                         //tạo nút đồng ý xóa và xử lý sự kiện
                         alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {

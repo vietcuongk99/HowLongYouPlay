@@ -79,6 +79,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 final View view = layoutInflater.inflate(R.layout.dialog_record_detail, null);
                 TextView play_time = view.findViewById(R.id.play_time);
                 TextView status = view.findViewById(R.id.status);
+                TextView note = view.findViewById(R.id.note);
                 TextView date_created = view.findViewById(R.id.date_created);
                 TextView date_modified = view.findViewById(R.id.date_modified);
 
@@ -87,6 +88,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
                 status.setText(record.getStatus());
                 date_created.setText(record.getDate_created());
+                note.setText(record.getNote());
 
                 if(record.getDate_modified().equals("")) {
                     date_modified.setText("Chưa xác định");

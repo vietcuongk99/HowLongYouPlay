@@ -89,10 +89,11 @@
                         <TextView
                             android:id="@+id/user_name"
                             android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_weight="2.5"
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:textAlignment="center"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -114,11 +115,12 @@
                         <TextView
                             android:id="@+id/user_gender"
                             android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_weight="2.5"
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            android:text="%1$s"/>
+                            android:text="%1$s"
+                            android:textAlignment="center"/>
 
                     </LinearLayout>
 
@@ -141,10 +143,11 @@
                             android:id="@+id/user_infor"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="2.5"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            android:text="%1$s" />
+                            android:text="%1$s"
+                            android:textAlignment="center"/>
 
                     </LinearLayout>
 

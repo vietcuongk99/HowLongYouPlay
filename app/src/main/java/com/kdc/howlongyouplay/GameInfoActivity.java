@@ -103,6 +103,20 @@ public class GameInfoActivity extends AppCompatActivity {
         Picasso.get().load(img_url).into(imageView);
 
 
+        //xử lý sự kiện khi click vào ảnh game
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameInfoActivity.this, ImageViewerActivity.class);
+                intent.putExtra("img_url", img_url);
+                intent.putExtra("game_title", title);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         //lấy ra danh sách Log để so sánh
         logList = new ArrayList<>();
         readLogList();
