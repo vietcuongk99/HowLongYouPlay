@@ -45,5 +45,7 @@
     <string name="zero_value">00</string>
     <string name="format_time">%1$s:%2$s:%3$s</string>
     <string name="status_value">%1$s</string>
+    <string name="play_on">Chơi trên: %1$s</string>
+    <string name="genre">Thể loại: %1$s</string>
 
 </resources>

@@ -109,7 +109,7 @@ public class GameRecordsActivity extends AppCompatActivity {
                 intent.putExtra("game_title", game_title);
 
                 startActivity(intent);
-                finish();
+
             }
         });
 
@@ -171,17 +171,17 @@ public class GameRecordsActivity extends AppCompatActivity {
                         String time = timeFormat.format(calendar.getTime());
                         note_detail = note.getText().toString();
                         date_created = time;
-                        if(hour.getText().toString().equals("")) {
+                        if(hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
                             hour_value = "00";
                         } else {
                             hour_value = hour.getText().toString();
                         }
-                        if(minute.getText().toString().equals("")) {
+                        if(minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
                             minute_value = "00";
                         } else {
                             minute_value = minute.getText().toString();
                         }
-                        if(second.getText().toString().equals("")) {
+                        if(second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
                             second_value = "00";
                         } else {
                             second_value = second.getText().toString();

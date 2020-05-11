@@ -39,6 +39,10 @@ public class GameInfoActivity extends AppCompatActivity {
 
     private TextView game_title;
     private TextView year;
+    private TextView genre;
+    private TextView developer;
+    private TextView pulisher;
+    private TextView play_on;
     private Intent intent;
     private MaterialEditText time;
     private Button submit_btn;
@@ -46,7 +50,8 @@ public class GameInfoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ImageButton add_btn, statistical_btn;
 
-    private String title, year_release, user_id, id_game, img_url;
+    private String title, year_release, user_id, id_game, img_url,
+            genre_name, developer_name, publisher_name, play_on_device;
 
     private ArrayList<GameLog> logList;
 
@@ -75,6 +80,10 @@ public class GameInfoActivity extends AppCompatActivity {
 
         game_title = findViewById(R.id.game_title);
         year = findViewById(R.id.year);
+        developer = findViewById(R.id.developer);
+        pulisher = findViewById(R.id.pulisher);
+        play_on = findViewById(R.id.play_on);
+        genre = findViewById(R.id.genre);
         intent = getIntent();
         imageView = (ImageView) findViewById(R.id.image_game);
         add_btn = findViewById(R.id.add_btn);
@@ -87,6 +96,10 @@ public class GameInfoActivity extends AppCompatActivity {
         //LogAdapter
         title = intent.getExtras().get("game_title").toString();
         year_release = intent.getExtras().get("year").toString();
+        genre_name = intent.getExtras().get("genre").toString();
+        play_on_device = intent.getExtras().get("play_on").toString();
+        developer_name = intent.getExtras().get("developer").toString();
+        publisher_name = intent.getExtras().get("pulisher").toString();
         id_game = intent.getExtras().get("game_id").toString();
         img_url = intent.getExtras().get("img_url").toString();
 
@@ -98,6 +111,10 @@ public class GameInfoActivity extends AppCompatActivity {
         // đặt nội dung cho TextView
         game_title.setText(title);
         year.setText(getApplicationContext().getResources().getString(R.string.year, year_release));
+        genre.setText(getApplicationContext().getResources().getString(R.string.genre, genre_name));
+        developer.setText(getApplicationContext().getResources().getString(R.string.developer, developer_name));
+        pulisher.setText(getApplicationContext().getResources().getString(R.string.pulisher, publisher_name));
+        play_on.setText(getApplicationContext().getResources().getString(R.string.play_on, play_on_device));
 
         //đặt hình ảnh cho ImageView
         Picasso.get().load(img_url).into(imageView);
@@ -112,7 +129,6 @@ public class GameInfoActivity extends AppCompatActivity {
                 intent.putExtra("game_title", title);
 
                 startActivity(intent);
-                finish();
             }
         });
 

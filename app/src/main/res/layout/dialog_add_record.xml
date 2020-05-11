@@ -27,7 +27,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nhập thời gian chơi:"
-                    android:textSize="20sp">
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp">
 
                 </TextView>
 
@@ -39,13 +40,14 @@
 
                     <com.rengwuxian.materialedittext.MaterialEditText
                         android:id="@+id/hour"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
-                        android:hint="@string/zero_value"
-                        android:inputType="text"
+                        android:hint="giờ"
+                        android:inputType="number"
                         android:textSize="20sp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:padding="10dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -58,13 +60,15 @@
                     </TextView>
                     <com.rengwuxian.materialedittext.MaterialEditText
                         android:id="@+id/minute"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
-                        android:hint="@string/zero_value"
-                        android:inputType="text"
+                        android:hint="phút"
+                        android:inputType="number"
                         android:textSize="20sp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:padding="10dp"/>
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -78,18 +82,17 @@
 
                     <com.rengwuxian.materialedittext.MaterialEditText
                         android:id="@+id/second"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
-                        android:hint="@string/zero_value"
-                        android:inputType="text"
+                        android:hint="giây"
+                        android:inputType="number"
                         android:textSize="20sp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:padding="10dp"/>
 
                 </LinearLayout>
-
-
-
+                
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,13 +105,14 @@
                         android:layout_height="match_parent"
                         android:text="Tình trạng:"
                         android:textSize="20sp"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:layout_marginBottom="10dp"/>
 
                     <RadioGroup
                         android:id="@+id/group_status"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_below="@+id/status">
 
                         <RadioButton
@@ -126,6 +130,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Đang chơi"
+                            android:textSize="20sp" />
+
+                        <RadioButton
+                            android:id="@+id/stop_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ngừng chơi"
                             android:textSize="20sp" />
 
 

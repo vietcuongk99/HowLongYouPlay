@@ -77,11 +77,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
                 LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                 final View view = layoutInflater.inflate(R.layout.dialog_record_detail, null);
+                final View view_header = layoutInflater.inflate(R.layout.dialog_record_detail_header, null);
                 TextView play_time = view.findViewById(R.id.play_time);
                 TextView status = view.findViewById(R.id.status);
                 TextView note = view.findViewById(R.id.note);
                 TextView date_created = view.findViewById(R.id.date_created);
                 TextView date_modified = view.findViewById(R.id.date_modified);
+                ImageButton close_btn = view_header.findViewById(R.id.close_btn);
 
                 play_time.setText(mContext.getResources().getString(R.string.format_time,
                         record.getHour(), record.getMinute(), record.getSecond()));
@@ -95,11 +97,21 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 } else {
                     date_modified.setText(record.getDate_modified());
                 }
+
+
                 builder.setCancelable(true);
-                builder.setTitle("Chi tiết");
+                builder.setCustomTitle(view_header);
                 builder.setView(view);
-                AlertDialog dialog = builder.show();
+                final AlertDialog dialog = builder.show();
                 dialog.show();
+                dialog.setCanceledOnTouchOutside(true);
+
+                close_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });

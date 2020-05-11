@@ -12,6 +12,10 @@ public class GameLog {
     private String img_url;
     private String add_date;
     private String total_record;
+    private String pulisher;
+    private String developer;
+    private String playable_device;
+    private String genre;
 
     public GameLog() {
 
@@ -86,5 +90,37 @@ public class GameLog {
 
     public void setTotal_record(String total_record) {
         this.total_record = total_record;
+    }
+
+    public String getPulisher() {
+        return pulisher;
+    }
+
+    public void setPulisher(String pulisher) {
+        this.pulisher = pulisher;
+    }
+
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
+
+    public String getPlayable_device() {
+        return playable_device;
+    }
+
+    public void setPlayable_device(String playable_device) {
+        this.playable_device = playable_device;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }
