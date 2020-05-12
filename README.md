@@ -18,7 +18,18 @@
 - Ứng dụng dành cho smartphone chạy hệ điều hành Android.
 - Ứng dụng yêu cầu quyền sử dụng internet cũng như truy cập vào bộ nhớ smartphone.
 
-_Ứng dụng đang trong quá trình phát triển và hoàn thiện._
+**Ảnh minh họa:**
+
+_Ảnh chưa phải của phiên bản hoàn chỉnh._
+
+<p float="left">
+  <img src="https://i.imgur.com/G2WmOiO.png" width="200" />
+  <img src="https://i.imgur.com/qidC3mo.png" width="200" /> 
+  <img src="https://i.imgur.com/j4LsVvo.png" width="200" />
+  <img src="https://i.imgur.com/3HavPNV.png" width="200" /> 
+</p>
+
+_**Ứng dụng đang trong quá trình phát triển và hoàn thiện.**_
 
 Phát triển: **việt cường**
 
