@@ -1,25 +1,23 @@
 package com.kdc.howlongyouplay;
 
+import android.net.Uri;
+import android.widget.ScrollView;
+
 public class Record {
-    private String log_id;
     private String record_id;
+    private String game_id;
+    private String game_title;
+    private String icon_url;
     private String hour;
     private String minute;
     private String second;
     private String status;
     private String date_created;
     private String date_modified;
+    private String finished_date;
     private String note;
 
     public Record() {
-    }
-
-    public String getLog_id() {
-        return log_id;
-    }
-
-    public void setLog_id(String log_id) {
-        this.log_id = log_id;
     }
 
     public String getRecord_id() {
@@ -84,5 +82,37 @@ public class Record {
 
     public void setSecond(String second) {
         this.second = second;
+    }
+
+    public String getGame_id() {
+        return game_id;
+    }
+
+    public void setGame_id(String game_id) {
+        this.game_id = game_id;
+    }
+
+    public String getFinished_date() {
+        return finished_date;
+    }
+
+    public void setFinished_date(String finished_date) {
+        this.finished_date = finished_date;
+    }
+
+    public String getIcon_url() {
+        return icon_url;
+    }
+
+    public void setIcon_url(String icon_url) {
+        this.icon_url = icon_url;
+    }
+
+    public String getGame_title() {
+        return game_title;
+    }
+
+    public void setGame_title(String game_title) {
+        this.game_title = game_title;
     }
 }

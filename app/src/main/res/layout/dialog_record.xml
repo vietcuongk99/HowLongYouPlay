@@ -6,19 +6,6 @@
     android:layout_gravity="center_horizontal">
 
 
-    <!--<ImageView
-        android:id="@+id/image_game"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@mipmap/p5"
-        android:scaleType="centerCrop"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp">
-
-    </ImageView>-->
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -72,6 +59,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:text="Ngày hoàn thành:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/finished_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Ghi chú:"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -85,7 +89,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/title_4"
+                android:id="@+id/title_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

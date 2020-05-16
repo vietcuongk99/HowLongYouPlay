@@ -5,13 +5,11 @@ package com.kdc.howlongyouplay;
 
 public class GameLog {
     private String game_title;
-    private String userid;
     private String id_log;
     private String year;
     private String id_game;
     private String img_url;
-    private String add_date;
-    private String total_record;
+    private String icon_url;
     private String pulisher;
     private String developer;
     private String playable_device;
@@ -34,14 +32,6 @@ public class GameLog {
 
     public void setGame_title(String game_title) {
         this.game_title = game_title;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
     }
 
     public String getId_log() {
@@ -76,22 +66,6 @@ public class GameLog {
         this.img_url = img_url;
     }
 
-    public String getAdd_date() {
-        return add_date;
-    }
-
-    public void setAdd_date(String add_date) {
-        this.add_date = add_date;
-    }
-
-    public String getTotal_record() {
-        return total_record;
-    }
-
-    public void setTotal_record(String total_record) {
-        this.total_record = total_record;
-    }
-
     public String getPulisher() {
         return pulisher;
     }
@@ -122,5 +96,13 @@ public class GameLog {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getIcon_url() {
+        return icon_url;
+    }
+
+    public void setIcon_url(String icon_url) {
+        this.icon_url = icon_url;
     }
 }

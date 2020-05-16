@@ -40,12 +40,22 @@
     <string name="developer">Phát triển: %1$s</string>
     <string name="pulisher">Phát hành: %1$s</string>
     <string name="add_date">Ngày thêm: %1$s</string>
-    <string name="game_records">Số bản ghi: %1$s</string>
+    <string name="game_records">Thời gian chơi: %1$s giờ %2$s phút %3$s giây</string>
     <string name="watch_records">xem records</string>
     <string name="zero_value">00</string>
     <string name="format_time">%1$s:%2$s:%3$s</string>
     <string name="status_value">%1$s</string>
     <string name="play_on">Chơi trên: %1$s</string>
     <string name="genre">Thể loại: %1$s</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="date_modified">Sửa lần cuối: %1$s</string>
+    <string name="finished_date">Ngày hoàn thành: %1$s</string>
+    <string name="note">Ghi chú: %1$s</string>
 
 </resources>

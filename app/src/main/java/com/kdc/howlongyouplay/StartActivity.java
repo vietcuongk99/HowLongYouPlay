@@ -34,6 +34,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // chuyển sang màn LoginActivity
                 startActivity(new Intent(StartActivity.this, LoginActivity.class));
+                finish();
             }
         });
 
@@ -43,6 +44,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // chuyển sang màn RegisterActivity
                 startActivity(new Intent(StartActivity.this, RegisterActivity.class));
+                finish();
             }
         });
     }

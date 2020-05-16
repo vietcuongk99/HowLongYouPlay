@@ -24,6 +24,7 @@
                 android:padding="20dp">
 
                 <TextView
+                    android:id="@+id/title_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nhập thời gian chơi:"
@@ -46,6 +47,8 @@
                         android:inputType="text"
                         android:textSize="20sp"
                         android:textAlignment="center"/>
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -88,50 +91,15 @@
 
                 </LinearLayout>
 
-
-
-                <RelativeLayout
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/finished_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:paddingVertical="20dp">
+                    app:met_floatingLabel="normal"
+                    android:hint="Ngày hoàn thành"
+                    android:inputType="date"
+                    android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Tình trạng:"
-                        android:textSize="20sp"
-                        android:layout_alignParentStart="true" />
-
-                    <RadioGroup
-                        android:id="@+id/group_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_below="@+id/status">
-
-                        <RadioButton
-                            android:id="@+id/finished"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hoàn thành"
-                            android:textSize="20sp"
-                            android:checked="true"
-                            android:layout_marginEnd="10dp"/>
-
-
-                        <RadioButton
-                            android:id="@+id/playing"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Đang chơi"
-                            android:textSize="20sp" />
-
-
-                    </RadioGroup>
-
-                </RelativeLayout>
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/note"

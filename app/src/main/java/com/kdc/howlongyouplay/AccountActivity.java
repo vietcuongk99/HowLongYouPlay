@@ -63,7 +63,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private RelativeLayout choose_img;
     private ImageView new_avatar;
-    private String newName, newInfor, genderPicked;
+    private String newName, newInfor, genderPicked, username, information, gender, img_url;
     private TextView action_choose_img;
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -109,15 +109,15 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String username = dataSnapshot.child("username").getValue().toString();
-                    String information = dataSnapshot.child("information").getValue().toString();
-                    String avatar_url = dataSnapshot.child("avatar_url").getValue().toString();
-                    String gender = dataSnapshot.child("gender").getValue().toString();
+                    username = dataSnapshot.child("username").getValue().toString();
+                    information = dataSnapshot.child("information").getValue().toString();
+                    img_url = dataSnapshot.child("avatar_url").getValue().toString();
+                    gender = dataSnapshot.child("gender").getValue().toString();
 
-                    if(!avatar_url.equals("default")) {
+                    if(!img_url.equals("default")) {
                         user_name.setText(username);
-                        Picasso.get().load(avatar_url).into(user_avatar);
-                        Picasso.get().load(avatar_url).into(user_page_img);
+                        Picasso.get().load(img_url).into(user_avatar);
+                        Picasso.get().load(img_url).into(user_page_img);
 
 
                         if (information.equals("")) {
@@ -240,24 +240,24 @@ public class AccountActivity extends AppCompatActivity {
                 RadioButton other_gender_picked = view.findViewById(R.id.lgbt);
 
                 //kiểm tra thay đổi khi lựa chọn giới tính trong genderGroup
-                male_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeGenderPicked(buttonView, isChecked);
-                    }
-                });
-                female_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeGenderPicked(buttonView, isChecked);
-                    }
-                });
-                other_gender_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeGenderPicked(buttonView, isChecked);
-                    }
-                });
+//                male_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        onChangeGenderPicked(buttonView, isChecked);
+//                    }
+//                });
+//                female_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        onChangeGenderPicked(buttonView, isChecked);
+//                    }
+//                });
+//                other_gender_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        onChangeGenderPicked(buttonView, isChecked);
+//                    }
+//                });
 
                 ImageButton accept_btn = view.findViewById(R.id.accept_btn);
                 ImageButton close_btn = view.findViewById(R.id.close_btn);
@@ -315,6 +315,18 @@ public class AccountActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
+            }
+        });
+
+
+        // xử lý sự kiện khi click vào avatar
+        user_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AccountActivity.this, ImageViewerActivity.class);
+                intent.putExtra("img_url", img_url);
+                startActivity(intent);
 
             }
         });
@@ -429,11 +441,15 @@ public class AccountActivity extends AppCompatActivity {
 
 
     //nhận biết thay đổi khi chọn button trong RadioGroup
-    private void onChangeGenderPicked(CompoundButton compoundButton, boolean isChecked) {
-        RadioButton radio = (RadioButton) compoundButton;
+//    private void onChangeGenderPicked(CompoundButton compoundButton, boolean isChecked) {
+//        RadioButton radio = (RadioButton) compoundButton;
+//
+//        Log.d("Giới tính: ", radio.getText().toString() + isChecked);
+//    }
 
-        Log.d("Giới tính: ", radio.getText().toString() + isChecked);
-    }
+
+
+
 
 
 }

@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -56,9 +58,9 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.search_result);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         gameLogList = new ArrayList<>();
         readList();
+
 
     }
 
@@ -74,31 +76,23 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                listAdapter.getFilter().filter(query);
-                // hiển thị list trong recyclerView
-                recyclerView.setAdapter(listAdapter);
-                recyclerView.setVisibility(View.VISIBLE);
+                if (listAdapter != null) {
+                    listAdapter.getFilter().filter(query);
+                    // hiển thị list trong recyclerView
+                    recyclerView.setAdapter(listAdapter);
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(SearchActivity.this, "Vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                }
 
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-                if(newText == null || newText.length() == 0) {
-                    recyclerView.setVisibility(View.INVISIBLE);
-                }
-                else {
-
-                        listAdapter.getFilter().filter(newText);
-                        // hiển thị list trong recyclerView
-                        recyclerView.setAdapter(listAdapter);
-                        recyclerView.setVisibility(View.VISIBLE);
-
-                }
-
                 return false;
             }
+
         });
         return true;
     }

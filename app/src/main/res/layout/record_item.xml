@@ -25,47 +25,25 @@
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/format_time"
-                    android:textSize="20sp"
-                    android:textStyle="normal">
-                </TextView>
+                <ImageView
+                    android:id="@+id/icon_game"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true">
+
+                </ImageView>
 
                 <TextView
-                    android:id="@+id/status"
+                    android:id="@+id/game_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/status_value"
+                    android:layout_height="50dp"
+                    android:text="@string/title"
                     android:textSize="20sp"
                     android:textStyle="normal"
-                    android:layout_below="@+id/time">
-
+                    android:layout_toEndOf="@+id/icon_game"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp">
                 </TextView>
-
-                <!--<TextView
-                    android:id="@+id/date_created"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="%1$s"
-                    android:textSize="20sp"
-                    android:textStyle="normal"
-                    android:layout_below="@+id/status">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/date_modified"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="%1$s"
-                    android:textSize="20sp"
-                    android:textStyle="normal"
-                    android:layout_below="@+id/date_created">
-
-                </TextView>-->
 
             </RelativeLayout>
 

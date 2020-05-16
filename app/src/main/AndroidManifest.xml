@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kdc.howlongyouplay">
+    package="com.kdc.howlongyouplay" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
@@ -12,14 +12,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ImageViewerActivity"></activity>
+        android:theme="@style/AppTheme" >
+        <activity android:name=".ImageViewerActivity" />
         <activity android:name=".AccountActivity" />
         <activity
             android:name=".StartActivity"
             android:parentActivityName=".InternetReqActivity" />
-        <activity android:name=".GameRecordsActivity" />
-        <activity android:name=".GameInfoActivity" />
+        <activity android:name=".GameActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".MainActivity" />
         <activity
@@ -28,7 +27,7 @@
         <activity
             android:name=".LoginActivity"
             android:parentActivityName=".StartActivity" />
-        <activity android:name=".InternetReqActivity">
+        <activity android:name=".InternetReqActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

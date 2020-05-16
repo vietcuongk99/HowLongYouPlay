@@ -1,20 +1,23 @@
 package com.kdc.howlongyouplay;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.ListAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,16 +25,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kdc.howlongyouplay.Adapter.LogAdapter;
+import com.kdc.howlongyouplay.Fragment.BackLogFragment;
+import com.kdc.howlongyouplay.Fragment.FinishedListFragment;
+import com.kdc.howlongyouplay.Fragment.PlayingListFragment;
+import com.kdc.howlongyouplay.Fragment.RetiredListFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private LogAdapter logAdapter;
-    private ArrayList<GameLog> LogList;
+    private long backPressedTime;
+    private Toast backToast;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +47,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("HowLongYouPlay");
 
-        recyclerView = findViewById(R.id.list_item);
-        recyclerView.setHasFixedSize(true);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        ViewPager viewPager = findViewById(R.id.view_pager);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        LogList = new ArrayList<>();
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new BackLogFragment(), "BackLog");
+        viewPagerAdapter.addFragment(new FinishedListFragment(), "Finished");
+        viewPagerAdapter.addFragment(new PlayingListFragment(), "Playing");
+        viewPagerAdapter.addFragment(new RetiredListFragment(), "Retired");
 
-        getLogList();
+        viewPager.setAdapter(viewPagerAdapter);
 
-
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -87,37 +95,60 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // lấy ra danh sách gamelog để hiển thị
-    private void getLogList() {
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String user_id = firebaseUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
+    @Override
+    public void onBackPressed() {
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+        // nếu khoảng cách giữa 2 lần nhấn nút Back > 2 giây, thông báo hiện ra
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            super.onBackPressed();
+            return;
+        }
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                LogList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+        else {
+            backToast = Toast.makeText(MainActivity.this, "Ấn nút Back lần nữa để thoát", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
 
-                    GameLog gameLog = snapshot.getValue(GameLog.class);
-                    gameLog.setId_log(snapshot.getKey());
-                    LogList.add(gameLog);
-
-                }
-
-
-                logAdapter = new LogAdapter(MainActivity.this,  LogList);
-                recyclerView.setAdapter(logAdapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        backPressedTime = System.currentTimeMillis();
     }
 
 
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
 
+        private ArrayList<Fragment> fragments;
+        private ArrayList<String> titles;
+
+        public ViewPagerAdapter(@NonNull FragmentManager fm) {
+            super(fm);
+            this.fragments = new ArrayList<>();
+            this.titles = new ArrayList<>();
+        }
+
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            fragments.add(fragment);
+            titles.add(title);
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
+        }
+    }
 }

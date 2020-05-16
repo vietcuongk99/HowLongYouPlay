@@ -3,14 +3,12 @@ package com.kdc.howlongyouplay.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +24,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kdc.howlongyouplay.GameLog;
-import com.kdc.howlongyouplay.GameRecordsActivity;
 import com.kdc.howlongyouplay.R;
 import com.kdc.howlongyouplay.Record;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,9 +59,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         // key của một bản record tương ứng
         final String key = record.getRecord_id();
         //gán dữ liệu vào view
-        holder.play_time.setText(mContext.getResources()
-                .getString(R.string.format_time, record.getHour(), record.getMinute(), record.getSecond()));
-        holder.play_status.setText(record.getStatus());
+        holder.game_title.setText(record.getGame_title());
+        Picasso.get().load(record.getIcon_url()).into(holder.icon_game);
 
         // xử lý sự kiện khi nhấn vào một record tương ứng
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,28 +72,56 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
 
                 LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-                final View view = layoutInflater.inflate(R.layout.dialog_record_detail, null);
-                final View view_header = layoutInflater.inflate(R.layout.dialog_record_detail_header, null);
+                final View view = layoutInflater.inflate(R.layout.dialog_record, null);
+                final View view_header = layoutInflater.inflate(R.layout.dialog_record_header, null);
                 TextView play_time = view.findViewById(R.id.play_time);
                 TextView status = view.findViewById(R.id.status);
                 TextView note = view.findViewById(R.id.note);
                 TextView date_created = view.findViewById(R.id.date_created);
                 TextView date_modified = view.findViewById(R.id.date_modified);
                 ImageButton close_btn = view_header.findViewById(R.id.close_btn);
+                TextView finished_date = view.findViewById(R.id.finished_date);
 
-                play_time.setText(mContext.getResources().getString(R.string.format_time,
-                        record.getHour(), record.getMinute(), record.getSecond()));
+                if (record.getStatus().equals("backlog")) {
+                    play_time.setText("Chưa xác định");
+                    finished_date.setText("Chưa xác định");
+                    status.setText(record.getStatus());
+                    date_created.setText(record.getDate_created());
+                    if (record.getNote().equals("")) {
+                        note.setText("Không có ghi chú");
+                    } else {
+                        note.setText(record.getNote());
+                    }
+                    if(record.getDate_modified().equals("")) {
+                        date_modified.setText("Chưa xác định");
+                    } else {
+                        date_modified.setText(record.getDate_modified());
+                    }
 
-                status.setText(record.getStatus());
-                date_created.setText(record.getDate_created());
-                note.setText(record.getNote());
-
-                if(record.getDate_modified().equals("")) {
-                    date_modified.setText("Chưa xác định");
                 } else {
-                    date_modified.setText(record.getDate_modified());
-                }
+                    status.setText(record.getStatus());
+                    date_created.setText(record.getDate_created());
+                    play_time.setText(mContext.getResources().getString(R.string.format_time,
+                            record.getHour(), record.getMinute(), record.getSecond()));
 
+                    if(record.getDate_modified().equals("")) {
+                        date_modified.setText("Chưa xác định");
+                    } else {
+                        date_modified.setText(record.getDate_modified());
+                    }
+
+                    if(record.getFinished_date().equals("")) {
+                        finished_date.setText("Chưa xác định");
+                    } else {
+                        finished_date.setText(record.getFinished_date());
+                    }
+
+                    if (record.getNote().equals("")) {
+                        note.setText("Không có ghi chú");
+                    } else {
+                        note.setText(record.getNote());
+                    }
+                }
 
                 builder.setCancelable(true);
                 builder.setCustomTitle(view_header);
@@ -126,7 +150,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
                 LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-                final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
+                final View view = layoutInflater.inflate(R.layout.dialog_edit_record, null);
 
                 ImageButton accept_btn = view.findViewById(R.id.accept_btn);
                 ImageButton close_btn = view.findViewById(R.id.close_btn);
@@ -135,24 +159,16 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 final MaterialEditText minute = view.findViewById(R.id.minute);
                 final MaterialEditText second = view.findViewById(R.id.second);
                 final MaterialEditText note = view.findViewById(R.id.note);
+                final MaterialEditText finished_date = view.findViewById(R.id.finished_date);
+                TextView title_1 = view.findViewById(R.id.title_1);
+                LinearLayout play_time = view.findViewById(R.id.play_time);
 
-                final RadioGroup statusGroup = view.findViewById(R.id.group_status);
-                RadioButton finished_picked = view.findViewById(R.id.finished);
-                RadioButton playing_picked = view.findViewById(R.id.playing);
-
-                //kiểm tra thay đổi khi lựa chọn trạng thái trong statusGroup
-                finished_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeStatusPicked(buttonView, isChecked);
-                    }
-                });
-                playing_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeStatusPicked(buttonView, isChecked);
-                    }
-                });
+                if (record.getStatus().equals("finished")) {
+                    finished_date.setVisibility(View.VISIBLE);
+                } else if (record.getStatus().equals("backlog")) {
+                    title_1.setVisibility(View.GONE);
+                    play_time.setVisibility(View.GONE);
+                }
 
 
                 //hiển thị dialog
@@ -165,7 +181,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 accept_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String new_hour_value, new_minute_value, new_second_value, new_note_detail,  date_modified;
+                        String new_hour_value, new_minute_value, new_second_value, new_note_detail,  date_modified, new_finished_date;
 
                         Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MM-yyyy" + ", " + "HH:mm:ss a");
@@ -188,34 +204,79 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                             new_second_value = second.getText().toString();
                         }
 
+                        if (record.getStatus().equals("finished")) {
+                            new_finished_date = finished_date.getText().toString();
 
-                        int i = statusGroup.getCheckedRadioButtonId();
-                        RadioButton checkedButton = view.findViewById(i);
-                        String new_status_picked = checkedButton.getText().toString();
+                            final HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("hour", new_hour_value);
+                            hashMap.put("minute", new_minute_value);
+                            hashMap.put("second", new_second_value);
+                            hashMap.put("note", new_note_detail);
+                            hashMap.put("date_modified", date_modified);
+                            hashMap.put("finished_date", new_finished_date);
+
+                            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                    .child("Logs").child(user_id);
+
+                            databaseReference.child(record.getStatus()).child(key)
+                                    .updateChildren(hashMap)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            dialog.dismiss();
+                                            Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+                        } else if (record.getStatus().equals("backlog")){
+
+                            final HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("note", new_note_detail);
+                            hashMap.put("date_modified", date_modified);
+
+                            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                    .child("Logs").child(user_id);
+
+                            databaseReference.child(record.getStatus()).child(key)
+                                    .updateChildren(hashMap)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            dialog.dismiss();
+                                            Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+
+                        }   else {
+
+                            final HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("hour", new_hour_value);
+                            hashMap.put("minute", new_minute_value);
+                            hashMap.put("second", new_second_value);
+                            hashMap.put("note", new_note_detail);
+                            hashMap.put("date_modified", date_modified);
+
+                            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                    .child("Logs").child(user_id);
+
+                            databaseReference.child(record.getStatus()).child(key)
+                                    .updateChildren(hashMap)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            dialog.dismiss();
+                                            Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+
+                        }
 
 
-                        final HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("hour", new_hour_value);
-                        hashMap.put("minute", new_minute_value);
-                        hashMap.put("second", new_second_value);
-                        hashMap.put("status", new_status_picked);
-                        hashMap.put("note", new_note_detail);
-                        hashMap.put("date_modified", date_modified);
-
-                        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                                .child("Logs").child(user_id);
-
-                        databaseReference.child(record.getLog_id()).child("records").child(key)
-                                .updateChildren(hashMap)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                dialog.dismiss();
-                                Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
 
                     }
                 });
@@ -251,14 +312,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                     @Override
                     public void onClick(final DialogInterface dialogInterface, int which) {
 
-                        databaseReference.child(record.getLog_id()).child("records").addValueEventListener(new ValueEventListener() {
+                        databaseReference.child(record.getStatus()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
 
                                     if(snapshot.getKey().equals(key)) {
-                                        databaseReference.child(record.getLog_id()).child("records").child(key)
+                                        databaseReference.child(record.getStatus()).child(key)
                                                 .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -282,22 +343,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
                             }
                         });
-
-                        // trừ đi 1 bản ghi vào tổng số bản ghi và cập nhật total_record
-                        int total_record = recordList.size();
-                        int new_records = total_record - 1;
-                        String new_record = String.valueOf(new_records);
-                        final HashMap<String, Object> hashMap_2 = new HashMap<>();
-                        hashMap_2.put("total_record", new_record);
-                        databaseReference.child(record.getLog_id()).updateChildren(hashMap_2)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(mContext, "Cập nhật số bản ghi thành công", Toast.LENGTH_SHORT)
-                                                .show();
-                                    }
-                                });
-
 
                     }
                 });
@@ -324,26 +369,18 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     public static class RecordViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView play_time;
-        private TextView play_status;
+        private TextView game_title;
+        private ImageView icon_game;
         private ImageButton edit_btn;
         private ImageButton delete_btn;
 
         public RecordViewHolder(View itemView) {
             super(itemView);
-            play_status = itemView.findViewById(R.id.status);
-            play_time = itemView.findViewById(R.id.time);
+            game_title = itemView.findViewById(R.id.game_title);
+            icon_game = itemView.findViewById(R.id.icon_game);
             edit_btn = itemView.findViewById(R.id.edit_btn);
             delete_btn = itemView.findViewById(R.id.delete_btn);
         }
     }
-
-    //nhận biết thay đổi khi chọn button trong RadioGroup
-    private void onChangeStatusPicked(CompoundButton compoundButton, boolean isChecked) {
-        RadioButton radio = (RadioButton) compoundButton;
-        Log.d("Trạng thái: ", radio.getText().toString() + isChecked);
-    }
-
-
 
 }

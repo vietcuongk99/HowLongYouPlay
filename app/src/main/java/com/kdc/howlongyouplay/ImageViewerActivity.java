@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -25,10 +26,16 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         img_url = intent.getExtras().get("img_url").toString();
-        game_title = intent.getExtras().get("game_title").toString();
+        // game_title = intent.getExtras().get("game_title").toString();
 
         Picasso.get().load(img_url).into(full_image);
 
-        Toast.makeText(ImageViewerActivity.this, "Game: " + game_title, Toast.LENGTH_SHORT).show();
+//        if(game_title.equals("")) {
+//            Log.d("avatar", "avatar");
+//        } else {
+//            Toast.makeText(ImageViewerActivity.this, "Game: " + game_title, Toast.LENGTH_SHORT).show();
+//        }
+
+
     }
 }
