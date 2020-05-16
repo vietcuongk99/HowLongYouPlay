@@ -574,7 +574,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 if (dataSnapshot.hasChild("finished")) {
                     finishedList.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.child("playing").getChildren()) {
+                    for(DataSnapshot snapshot : dataSnapshot.child("finished").getChildren()) {
 
                         Record record = snapshot.getValue(Record.class);
                         record.setRecord_id(snapshot.getKey());
