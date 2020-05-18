@@ -38,6 +38,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     private Context mContext;
     private List<Record> recordList;
+    private Toast toast;
 
     public RecordAdapter(Context mContext, List<Record> recordList) {
         this.mContext = mContext;
@@ -181,6 +182,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 accept_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        dialog.dismiss();
+                        toast = Toast.makeText(mContext, "Sửa thành công", Toast.LENGTH_SHORT);
+                        toast.show();
                         String new_hour_value, new_minute_value, new_second_value, new_note_detail,  date_modified, new_finished_date;
 
                         Calendar calendar = Calendar.getInstance();
@@ -224,8 +228,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            dialog.dismiss();
-                                            Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT)
+                                            toast.cancel();
+                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
                                                     .show();
                                         }
                                     });
@@ -244,8 +248,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            dialog.dismiss();
-                                            Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT)
+                                            toast.cancel();
+                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
                                                     .show();
                                         }
                                     });
@@ -268,8 +272,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            dialog.dismiss();
-                                            Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT)
+                                            toast.cancel();
+                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
                                                     .show();
                                         }
                                     });
@@ -311,6 +315,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialogInterface, int which) {
+                        dialogInterface.dismiss();
+                        toast = Toast.makeText(mContext, "Xóa thành công", Toast.LENGTH_SHORT);
+                        toast.show();
+
 
                         databaseReference.child(record.getStatus()).addValueEventListener(new ValueEventListener() {
                             @Override
@@ -324,12 +332,12 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    dialogInterface.dismiss();
-                                                    Toast.makeText(mContext, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                                                    toast.cancel();
+                                                    Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT).show();
 
                                                 }
                                                 else {
-                                                    dialogInterface.dismiss();
+                                                    toast.cancel();
                                                     Toast.makeText(mContext, "Xóa lỗi", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
@@ -382,5 +390,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             delete_btn = itemView.findViewById(R.id.delete_btn);
         }
     }
+
 
 }

@@ -14,7 +14,7 @@
     <string name="submit_btn">Thêm</string>
     <string name="game_title">Game title</string>
     <string name="title_action">Thêm bản ghi mới</string>
-    <string name="check_internet">Ứng dụng yêu cầu kết nối mạng, kiểm tra lại kết nối mạng trước khi bắt đầu sử dụng</string>
+    <string name="check_internet">Ứng dụng cần kết nối mạng, kiểm tra trước khi sử dụng để không làm ảnh hưởng trải nghiệm của bạn</string>
     <string name="start">Bắt đầu</string>
     <string name="list_title">Danh sách game của bạn</string>
     <string name="edit_btn">Nút sửa log</string>

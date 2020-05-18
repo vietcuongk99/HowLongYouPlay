@@ -1,5 +1,8 @@
 package com.kdc.howlongyouplay.Fragment;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,19 +33,39 @@ public class PlayingListFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecordAdapter recordAdapter;
     private ArrayList<Record> playingList;
+    private RelativeLayout loading_state_view;
+    private RelativeLayout empty_state_view;
+    private RelativeLayout error_state_view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_playing_list, container, false);
 
-        recyclerView = view.findViewById(R.id.recycle_view_playing);
+        recyclerView = view.findViewById(R.id.recycle_view);
+        loading_state_view = view.findViewById(R.id.loading);
+        empty_state_view = view.findViewById(R.id.empty_list);
+        error_state_view = view.findViewById(R.id.error);
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         playingList = new ArrayList<>();
 
         getPlayingList();
+
+        /*
+        if (isNetworkConnected()) {
+            getPlayingList();
+        }
+        else {
+            loading_state_view.setVisibility(View.GONE);
+            empty_state_view.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+            error_state_view.setVisibility(View.VISIBLE);
+        }
+
+         */
+
 
         return view;
     }
@@ -65,8 +89,18 @@ public class PlayingListFragment extends Fragment {
 
                 }
 
-                recordAdapter = new RecordAdapter(getContext(),  playingList);
-                recyclerView.setAdapter(recordAdapter);
+                if (playingList.size() != 0) {
+                    loading_state_view.setVisibility(View.GONE);
+                    recordAdapter = new RecordAdapter(getContext(),  playingList);
+                    recyclerView.setAdapter(recordAdapter);
+
+                }
+                else {
+                    loading_state_view.setVisibility(View.GONE);
+                    empty_state_view.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+
+                }
 
             }
 
@@ -75,5 +109,19 @@ public class PlayingListFragment extends Fragment {
 
             }
         });
+    }
+
+
+    private boolean isNetworkConnected() {
+        boolean connected = false;
+        if (getActivity() != null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                connected = true;
+            }
+        }
+
+        return connected;
     }
 }

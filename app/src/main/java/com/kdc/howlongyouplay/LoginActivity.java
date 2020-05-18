@@ -102,6 +102,14 @@ public class LoginActivity extends AppCompatActivity {
 //        dialog = null;
 //    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 
 }

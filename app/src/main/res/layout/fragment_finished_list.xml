@@ -6,10 +6,23 @@
     tools:context=".Fragment.FinishedListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view_finished"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+
+    <include
+        android:id="@+id/recycle_view"
+        layout="@layout/recycleview" />
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/loading_state_view" />
+
+    <include
+        android:id="@+id/empty_list"
+        layout="@layout/empty_state_view"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/error"
+        layout="@layout/error_state_view"
+        android:visibility="gone" />
 
 </FrameLayout>

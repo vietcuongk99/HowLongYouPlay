@@ -12,9 +12,9 @@
 
     <ImageView
         android:id="@+id/icon_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_app_foreground" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/wifi_on" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -59,11 +59,13 @@ public class GameActivity extends AppCompatActivity {
     private ArrayList<Record> finishedList, playingList, retiredList, backlogList;
     private DatabaseReference databaseReference;
 
+    private Toast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Thêm bản ghi mới");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -184,10 +186,14 @@ public class GameActivity extends AppCompatActivity {
 
 
                         if (checkSameLog(playingList, title)) {
+                            dialog.dismiss();
                             Toast.makeText(GameActivity.this,
                                     "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                                     .show();
                         } else {
+                            dialog.dismiss();
+                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                            toast.show();
 
                             Calendar calendar = Calendar.getInstance();
                             SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
@@ -228,8 +234,8 @@ public class GameActivity extends AppCompatActivity {
                             blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    dialog.dismiss();
-                                    Toast.makeText(GameActivity.this, "Thêm thành công", Toast.LENGTH_SHORT)
+                                    toast.cancel();
+                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
                                             .show();
                                 }
                             });
@@ -285,10 +291,14 @@ public class GameActivity extends AppCompatActivity {
 
 
                         if (checkSameLog(backlogList, title)) {
+                            dialog.dismiss();
                             Toast.makeText(GameActivity.this,
                                     "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                                     .show();
                         } else {
+                            dialog.dismiss();
+                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                            toast.show();
 
                             Calendar calendar = Calendar.getInstance();
                             SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
@@ -310,8 +320,8 @@ public class GameActivity extends AppCompatActivity {
                             blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    dialog.dismiss();
-                                    Toast.makeText(GameActivity.this, "Thêm thành công", Toast.LENGTH_SHORT)
+                                    toast.cancel();
+                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
                                             .show();
                                 }
                             });
@@ -367,10 +377,15 @@ public class GameActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         if (checkSameLog(finishedList, title)) {
+                            dialog.dismiss();
                             Toast.makeText(GameActivity.this,
                                     "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                                     .show();
                         } else {
+
+                            dialog.dismiss();
+                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                            toast.show();
 
                             Calendar calendar = Calendar.getInstance();
                             SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
@@ -412,8 +427,8 @@ public class GameActivity extends AppCompatActivity {
                             blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    dialog.dismiss();
-                                    Toast.makeText(GameActivity.this, "Thêm thành công", Toast.LENGTH_SHORT)
+                                    toast.cancel();
+                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
                                             .show();
                                 }
                             });
@@ -467,10 +482,14 @@ public class GameActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         if (checkSameLog(retiredList, title)) {
+                            dialog.dismiss();
                             Toast.makeText(GameActivity.this,
                                     "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                                     .show();
                         } else {
+                            dialog.dismiss();
+                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                            toast.show();
 
                             Calendar calendar = Calendar.getInstance();
                             SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
@@ -511,8 +530,8 @@ public class GameActivity extends AppCompatActivity {
                             blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    dialog.dismiss();
-                                    Toast.makeText(GameActivity.this, "Thêm thành công", Toast.LENGTH_SHORT)
+                                    toast.cancel();
+                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
                                             .show();
                                 }
                             });
@@ -532,8 +551,6 @@ public class GameActivity extends AppCompatActivity {
             }
 
         });
-
-
 
 
     }

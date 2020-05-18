@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                             String userid = firebaseUser.getUid();
 
                             //đẩy một bản ghi mới vào nhánh User trong csdl Firebase
-                            reference = FirebaseDatabase.getInstance().getReference();
+                            reference = FirebaseDatabase.getInstance().getReference("Users");
 
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id", userid);
@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("role", "normal_user");
                             hashMap.put("avatar_url", "default");
 
-                            reference.child("Users").child(userid).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            reference.child(userid).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
@@ -128,5 +128,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
