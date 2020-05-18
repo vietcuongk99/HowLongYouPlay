@@ -2,12 +2,15 @@ package com.kdc.howlongyouplay.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +35,7 @@ import com.kdc.howlongyouplay.Record;
 
 import java.util.ArrayList;
 
+import io.opencensus.resource.Resource;
 
 
 public class BackLogFragment extends Fragment {
@@ -43,6 +47,7 @@ public class BackLogFragment extends Fragment {
     private RelativeLayout error_state_view;
 
     private AlertDialog alert;
+    private Resources resource;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +61,15 @@ public class BackLogFragment extends Fragment {
         error_state_view = view.findViewById(R.id.error);
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        resource = recyclerView.getResources();
+
+        if (resource.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }
 
         backlogList = new ArrayList<>();
         getBackLogList();

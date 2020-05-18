@@ -220,6 +220,7 @@ public class GameActivity extends AppCompatActivity {
                             final HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("game_title", title);
                             hashMap.put("icon_url", icon_url);
+                            hashMap.put("image_url", img_url);
                             hashMap.put("hour", hour_value);
                             hashMap.put("minute", minute_value);
                             hashMap.put("second", second_value);
@@ -310,6 +311,7 @@ public class GameActivity extends AppCompatActivity {
                             final HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("game_title", title);
                             hashMap.put("icon_url", icon_url);
+                            hashMap.put("image_url", img_url);
                             hashMap.put("note", note_detail);
                             hashMap.put("date_created", date_created);
                             hashMap.put("date_modified", "");
@@ -413,6 +415,7 @@ public class GameActivity extends AppCompatActivity {
                             final HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("game_title", title);
                             hashMap.put("icon_url", icon_url);
+                            hashMap.put("image_url", img_url);
                             hashMap.put("hour", hour_value);
                             hashMap.put("minute", minute_value);
                             hashMap.put("second", second_value);
@@ -512,10 +515,10 @@ public class GameActivity extends AppCompatActivity {
                                 second_value = second.getText().toString();
                             }
 
-
                             final HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("game_title", title);
                             hashMap.put("icon_url", icon_url);
+                            hashMap.put("image_url", img_url);
                             hashMap.put("hour", hour_value);
                             hashMap.put("minute", minute_value);
                             hashMap.put("second", second_value);

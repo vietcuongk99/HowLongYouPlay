@@ -3,6 +3,8 @@ package com.kdc.howlongyouplay.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.nikartm.button.FitButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +36,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import io.opencensus.resource.Resource;
+
 //cmt tương tự với ListAdapter và LogAdapter
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewHolder> {
 
@@ -49,7 +55,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     @Override
     public RecordAdapter.RecordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        final View view = LayoutInflater.from(mContext).inflate(R.layout.record_item, parent, false);
+        View view = new View(mContext);
+        Resources resource = view.getResources();
+        if (resource.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.record_item_2, parent, false);
+        } else {
+            view = LayoutInflater.from(mContext).inflate(R.layout.record_item, parent, false);
+        }
         return new RecordAdapter.RecordViewHolder(view);
     }
 
@@ -61,7 +73,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         final String key = record.getRecord_id();
         //gán dữ liệu vào view
         holder.game_title.setText(record.getGame_title());
-        Picasso.get().load(record.getIcon_url()).into(holder.icon_game);
+//        Picasso.get().load(record.getIcon_url()).into(holder.icon_game);
+        Picasso.get().load(record.getImage_url()).into(holder.game_image);
 
         // xử lý sự kiện khi nhấn vào một record tương ứng
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -378,14 +391,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     public static class RecordViewHolder extends RecyclerView.ViewHolder{
 
         private TextView game_title;
-        private ImageView icon_game;
-        private ImageButton edit_btn;
-        private ImageButton delete_btn;
+        private ImageView game_image;
+        private FitButton edit_btn;
+        private FitButton delete_btn;
 
         public RecordViewHolder(View itemView) {
             super(itemView);
             game_title = itemView.findViewById(R.id.game_title);
-            icon_game = itemView.findViewById(R.id.icon_game);
+            game_image = itemView.findViewById(R.id.game_image);
             edit_btn = itemView.findViewById(R.id.edit_btn);
             delete_btn = itemView.findViewById(R.id.delete_btn);
         }

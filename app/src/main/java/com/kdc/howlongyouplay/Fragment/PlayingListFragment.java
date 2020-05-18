@@ -1,12 +1,15 @@
 package com.kdc.howlongyouplay.Fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +39,7 @@ public class PlayingListFragment extends Fragment {
     private RelativeLayout loading_state_view;
     private RelativeLayout empty_state_view;
     private RelativeLayout error_state_view;
+    private Resources resource;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,9 +50,15 @@ public class PlayingListFragment extends Fragment {
         loading_state_view = view.findViewById(R.id.loading);
         empty_state_view = view.findViewById(R.id.empty_list);
         error_state_view = view.findViewById(R.id.error);
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        resource = recyclerView.getResources();
+
+        if (resource.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }
         playingList = new ArrayList<>();
 
         getPlayingList();

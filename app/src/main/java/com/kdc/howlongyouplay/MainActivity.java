@@ -2,21 +2,25 @@ package com.kdc.howlongyouplay;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,28 +41,49 @@ public class MainActivity extends AppCompatActivity {
     private long backPressedTime;
     private Toast backToast;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("HowLongYouPlay");
+        getSupportActionBar().setTitle("Danh sách game của bạn");
 
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        ViewPager viewPager = findViewById(R.id.view_pager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new BackLogFragment(), "BackLog");
-        viewPagerAdapter.addFragment(new FinishedListFragment(), "Finished");
-        viewPagerAdapter.addFragment(new PlayingListFragment(), "Playing");
-        viewPagerAdapter.addFragment(new RetiredListFragment(), "Retired");
+        final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_tab_layout);
 
-        viewPager.setAdapter(viewPagerAdapter);
+        loadFragment(new PlayingListFragment());
 
-        tabLayout.setupWithViewPager(viewPager);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_backlog:
+                        Fragment backlog = new BackLogFragment();
+                        loadFragment(backlog);
+                        return true;
+
+                    case R.id.nav_finished:
+                        Fragment finished = new FinishedListFragment();
+                        loadFragment(finished);
+                        return true;
+
+                    case R.id.nav_playing:
+                        Fragment playing = new PlayingListFragment();
+                        loadFragment(playing);
+                        return true;
+
+                    case R.id.nav_retired:
+                        Fragment retired = new RetiredListFragment();
+                        loadFragment(retired);
+                        return true;
+
+                }
+                return false;
+            }
+        });
+
 
     }
 
@@ -116,39 +141,12 @@ public class MainActivity extends AppCompatActivity {
         backPressedTime = System.currentTimeMillis();
     }
 
+    // load fragment
+    private void loadFragment(Fragment fragment) {
 
-    private static class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String> titles;
-
-        public ViewPagerAdapter(@NonNull FragmentManager fm) {
-            super(fm);
-            this.fragments = new ArrayList<>();
-            this.titles = new ArrayList<>();
-        }
-
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            fragments.add(fragment);
-            titles.add(title);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles.get(position);
-        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

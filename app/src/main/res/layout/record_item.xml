@@ -4,9 +4,9 @@
     android:id="@+id/gamelog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginRight="20dp"
-    android:layout_marginLeft="20dp"
+    android:layout_marginTop="5dp"
     android:layout_marginBottom="10dp"
+    android:layout_marginHorizontal="15dp"
     app:cardPreventCornerOverlap="false">
 
     <!-- nội dung hiển thị trên card -->
@@ -15,96 +15,63 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/record_detail"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/group_value"
-                android:layout_width="0dp"
-                android:layout_weight="1.5"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="10dp">
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
                 <ImageView
-                    android:id="@+id/icon_game"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true">
+                    android:id="@+id/game_image"
+                    android:background="#505EAA"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop">
 
                 </ImageView>
 
                 <TextView
                     android:id="@+id/game_title"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/title"
-                    android:textSize="20sp"
-                    android:textStyle="normal"
-                    android:layout_toEndOf="@+id/icon_game"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="10dp">
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:textColor="#fff"
+                    android:layout_alignParentBottom="true"
+                    android:background="#B3000000">
+
                 </TextView>
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                android:id="@+id/group_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <ImageButton
+                <com.github.nikartm.button.FitButton
                     android:id="@+id/edit_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/edit"
-                    android:layout_alignParentStart="true">
+                    app:fb_text="@string/edit"
+                    android:layout_toStartOf="@+id/delete_btn"
+                    android:padding="10dp"
+                    app:fb_textSize="15sp"/>
 
-                </ImageButton>
-
-                <ImageButton
+                <com.github.nikartm.button.FitButton
                     android:id="@+id/delete_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/delete"
-                    android:layout_toEndOf="@+id/edit_btn">
-
-                </ImageButton>
+                    app:fb_text="@string/delete"
+                    android:layout_alignParentEnd="true"
+                    android:padding="10dp"
+                    app:fb_textSize="15sp"/>
 
             </RelativeLayout>
 
 
         </LinearLayout>
-
-        <!--<LinearLayout
-            android:id="@+id/group_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
-
-            <ImageButton
-                android:id="@+id/edit_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@mipmap/edit"
-                android:layout_marginEnd="10dp"
-                android:background="@android:color/transparent">
-
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/delete_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@mipmap/delete"
-                android:background="@android:color/transparent">
-            </ImageButton>
-
-        </LinearLayout>-->
-
-
 
 
 </androidx.cardview.widget.CardView>

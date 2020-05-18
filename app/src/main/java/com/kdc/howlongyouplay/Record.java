@@ -8,6 +8,7 @@ public class Record {
     private String game_id;
     private String game_title;
     private String icon_url;
+    private String image_url;
     private String hour;
     private String minute;
     private String second;
@@ -114,5 +115,13 @@ public class Record {
 
     public void setGame_title(String game_title) {
         this.game_title = game_title;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }
