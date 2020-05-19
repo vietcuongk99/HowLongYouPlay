@@ -6,6 +6,8 @@ import androidx.appcompat.widget.SearchView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +31,14 @@ import com.kdc.howlongyouplay.Adapter.ListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.opencensus.resource.Resource;
+
 public class SearchActivity extends AppCompatActivity {
 
     private List<GameLog> gameLogList;
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
+    private Resources resource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,14 @@ public class SearchActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.search_result);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        resource = recyclerView.getResources();
+
+        if (resource.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+        }
         gameLogList = new ArrayList<>();
         readList();
 

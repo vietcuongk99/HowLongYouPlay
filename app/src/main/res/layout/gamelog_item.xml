@@ -13,15 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/header_title_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="header"
-            android:textColor="#000000"
-            android:textAlignment="center">
-
-        </TextView>
 
         <!-- background của card -->
         <ImageView
@@ -30,18 +21,22 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="#CED8DF"
-            android:layout_below="@+id/header_title_card"
             android:contentDescription="@string/card_background">
         </ImageView>
 
-        <!-- nội dung hiển thị trên card -->
-        <RelativeLayout
+        <TextView
+            android:id="@+id/header_title_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_below="@+id/header_title_card">
+            android:layout_height="wrap_content"
+            android:text="header"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:layout_alignParentBottom="true"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:background="#B3000000">
 
-        </RelativeLayout>
+        </TextView>
 
     </RelativeLayout>
 

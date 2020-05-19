@@ -65,19 +65,6 @@ public class FinishedListFragment extends Fragment {
         finishedList = new ArrayList<>();
         getFinishedList();
 
-        /*
-        if (isNetworkConnected()) {
-            getFinishedList();
-        }
-        else {
-            loading_state_view.setVisibility(View.GONE);
-            empty_state_view.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
-            error_state_view.setVisibility(View.VISIBLE);
-        }
-
-         */
-
         return view;
     }
 

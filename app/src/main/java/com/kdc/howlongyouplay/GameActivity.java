@@ -53,6 +53,8 @@ public class GameActivity extends AppCompatActivity {
             genre_name, developer_name, publisher_name, play_on_device,
             hour_value, minute_value, second_value, note_detail, status_picked, date_created, finished_date;
 
+    private int hour_format, minute_format, second_format;
+
     private FitButton add_playing, add_finished, add_retired, add_backlog;
 
 
@@ -67,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thêm bản ghi mới");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -165,8 +167,8 @@ public class GameActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
-                ImageButton accept_btn = view.findViewById(R.id.accept_btn);
-                ImageButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
                 final MaterialEditText hour = view.findViewById(R.id.hour);
                 final MaterialEditText minute = view.findViewById(R.id.minute);
@@ -203,18 +205,25 @@ public class GameActivity extends AppCompatActivity {
                             if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
                                 hour_value = "00";
                             } else {
-                                hour_value = hour.getText().toString();
+                                hour_format = Integer.parseInt(hour.getText().toString());
                             }
                             if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
                                 minute_value = "00";
                             } else {
-                                minute_value = minute.getText().toString();
+                                minute_format = Integer.parseInt(minute.getText().toString());
                             }
                             if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
                                 second_value = "00";
                             } else {
-                                second_value = second.getText().toString();
+                                second_format = Integer.parseInt(second.getText().toString());
                             }
+
+                            TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                            timeCorrect.correctTimeInput();
+
+                            hour_value = String.format("%02d", timeCorrect.getHour());
+                            minute_value = String.format("%02d", timeCorrect.getMinute());
+                            second_value = String.format("%02d", timeCorrect.getSecond());
 
 
                             final HashMap<String, Object> hashMap = new HashMap<>();
@@ -271,8 +280,8 @@ public class GameActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
-                ImageButton accept_btn = view.findViewById(R.id.accept_btn);
-                ImageButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
                 final MaterialEditText note = view.findViewById(R.id.note);
                 LinearLayout play_time = view.findViewById(R.id.play_time);
@@ -356,8 +365,8 @@ public class GameActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
-                ImageButton accept_btn = view.findViewById(R.id.accept_btn);
-                ImageButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
                 final MaterialEditText hour = view.findViewById(R.id.hour);
                 final MaterialEditText minute = view.findViewById(R.id.minute);
@@ -398,18 +407,25 @@ public class GameActivity extends AppCompatActivity {
                             if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
                                 hour_value = "00";
                             } else {
-                                hour_value = hour.getText().toString();
+                                hour_format = Integer.parseInt(hour.getText().toString());
                             }
                             if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
                                 minute_value = "00";
                             } else {
-                                minute_value = minute.getText().toString();
+                                minute_format = Integer.parseInt(minute.getText().toString());
                             }
                             if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
                                 second_value = "00";
                             } else {
-                                second_value = second.getText().toString();
+                                second_format = Integer.parseInt(second.getText().toString());
                             }
+
+                            TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                            timeCorrect.correctTimeInput();
+
+                            hour_value = String.format("%02d", timeCorrect.getHour());
+                            minute_value = String.format("%02d", timeCorrect.getMinute());
+                            second_value = String.format("%02d", timeCorrect.getSecond());
 
 
                             final HashMap<String, Object> hashMap = new HashMap<>();
@@ -465,8 +481,8 @@ public class GameActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
-                ImageButton accept_btn = view.findViewById(R.id.accept_btn);
-                ImageButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
                 final MaterialEditText hour = view.findViewById(R.id.hour);
                 final MaterialEditText minute = view.findViewById(R.id.minute);
@@ -499,21 +515,31 @@ public class GameActivity extends AppCompatActivity {
                             String time = timeFormat.format(calendar.getTime());
                             note_detail = note.getText().toString();
                             date_created = time;
+
+
                             if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
                                 hour_value = "00";
                             } else {
-                                hour_value = hour.getText().toString();
+                                hour_format = Integer.parseInt(hour.getText().toString());
                             }
                             if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
                                 minute_value = "00";
                             } else {
-                                minute_value = minute.getText().toString();
+                                minute_format = Integer.parseInt(minute.getText().toString());
                             }
                             if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
                                 second_value = "00";
                             } else {
-                                second_value = second.getText().toString();
+                                second_format = Integer.parseInt(second.getText().toString());
                             }
+
+                            TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                            timeCorrect.correctTimeInput();
+
+                            hour_value = String.format("%02d", timeCorrect.getHour());
+                            minute_value = String.format("%02d", timeCorrect.getMinute());
+                            second_value = String.format("%02d", timeCorrect.getSecond());
+
 
                             final HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("game_title", title);
@@ -640,6 +666,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
      */
+
 
 
 

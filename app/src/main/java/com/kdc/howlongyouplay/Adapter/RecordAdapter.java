@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.R;
 import com.kdc.howlongyouplay.Record;
+import com.kdc.howlongyouplay.TimeCorrect;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
@@ -45,6 +47,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     private Context mContext;
     private List<Record> recordList;
     private Toast toast;
+    private int hour_format, minute_format, second_format;
 
     public RecordAdapter(Context mContext, List<Record> recordList) {
         this.mContext = mContext;
@@ -166,8 +169,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                 final View view = layoutInflater.inflate(R.layout.dialog_edit_record, null);
 
-                ImageButton accept_btn = view.findViewById(R.id.accept_btn);
-                ImageButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
                 final MaterialEditText hour = view.findViewById(R.id.hour);
                 final MaterialEditText minute = view.findViewById(R.id.minute);
@@ -205,21 +208,30 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                         date_modified = timeFormat.format(calendar.getTime());
                         new_note_detail = note.getText().toString();
 
-                        if(hour.getText().toString().equals("")) {
+
+
+                        if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
                             new_hour_value = "00";
                         } else {
-                            new_hour_value = hour.getText().toString();
+                            hour_format = Integer.parseInt(hour.getText().toString());
                         }
-                        if(minute.getText().toString().equals("")) {
+                        if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
                             new_minute_value = "00";
                         } else {
-                            new_minute_value = minute.getText().toString();
+                            minute_format = Integer.parseInt(minute.getText().toString());
                         }
-                        if(second.getText().toString().equals("")) {
+                        if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
                             new_second_value = "00";
                         } else {
-                            new_second_value = second.getText().toString();
+                            second_format = Integer.parseInt(second.getText().toString());
                         }
+
+                        TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                        timeCorrect.correctTimeInput();
+
+                        new_hour_value = String.format("%02d", timeCorrect.getHour());
+                        new_minute_value = String.format("%02d", timeCorrect.getMinute());
+                        new_second_value = String.format("%02d", timeCorrect.getSecond());
 
                         if (record.getStatus().equals("finished")) {
                             new_finished_date = finished_date.getText().toString();

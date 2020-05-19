@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
                         android:hint="@string/zero_value"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:textSize="20sp"
                         android:textAlignment="center"/>
 
@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
                         android:hint="@string/zero_value"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:textSize="20sp"
                         android:textAlignment="center"/>
 
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
                         android:hint="@string/zero_value"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:textSize="20sp"
                         android:textAlignment="center"/>
 
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="normal"
                     android:hint="Ngày hoàn thành"
-                    android:inputType="date"
+                    android:inputType="text"
                     android:visibility="gone" />
 
 
@@ -117,29 +117,31 @@
             android:id="@+id/group_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#6A729C">
+            android:layout_alignParentBottom="true">
 
-            <ImageButton
+            <com.github.nikartm.button.FitButton
                 android:id="@+id/accept_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/checked"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/submit_btn" />
+                app:fb_icon="@mipmap/checked"
+                android:contentDescription="@string/submit_btn"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_rippleColor="#27AF2D"/>
 
 
-            <ImageButton
+
+            <com.github.nikartm.button.FitButton
                 android:id="@+id/close_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/close"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/close" />
+                app:fb_icon="@mipmap/close"
+                android:contentDescription="@string/close"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_rippleColor="#FF0000"/>
 
         </LinearLayout>
 

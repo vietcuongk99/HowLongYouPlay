@@ -50,7 +50,7 @@ public class PlayingListFragment extends Fragment {
         loading_state_view = view.findViewById(R.id.loading);
         empty_state_view = view.findViewById(R.id.empty_list);
         error_state_view = view.findViewById(R.id.error);
-        recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
 
         resource = recyclerView.getResources();
 

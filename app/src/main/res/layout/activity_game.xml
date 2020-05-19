@@ -11,14 +11,31 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#505EAA"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/MenuStyle"
-            app:titleTextColor="#FFFFFF" />
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/image_game"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="#CED8DF" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1AFFFFFF"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/MenuStyle"
+                app:titleTextColor="#fff" />
+
+        </RelativeLayout>
+
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -33,19 +50,12 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <ImageView
-                        android:id="@+id/image_game"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center_horizontal"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"
-                        android:src="#CED8DF" />
-
                     <RelativeLayout
                         android:id="@+id/group_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="20dp"
+                        android:paddingHorizontal="20dp">
 
                         <com.github.nikartm.button.FitButton
                             android:id="@+id/add_playing"
