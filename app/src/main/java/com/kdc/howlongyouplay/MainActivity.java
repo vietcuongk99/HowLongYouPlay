@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -50,35 +51,61 @@ public class MainActivity extends AppCompatActivity {
 
 
         final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_tab_layout);
+        final ViewPager viewPager = findViewById(R.id.view_pager);
 
-        loadFragment(new PlayingListFragment());
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()) {
-                    case R.id.nav_backlog:
-                        Fragment backlog = new BackLogFragment();
-                        loadFragment(backlog);
-                        return true;
-
-                    case R.id.nav_finished:
-                        Fragment finished = new FinishedListFragment();
-                        loadFragment(finished);
-                        return true;
-
                     case R.id.nav_playing:
-                        Fragment playing = new PlayingListFragment();
-                        loadFragment(playing);
-                        return true;
-
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.nav_finished:
+                        viewPager.setCurrentItem(1);
+                        break;
                     case R.id.nav_retired:
-                        Fragment retired = new RetiredListFragment();
-                        loadFragment(retired);
-                        return true;
-
+                        viewPager.setCurrentItem(2);
+                        break;
+                    case R.id.nav_backlog:
+                        viewPager.setCurrentItem(3);
+                        break;
                 }
-                return false;
+                return true;
+            }
+        });
+
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_playing).setChecked(true);
+                        break;
+                    case 1:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_finished).setChecked(true);
+                        break;
+                    case 2:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_retired).setChecked(true);
+                        break;
+                    case 3:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_backlog).setChecked(true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -116,13 +143,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    // load fragment
-    private void loadFragment(Fragment fragment) {
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        public ViewPagerAdapter(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new PlayingListFragment();
+                case 1:
+                    return new FinishedListFragment();
+                case 2:
+                    return new RetiredListFragment();
+                case 3:
+                    return new BackLogFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+
+
     }
 }

@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#505EAA</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">#6DB8F4</item>
+        <item name="colorAccent">#A7CFEF</item>
         <item name="searchViewStyle">@style/SearchView</item>
     </style>
     <style name="MenuStyle" parent="Theme.AppCompat.Light">

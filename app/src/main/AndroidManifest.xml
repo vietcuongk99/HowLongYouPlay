@@ -21,7 +21,8 @@
             android:parentActivityName=".InternetReqActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation"/>
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".StartActivity" />
