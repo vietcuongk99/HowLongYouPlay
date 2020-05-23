@@ -117,6 +117,7 @@ public class GameActivity extends AppCompatActivity {
 
         button_1 = findViewById(R.id.button_transform_1);
         add_record_btn = findViewById(R.id.add_record_btn);
+        FitButton cancel_button = findViewById(R.id.cancel_action);
 
         AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
         final Resources resource = appBarLayout.getResources();
@@ -129,71 +130,61 @@ public class GameActivity extends AppCompatActivity {
             Point size = new Point();
             display.getSize(size);
             int height = size.y;
+            int width = size.x;
             top_content.getLayoutParams().height = height/3;
+
+            ConstraintSet constraintSet = new ConstraintSet();
+
+            constraintSet.clone(group_divider);
+
+            group_divider.getLayoutParams().width = width;
+            group_divider.getLayoutParams().height = width/6;
+
+            //view 1
+            constraintSet.connect(R.id.view1,ConstraintSet.START,R.id.group_divider,ConstraintSet.START,0);
+            constraintSet.connect(R.id.view1,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
+            constraintSet.connect(R.id.view1,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
+            constraintSet.connect(R.id.view1,ConstraintSet.END,R.id.view2,ConstraintSet.START,0);
+            constraintSet.setDimensionRatio(R.id.view1, "1");
+
+
+            //view 2
+            constraintSet.connect(R.id.view2,ConstraintSet.START,R.id.view1,ConstraintSet.END,0);
+            constraintSet.connect(R.id.view2,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
+            constraintSet.connect(R.id.view2,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
+            constraintSet.connect(R.id.view2,ConstraintSet.END,R.id.view3,ConstraintSet.START,0);
+
+            constraintSet.setDimensionRatio(R.id.view2, "1");
+
+            //view 3
+
+            constraintSet.connect(R.id.view3,ConstraintSet.START,R.id.view2,ConstraintSet.END,0);
+            constraintSet.connect(R.id.view3,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
+            constraintSet.connect(R.id.view3,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
+            constraintSet.connect(R.id.view3,ConstraintSet.END,R.id.view4,ConstraintSet.START,0);
+
+            constraintSet.setDimensionRatio(R.id.view3, "1");
+
+            //view 4
+            //view4.requestLayout();
+            constraintSet.connect(R.id.view4,ConstraintSet.START,R.id.view3,ConstraintSet.END,0);
+            constraintSet.connect(R.id.view4,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
+            constraintSet.connect(R.id.view4,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
+            constraintSet.connect(R.id.view4,ConstraintSet.END,R.id.group_divider,ConstraintSet.END,0);
+
+            constraintSet.setDimensionRatio(R.id.view4, "1");
+
+            constraintSet.applyTo(group_divider);
 
         }
 
         add_record_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                if (resource.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-                    ConstraintSet constraintSet = new ConstraintSet();
-
-                    constraintSet.clone(group_divider);
-
-                    group_divider.getLayoutParams().width = group_action.getWidth();
-                    group_divider.getLayoutParams().height = group_action.getWidth()/6;
-
-                    //view 1
-                    constraintSet.connect(R.id.view1,ConstraintSet.START,R.id.group_divider,ConstraintSet.START,0);
-                    constraintSet.connect(R.id.view1,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-                    constraintSet.connect(R.id.view1,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-                    constraintSet.connect(R.id.view1,ConstraintSet.END,R.id.view2,ConstraintSet.START,0);
-                    constraintSet.setDimensionRatio(R.id.view1, "1");
-
-
-                    //view 2
-
-                    constraintSet.connect(R.id.view2,ConstraintSet.START,R.id.view1,ConstraintSet.END,0);
-                    constraintSet.connect(R.id.view2,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-                    constraintSet.connect(R.id.view2,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-                    constraintSet.connect(R.id.view2,ConstraintSet.END,R.id.view3,ConstraintSet.START,0);
-
-                    constraintSet.setDimensionRatio(R.id.view2, "1");
-
-                    //view 3
-
-                    constraintSet.connect(R.id.view3,ConstraintSet.START,R.id.view2,ConstraintSet.END,0);
-                    constraintSet.connect(R.id.view3,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-                    constraintSet.connect(R.id.view3,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-                    constraintSet.connect(R.id.view3,ConstraintSet.END,R.id.view4,ConstraintSet.START,0);
-
-                    constraintSet.setDimensionRatio(R.id.view3, "1");
-
-                    //view 4
-                    //view4.requestLayout();
-                    constraintSet.connect(R.id.view4,ConstraintSet.START,R.id.view3,ConstraintSet.END,0);
-                    constraintSet.connect(R.id.view4,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-                    constraintSet.connect(R.id.view4,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-                    constraintSet.connect(R.id.view4,ConstraintSet.END,R.id.group_divider,ConstraintSet.END,0);
-
-                    constraintSet.setDimensionRatio(R.id.view4, "1");
-
-                    constraintSet.applyTo(group_divider);
-
-                    button_1.startTransform();
-
-                } else {
-                    button_1.startTransform();
-                }
-
+                button_1.startTransform();
             }
         });
 
-        FitButton cancel_button = findViewById(R.id.cancel_action);
 
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,47 +193,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-
-
-/*
-        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
-        Resources resource = appBarLayout.getResources();
-
-
-        if (resource.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-
-            ConstraintSet constraintSet = new ConstraintSet();
-
-
-            constraintSet.setDimensionRatio(R.id.group_divider, "4:1");
-            //view 1
-            constraintSet.connect(R.id.view1,ConstraintSet.START,R.id.group_divider,ConstraintSet.START,0);
-            constraintSet.connect(R.id.view1,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-            constraintSet.connect(R.id.view1,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-            constraintSet.connect(R.id.view1,ConstraintSet.END,R.id.view2,ConstraintSet.START,0);
-
-            //view 2
-            constraintSet.connect(R.id.view2,ConstraintSet.START,R.id.view1,ConstraintSet.END,0);
-            constraintSet.connect(R.id.view2,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-            constraintSet.connect(R.id.view2,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-            constraintSet.connect(R.id.view2,ConstraintSet.END,R.id.view3,ConstraintSet.START,0);
-
-            //view 3
-            constraintSet.connect(R.id.view3,ConstraintSet.START,R.id.view2,ConstraintSet.END,0);
-            constraintSet.connect(R.id.view3,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-            constraintSet.connect(R.id.view3,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-            constraintSet.connect(R.id.view3,ConstraintSet.END,R.id.view4,ConstraintSet.START,0);
-
-            //view 4
-            constraintSet.connect(R.id.view4,ConstraintSet.START,R.id.view3,ConstraintSet.END,0);
-            constraintSet.connect(R.id.view4,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
-            constraintSet.connect(R.id.view4,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
-            constraintSet.connect(R.id.view4,ConstraintSet.END,R.id.group_divider,ConstraintSet.END,0);
-
-        }
-
- */
 
 
 
@@ -820,8 +770,5 @@ public class GameActivity extends AppCompatActivity {
     }
 
      */
-
-
-
 
 }

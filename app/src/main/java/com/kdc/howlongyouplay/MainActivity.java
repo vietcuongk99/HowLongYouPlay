@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -39,15 +40,36 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String user_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Danh sách game của bạn");
+        user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                final Toolbar toolbar = findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
+
+                String user_name = dataSnapshot.child("username").getValue().toString();
+                getSupportActionBar().setTitle(user_name);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_tab_layout);
