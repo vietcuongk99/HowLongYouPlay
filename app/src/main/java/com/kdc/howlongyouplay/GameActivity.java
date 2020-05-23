@@ -129,8 +129,7 @@ public class GameActivity extends AppCompatActivity {
             Point size = new Point();
             display.getSize(size);
             int height = size.y;
-            imageView.getLayoutParams().height = height / 4;
-            top_content.getLayoutParams().height = (height / 4)*245/200;
+            top_content.getLayoutParams().height = height/3;
 
         }
 
