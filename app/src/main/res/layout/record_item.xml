@@ -25,9 +25,7 @@
                     android:background="#CED8DF"
                     android:layout_width="match_parent"
                     android:layout_height="175dp"
-                    android:scaleType="centerCrop">
-
-                </ImageView>
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/game_title"
@@ -38,9 +36,7 @@
                     android:padding="10dp"
                     android:textColor="#fff"
                     android:layout_alignParentBottom="true"
-                    android:background="#B3000000">
-
-                </TextView>
+                    android:background="#B3000000" />
 
             </RelativeLayout>
 
