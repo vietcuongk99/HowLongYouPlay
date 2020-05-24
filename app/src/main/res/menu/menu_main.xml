@@ -16,7 +16,7 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/persona_statistic"
+        android:id="@+id/your_statistic"
         android:title="Thống kê cá nhân"
         app:showAsAction="never" />
 

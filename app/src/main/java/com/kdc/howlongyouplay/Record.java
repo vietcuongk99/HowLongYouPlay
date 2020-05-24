@@ -21,6 +21,14 @@ public class Record {
     public Record() {
     }
 
+    public Record(String game_title, String hour, String minute, String second) {
+        this.game_title = game_title;
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+
+    }
+
     public String getRecord_id() {
         return record_id;
     }

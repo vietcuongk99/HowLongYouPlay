@@ -51,5 +51,6 @@
     <string name="date_modified">Sửa lần cuối: %1$s</string>
     <string name="finished_date">Ngày hoàn thành: %1$s</string>
     <string name="note">Ghi chú: %1$s</string>
+    <string name="header_group">%1$s (%2$s)</string>
 
 </resources>

@@ -40,24 +40,20 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String user_id;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                final Toolbar toolbar = findViewById(R.id.toolbar);
-                setSupportActionBar(toolbar);
 
                 String user_name = dataSnapshot.child("username").getValue().toString();
                 getSupportActionBar().setTitle(user_name);
@@ -159,6 +155,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.edit_profile:
                 startActivity(new Intent(MainActivity.this, AccountActivity.class));
                 finish();
+                return true;
+
+            case R.id.your_statistic:
+                startActivity(new Intent(MainActivity.this, YourStatisticActivity.class));
+//                finish();
                 return true;
         }
         return false;

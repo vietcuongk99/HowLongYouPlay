@@ -18,13 +18,13 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="175dp">
+                android:layout_height="135dp">
 
                 <ImageView
                     android:id="@+id/game_image"
                     android:background="#CED8DF"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
+                    android:layout_height="135dp"
                     android:scaleType="centerCrop" />
 
                 <TextView
