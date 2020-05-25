@@ -60,17 +60,10 @@ public class YourStatisticActivity extends AppCompatActivity {
 
 
         playingList = new ArrayList<>();
-        getPlayingList();
-
         finishedList = new ArrayList<>();
-        getFinishedList();
-
         retiredList = new ArrayList<>();
-        getRetiredList();
-
         backlogList = new ArrayList<>();
-        getBackLogList();
-
+        getList();
 
         final List<String> listHeader = new ArrayList<>();
         mData = new HashMap<>();
@@ -94,103 +87,43 @@ public class YourStatisticActivity extends AppCompatActivity {
 
 
     // lấy ra danh sách gamelog để hiển thị
-    private void getBackLogList() {
+    private void getList() {
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final String user_id = firebaseUser.getUid();
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Logs").child(user_id).child("backlog");
+                .child("Logs").child(user_id);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 backlogList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    Record record = snapshot.getValue(Record.class);
-                    backlogList.add(record);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    // lấy ra danh sách gamelog để hiển thị
-    private void getFinishedList() {
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String user_id = firebaseUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id).child("finished");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 finishedList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    Record record = snapshot.getValue(Record.class);
-                    record.setRecord_id(snapshot.getKey());
-                    finishedList.add(record);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-    // lấy ra danh sách gamelog để hiển thị
-    private void getPlayingList() {
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String user_id = firebaseUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id).child("playing");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 playingList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    Record record = snapshot.getValue(Record.class);
-                    record.setRecord_id(snapshot.getKey());
-                    playingList.add(record);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-    private void getRetiredList() {
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String user_id = firebaseUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id).child("retired");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 retiredList.clear();
+
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                    Record record = snapshot.getValue(Record.class);
-                    retiredList.add(record);
+                    if(snapshot.hasChild("records")) {
+                        for (DataSnapshot snapshot1 : snapshot.child("records").getChildren()) {
+                            Record record = snapshot1.getValue(Record.class);
+
+                            if (record.getStatus().contains("playing")) {
+                                record.setRecord_id(snapshot1.getKey());
+                                playingList.add(record);
+                            } else if (record.getStatus().contains("finished")) {
+                                record.setRecord_id(snapshot1.getKey());
+                                finishedList.add(record);
+                            } else if (record.getStatus().contains("retired")) {
+                                record.setRecord_id(snapshot1.getKey());
+                                retiredList.add(record);
+                            } else {
+                                record.setRecord_id(snapshot1.getKey());
+                                backlogList.add(record);
+                            }
+                        }
+                    }
 
                 }
-
 
             }
 
@@ -199,6 +132,7 @@ public class YourStatisticActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     /*
