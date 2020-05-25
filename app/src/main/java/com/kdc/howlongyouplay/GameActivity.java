@@ -193,9 +193,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         add_playing = findViewById(R.id.add_playing);
         add_finished = findViewById(R.id.add_finished);
         add_backlog = findViewById(R.id.add_backlog);
@@ -217,7 +214,6 @@ public class GameActivity extends AppCompatActivity {
         id_game = intent.getExtras().get("game_id").toString();
         img_url = intent.getExtras().get("img_url").toString();
         icon_url = intent.getExtras().get("icon_url").toString();
-
 
         //Hiển thị id của game đã chọn qua Log
         Log.d("ID Game", "ID game được chọn: " + id_game);
@@ -265,12 +261,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                /*
                 if (checkSameLog(playingList, title)) {
                     Toast.makeText(GameActivity.this,
                             "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                             .show();
                 } else {
+
+                 */
 
 
                     // tạo builder và các phần tử liên quan
@@ -344,16 +342,58 @@ public class GameActivity extends AppCompatActivity {
                             hashMap.put("status", "playing");
                             hashMap.put("finished_date", "");
 
-                            DatabaseReference blank_record = databaseReference.child("playing").push();
 
-                            blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            final HashMap<String, Object> hashMap2 = new HashMap<>();
+                            hashMap2.put("game_title", title);
+                            hashMap2.put("icon_url", icon_url);
+                            hashMap2.put("image_url", img_url);
+                            hashMap2.put("records", "");
+
+                            //kiểm tra dữ liệu game của người dùng trong Log
+                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    toast.cancel();
-                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                            .show();
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    //nếu log của người dùng đã có game cần thêm record
+                                    if (dataSnapshot.hasChild(id_game)) {
+                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                        .show();
+                                            }
+                                        });
+                                    } else {
+                                        //nếu chưa có game cần thêm record
+                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                toast.cancel();
+                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(),
+                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                                .show();
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                                 }
                             });
+
+
 
 
                         }
@@ -366,7 +406,7 @@ public class GameActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
-                }
+                //}
             }
 
         });
@@ -377,12 +417,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                /*
                 if (checkSameLog(backlogList, title)) {
                     Toast.makeText(GameActivity.this,
                             "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                             .show();
                 } else {
+
+                 */
 
                     // tạo builder và các phần tử liên quan
                     final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
@@ -428,14 +470,53 @@ public class GameActivity extends AppCompatActivity {
                             hashMap.put("date_modified", "");
                             hashMap.put("status", "backlog");
 
-                            DatabaseReference blank_record = databaseReference.child("backlog").push();
+                            final HashMap<String, Object> hashMap2 = new HashMap<>();
+                            hashMap2.put("game_title", title);
+                            hashMap2.put("icon_url", icon_url);
+                            hashMap2.put("image_url", img_url);
+                            hashMap2.put("records", "");
 
-                            blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            //kiểm tra dữ liệu game của người dùng trong Log
+                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    toast.cancel();
-                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                            .show();
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    //nếu log của người dùng đã có game cần thêm record
+                                    if (dataSnapshot.hasChild(id_game)) {
+                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                        .show();
+                                            }
+                                        });
+                                    } else {
+                                        //nếu chưa có game cần thêm record
+                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                toast.cancel();
+                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(),
+                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                                .show();
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                                 }
                             });
                         }
@@ -449,7 +530,7 @@ public class GameActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
+            //}
 
         });
 
@@ -459,11 +540,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*
                 if (checkSameLog(finishedList, title)) {
                     Toast.makeText(GameActivity.this,
                             "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                             .show();
                 } else {
+
+                 */
 
 
                     // tạo builder và các phần tử liên quan
@@ -541,14 +625,53 @@ public class GameActivity extends AppCompatActivity {
                             hashMap.put("status", "finished");
                             hashMap.put("finished_date", finished_date);
 
-                            DatabaseReference blank_record = databaseReference.child("finished").push();
+                            final HashMap<String, Object> hashMap2 = new HashMap<>();
+                            hashMap2.put("game_title", title);
+                            hashMap2.put("icon_url", icon_url);
+                            hashMap2.put("image_url", img_url);
+                            hashMap2.put("records", "");
 
-                            blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            //kiểm tra dữ liệu game của người dùng trong Log
+                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    toast.cancel();
-                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                            .show();
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    //nếu log của người dùng đã có game cần thêm record
+                                    if (dataSnapshot.hasChild(id_game)) {
+                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                        .show();
+                                            }
+                                        });
+                                    } else {
+                                        //nếu chưa có game cần thêm record
+                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                toast.cancel();
+                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(),
+                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                                .show();
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                                 }
                             });
 
@@ -566,7 +689,7 @@ public class GameActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
+            //}
 
         });
 
@@ -576,11 +699,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*
                 if (checkSameLog(retiredList, title)) {
                     Toast.makeText(GameActivity.this,
                             "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                             .show();
                 } else {
+
+                 */
 
 
                     // tạo builder và các phần tử liên quan
@@ -655,17 +781,58 @@ public class GameActivity extends AppCompatActivity {
                             hashMap.put("status", "retired");
                             hashMap.put("finished_date", "");
 
-                            DatabaseReference blank_record = databaseReference.child("retired").push();
+                            final HashMap<String, Object> hashMap2 = new HashMap<>();
+                            hashMap2.put("game_title", title);
+                            hashMap2.put("icon_url", icon_url);
+                            hashMap2.put("image_url", img_url);
+                            hashMap2.put("records", "");
 
-                            blank_record.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            //kiểm tra dữ liệu game của người dùng trong Log
+                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    toast.cancel();
-                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                            .show();
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    //nếu log của người dùng đã có game cần thêm record
+                                    //bổ sung record mới trong records
+                                    if (dataSnapshot.hasChild(id_game)) {
+                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                        .show();
+                                            }
+                                        });
+
+                                    } else {
+                                        //nếu chưa có game cần thêm record
+                                        //thêm game và record tương ứng
+                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                toast.cancel();
+                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(),
+                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                                .show();
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                                 }
                             });
-
 
                         }
 
@@ -681,7 +848,7 @@ public class GameActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
+            //}
 
         });
 

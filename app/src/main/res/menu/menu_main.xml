@@ -19,6 +19,10 @@
         android:id="@+id/your_statistic"
         android:title="Thống kê cá nhân"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/game_list"
+        android:title="Danh sách game của tôi"
+        app:showAsAction="never" />
 
 
     <item

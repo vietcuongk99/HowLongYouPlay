@@ -84,7 +84,7 @@ public class RetiredListFragment extends Fragment {
     private void getRetiredList() {
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final String user_id = firebaseUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id).child("retired");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,12 +92,18 @@ public class RetiredListFragment extends Fragment {
                 retiredList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                    Record record = snapshot.getValue(Record.class);
-                    record.setRecord_id(snapshot.getKey());
-                    retiredList.add(record);
+                    if(snapshot.hasChild("records")) {
+                        for (DataSnapshot snapshot1 : snapshot.child("records").getChildren()) {
+                            Record record = snapshot1.getValue(Record.class);
+                            record.setGame_id(snapshot.getKey());
+                            if (record.getStatus().contains("retired")) {
+                                record.setRecord_id(snapshot1.getKey());
+                                retiredList.add(record);
+                            }
+                        }
+                    }
 
                 }
-
                 if (retiredList.size() != 0) {
                     loading_state_view.setVisibility(View.GONE);
                     recordAdapter = new RecordAdapter(getContext(),  retiredList);

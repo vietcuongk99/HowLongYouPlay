@@ -57,7 +57,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.header_title_card.setText(gameLog.getGame_title());
         Picasso.get().load(gameLog.getImg_url()).into(holder.background);
 
-        final String key = gameLog.getId_log();
 
         // xử lý sự kiện khi click vào một game trong danh sách tìm kiếm
         holder.itemView.setOnClickListener(new View.OnClickListener() {

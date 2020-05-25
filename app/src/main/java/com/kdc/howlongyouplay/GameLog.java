@@ -5,7 +5,7 @@ package com.kdc.howlongyouplay;
 
 public class GameLog {
     private String game_title;
-    private String id_log;
+    //private String id_log;
     private String year;
     private String id_game;
     private String img_url;
@@ -34,6 +34,7 @@ public class GameLog {
         this.game_title = game_title;
     }
 
+    /*
     public String getId_log() {
         return id_log;
     }
@@ -41,6 +42,8 @@ public class GameLog {
     public void setId_log(String id_log) {
         this.id_log = id_log;
     }
+
+     */
 
     public String getYear() {
         return year;

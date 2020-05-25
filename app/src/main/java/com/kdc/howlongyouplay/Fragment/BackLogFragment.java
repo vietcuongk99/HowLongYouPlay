@@ -80,8 +80,7 @@ public class BackLogFragment extends Fragment {
     private void getBackLogList() {
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final String user_id = firebaseUser.getUid();
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Logs").child(user_id).child("backlog");
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
 
         loading_state_view.setVisibility(View.VISIBLE);
         reference.addValueEventListener(new ValueEventListener() {
@@ -90,9 +89,16 @@ public class BackLogFragment extends Fragment {
                 backlogList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                    Record record = snapshot.getValue(Record.class);
-                    record.setRecord_id(snapshot.getKey());
-                    backlogList.add(record);
+                    if(snapshot.hasChild("records")) {
+                        for (DataSnapshot snapshot1 : snapshot.child("records").getChildren()) {
+                            Record record = snapshot1.getValue(Record.class);
+                            record.setGame_id(snapshot.getKey());
+                            if (record.getStatus().contains("backlog")) {
+                                record.setRecord_id(snapshot1.getKey());
+                                backlogList.add(record);
+                            }
+                        }
+                    }
 
                 }
 

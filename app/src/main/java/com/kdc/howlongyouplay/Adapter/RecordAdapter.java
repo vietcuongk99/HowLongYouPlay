@@ -233,7 +233,12 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                         new_minute_value = String.format("%02d", timeCorrect.getMinute());
                         new_second_value = String.format("%02d", timeCorrect.getSecond());
 
-                        if (record.getStatus().equals("finished")) {
+
+                        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                .child("Logs").child(user_id);
+
+                        if (record.getStatus().contains("finished")) {
                             new_finished_date = finished_date.getText().toString();
 
                             final HashMap<String, Object> hashMap = new HashMap<>();
@@ -244,11 +249,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                             hashMap.put("date_modified", date_modified);
                             hashMap.put("finished_date", new_finished_date);
 
-                            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                                    .child("Logs").child(user_id);
-
-                            databaseReference.child(record.getStatus()).child(key)
+                            databaseReference.child(record.getGame_id()).child("records").child(key)
                                     .updateChildren(hashMap)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -258,17 +259,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                                     .show();
                                         }
                                     });
-                        } else if (record.getStatus().equals("backlog")){
+                        } else if (record.getStatus().contains("backlog")){
 
                             final HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("note", new_note_detail);
                             hashMap.put("date_modified", date_modified);
 
-                            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                                    .child("Logs").child(user_id);
 
-                            databaseReference.child(record.getStatus()).child(key)
+                            databaseReference.child(record.getGame_id()).child("records").child(key)
                                     .updateChildren(hashMap)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -288,11 +286,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                             hashMap.put("note", new_note_detail);
                             hashMap.put("date_modified", date_modified);
 
-                            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                                    .child("Logs").child(user_id);
-
-                            databaseReference.child(record.getStatus()).child(key)
+                            databaseReference.child(record.getGame_id()).child("records").child(key)
                                     .updateChildren(hashMap)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -304,8 +298,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                     });
 
                         }
-
-
 
                     }
                 });
@@ -345,14 +337,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                         toast.show();
 
 
-                        databaseReference.child(record.getStatus()).addValueEventListener(new ValueEventListener() {
+                        databaseReference.child(record.getGame_id()).child("records").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
 
                                     if(snapshot.getKey().equals(key)) {
-                                        databaseReference.child(record.getStatus()).child(key)
+                                        databaseReference.child(record.getGame_id()).child("records").child(key)
                                                 .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {

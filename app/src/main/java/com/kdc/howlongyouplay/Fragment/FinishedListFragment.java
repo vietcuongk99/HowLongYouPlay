@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class FinishedListFragment extends Fragment {
     private void getFinishedList() {
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final String user_id = firebaseUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id).child("finished");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,9 +81,16 @@ public class FinishedListFragment extends Fragment {
                 finishedList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                    Record record = snapshot.getValue(Record.class);
-                    record.setRecord_id(snapshot.getKey());
-                    finishedList.add(record);
+                    if(snapshot.hasChild("records")) {
+                        for (DataSnapshot snapshot1 : snapshot.child("records").getChildren()) {
+                            Record record = snapshot1.getValue(Record.class);
+                            record.setGame_id(snapshot.getKey());
+                            if (record.getStatus().contains("finished")) {
+                                record.setRecord_id(snapshot1.getKey());
+                                finishedList.add(record);
+                            }
+                        }
+                    }
 
                 }
 

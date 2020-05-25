@@ -42,7 +42,7 @@
                     <ImageView
                         android:id="@+id/user_page_img"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="100dp"
                         android:src="#D8E5EF"
                         android:tintMode="src_over"
                         android:tint="#B3FFFFFF"
@@ -68,7 +68,7 @@
                     android:orientation="vertical"
                     android:background="#FFFFFF"
                     android:layout_margin="30dp"
-                    android:padding="20dp">
+                    android:padding="10dp">
 
                     <LinearLayout
                         android:id="@+id/name"
