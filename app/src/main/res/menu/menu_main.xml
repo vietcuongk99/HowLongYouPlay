@@ -20,7 +20,7 @@
         android:title="Thống kê cá nhân"
         app:showAsAction="never" />
     <item
-        android:id="@+id/game_list"
+        android:id="@+id/your_list"
         android:title="Danh sách game của tôi"
         app:showAsAction="never" />
 

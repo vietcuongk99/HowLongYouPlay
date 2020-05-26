@@ -1,16 +1,21 @@
 package com.kdc.howlongyouplay;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Log {
 
     private String user_id;
     private String game_title;
-    private List<String> id_log;
+    private String image_url;
+    private String icon_url;
+    private HashMap<String, Object> records;
     private String year;
     private String id_game;
-    private String img_url;
-    private String icon_url;
+
+    public Log() {
+
+    }
 
     public String getGame_title() {
         return game_title;
@@ -20,13 +25,6 @@ public class Log {
         this.game_title = game_title;
     }
 
-    public List<String> getId_log() {
-        return id_log;
-    }
-
-    public void setId_log(List<String> id_log) {
-        this.id_log = id_log;
-    }
 
     public String getYear() {
         return year;
@@ -44,12 +42,21 @@ public class Log {
         this.id_game = id_game;
     }
 
-    public String getImg_url() {
-        return img_url;
+
+    public HashMap<String, Object> getRecords() {
+        return records;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setRecords(HashMap<String, Object> records) {
+        this.records = records;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getIcon_url() {

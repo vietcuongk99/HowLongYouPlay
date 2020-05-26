@@ -159,7 +159,10 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.your_statistic:
                 startActivity(new Intent(MainActivity.this, YourStatisticActivity.class));
-//                finish();
+                return true;
+
+            case R.id.your_list:
+                startActivity(new Intent(MainActivity.this, YourListActivity.class));
                 return true;
         }
         return false;

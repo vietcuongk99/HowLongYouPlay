@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".YourStatisticActivity"></activity>
+        <activity android:name=".YourListActivity"></activity>
+        <activity android:name=".YourStatisticActivity" />
         <activity android:name=".ImageViewerActivity" />
         <activity android:name=".AccountActivity" />
         <activity
