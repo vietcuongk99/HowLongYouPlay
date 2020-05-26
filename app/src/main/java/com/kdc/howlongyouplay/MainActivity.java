@@ -3,13 +3,19 @@ package com.kdc.howlongyouplay;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -39,6 +45,8 @@ import com.kdc.howlongyouplay.Fragment.RetiredListFragment;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private long backPressedTime;
+    private Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,10 +167,12 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.your_statistic:
                 startActivity(new Intent(MainActivity.this, YourStatisticActivity.class));
+                finish();
                 return true;
 
             case R.id.your_list:
                 startActivity(new Intent(MainActivity.this, YourListActivity.class));
+                finish();
                 return true;
         }
         return false;
@@ -200,4 +210,39 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+        // nếu khoảng cách giữa 2 lần nhấn nút Back > 2 giây, thông báo hiện ra
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            super.onBackPressed();
+            return;
+        }
+
+        else {
+            backToast = Toast.makeText(MainActivity.this, "Ấn nút Back lần nữa để thoát", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
+    }
+
+    private boolean isNetworkConnected() {
+        boolean connected = false;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            connected = true;
+        }
+
+        return connected;
+    }
+
 }

@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.opencensus.resource.Resource;
+import me.ibrahimsn.lib.CirclesLoadingView;
 
 public class YourListActivity extends AppCompatActivity {
     private LogAdapter logAdapter;
@@ -29,21 +34,24 @@ public class YourListActivity extends AppCompatActivity {
     private HashMap<String, Object> records;
 
     private RecyclerView recyclerView;
+    private RelativeLayout loading_state_view, empty_state_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_list);
 
-
         recyclerView = findViewById(R.id.your_list);
+        loading_state_view = findViewById(R.id.loading);
+        empty_state_view = findViewById(R.id.empty_list);
         recyclerView.setHasFixedSize(true);
 
         Resources resource = recyclerView.getResources();
 
         if (resource.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+            recyclerView.setLayoutManager(new GridLayoutManager(YourListActivity.this, 2));
         } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+            recyclerView.setLayoutManager(new GridLayoutManager(YourListActivity.this, 1));
         }
 
         logList = new ArrayList<>();
@@ -59,7 +67,7 @@ public class YourListActivity extends AppCompatActivity {
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Logs").child(userid);
-
+        loading_state_view.setVisibility(View.VISIBLE);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -71,9 +79,9 @@ public class YourListActivity extends AppCompatActivity {
                         log.setId_game(snapshot.getKey());
 
                         android.util.Log.d("GAME ID: ", log.getId_game());
-                        android.util.Log.d("IMG URL: ", log.getGame_title().toString());
+                        android.util.Log.d("GAME TITLE: ", log.getGame_title().toString());
                         android.util.Log.d("IMG URL: ", log.getImage_url().toString());
-                        android.util.Log.d("IMG URL: ", log.getIcon_url().toString());
+                        android.util.Log.d("ICON URL: ", log.getIcon_url().toString());
 
                         DatabaseReference databaseReference1 = databaseReference.child(log.getId_game()).child("records");
                         databaseReference1.addValueEventListener(new ValueEventListener() {
@@ -99,11 +107,21 @@ public class YourListActivity extends AppCompatActivity {
 
                     }
 
+                }
+
+                if (logList.size() != 0) {
+                    loading_state_view.setVisibility(View.GONE);
+                    logAdapter = new LogAdapter(YourListActivity.this, logList);
+                    recyclerView.setAdapter(logAdapter);
+
+                }
+                else {
+                    loading_state_view.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    empty_state_view.setVisibility(View.VISIBLE);
 
                 }
 
-                logAdapter = new LogAdapter(getApplicationContext(), logList);
-                recyclerView.setAdapter(logAdapter);
 
             }
 
@@ -113,5 +131,13 @@ public class YourListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

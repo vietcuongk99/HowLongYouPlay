@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nhập thời gian chơi:"
-                    android:textSize="20sp">
+                    android:textSize="15sp">
 
                 </TextView>
 
@@ -91,6 +91,62 @@
 
                 </LinearLayout>
 
+                <RadioGroup
+                    android:id="@+id/group_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/playing"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="10dp"
+                            android:text="Playing">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/retired"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Retired">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/finished"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="10dp"
+                            android:text="Finished"/>
+
+                        <CheckBox
+                            android:id="@+id/backlog"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Backlog"/>
+
+                    </LinearLayout>
+
+                </RadioGroup>
+
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/finished_date"
                     android:layout_width="match_parent"
@@ -106,7 +162,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="normal"
-                    android:hint="Ghi chú khác" />
+                    android:hint="Ghi chú khác"
+                    android:textSize="15sp"/>
 
             </LinearLayout>
 

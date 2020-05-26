@@ -71,7 +71,6 @@ public class GameActivity extends AppCompatActivity {
     private RelativeLayout top_content;
 
 
-    private ArrayList<Record> finishedList, playingList, retiredList, backlogList;
     private DatabaseReference databaseReference;
 
     private Toast toast;
@@ -245,16 +244,6 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-        //lấy ra danh sách Log để so sánh
-        finishedList = new ArrayList<>();
-        playingList = new ArrayList<>();
-        retiredList = new ArrayList<>();
-        backlogList = new ArrayList<>();
-        readLogList();
-
-
-
-
 
         // xử lý sự kiện cho nút add
         add_playing.setOnClickListener(new View.OnClickListener() {
@@ -267,145 +256,144 @@ public class GameActivity extends AppCompatActivity {
                             "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                             .show();
                 } else {
-
                  */
 
 
-                    // tạo builder và các phần tử liên quan
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                // tạo builder và các phần tử liên quan
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
 
-                    LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
-                    final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
+                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
-                    FitButton accept_btn = view.findViewById(R.id.accept_btn);
-                    FitButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
-                    final MaterialEditText hour = view.findViewById(R.id.hour);
-                    final MaterialEditText minute = view.findViewById(R.id.minute);
-                    final MaterialEditText second = view.findViewById(R.id.second);
-                    final MaterialEditText note = view.findViewById(R.id.note);
-
-
-                    //hiển thị dialog
-                    builder.setTitle("Thêm bản ghi mới");
-                    builder.setView(view);
-                    builder.setCancelable(false);
-                    final AlertDialog dialog = builder.show();
-
-                    accept_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            dialog.dismiss();
-                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
-                            toast.show();
-
-                            Calendar calendar = Calendar.getInstance();
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
-                            String time = timeFormat.format(calendar.getTime());
-                            note_detail = note.getText().toString();
-                            date_created = time;
-                            if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
-                                hour_value = "00";
-                            } else {
-                                hour_format = Integer.parseInt(hour.getText().toString());
-                            }
-                            if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
-                                minute_value = "00";
-                            } else {
-                                minute_format = Integer.parseInt(minute.getText().toString());
-                            }
-                            if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
-                                second_value = "00";
-                            } else {
-                                second_format = Integer.parseInt(second.getText().toString());
-                            }
-
-                            TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
-                            timeCorrect.correctTimeInput();
-
-                            hour_value = String.format("%02d", timeCorrect.getHour());
-                            minute_value = String.format("%02d", timeCorrect.getMinute());
-                            second_value = String.format("%02d", timeCorrect.getSecond());
+                final MaterialEditText hour = view.findViewById(R.id.hour);
+                final MaterialEditText minute = view.findViewById(R.id.minute);
+                final MaterialEditText second = view.findViewById(R.id.second);
+                final MaterialEditText note = view.findViewById(R.id.note);
 
 
-                            final HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("game_title", title);
-                            hashMap.put("icon_url", icon_url);
-                            hashMap.put("image_url", img_url);
-                            hashMap.put("hour", hour_value);
-                            hashMap.put("minute", minute_value);
-                            hashMap.put("second", second_value);
-                            hashMap.put("note", note_detail);
-                            hashMap.put("date_created", date_created);
-                            hashMap.put("date_modified", "");
-                            hashMap.put("status", "playing");
-                            hashMap.put("finished_date", "");
+                //hiển thị dialog
+                builder.setTitle("Thêm bản ghi mới");
+                builder.setView(view);
+                builder.setCancelable(false);
+                final AlertDialog dialog = builder.show();
+
+                accept_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                        toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
+                        String time = timeFormat.format(calendar.getTime());
+                        note_detail = note.getText().toString();
+                        date_created = time;
+                        if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
+                            hour_value = "00";
+                        } else {
+                            hour_format = Integer.parseInt(hour.getText().toString());
+                        }
+                        if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
+                            minute_value = "00";
+                        } else {
+                            minute_format = Integer.parseInt(minute.getText().toString());
+                        }
+                        if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
+                            second_value = "00";
+                        } else {
+                            second_format = Integer.parseInt(second.getText().toString());
+                        }
+
+                        TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                        timeCorrect.correctTimeInput();
+
+                        hour_value = String.format("%02d", timeCorrect.getHour());
+                        minute_value = String.format("%02d", timeCorrect.getMinute());
+                        second_value = String.format("%02d", timeCorrect.getSecond());
 
 
-                            final HashMap<String, Object> hashMap2 = new HashMap<>();
-                            hashMap2.put("game_title", title);
-                            hashMap2.put("icon_url", icon_url);
-                            hashMap2.put("image_url", img_url);
-                            hashMap2.put("records", "");
+                        final HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("game_title", title);
+                        hashMap.put("icon_url", icon_url);
+                        hashMap.put("image_url", img_url);
+                        hashMap.put("hour", hour_value);
+                        hashMap.put("minute", minute_value);
+                        hashMap.put("second", second_value);
+                        hashMap.put("note", note_detail);
+                        hashMap.put("date_created", date_created);
+                        hashMap.put("date_modified", "");
+                        hashMap.put("status", "playing");
+                        hashMap.put("finished_date", "");
 
-                            //kiểm tra dữ liệu game của người dùng trong Log
-                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
-                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    //nếu log của người dùng đã có game cần thêm record
-                                    if (dataSnapshot.hasChild(id_game)) {
-                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
-                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                        .show();
-                                            }
-                                        });
-                                    } else {
-                                        //nếu chưa có game cần thêm record
-                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                toast.cancel();
-                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
-                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),
-                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                                .show();
-                                                    }
-                                                });
-                                            }
-                                        });
+                        final HashMap<String, Object> hashMap2 = new HashMap<>();
+                        hashMap2.put("game_title", title);
+                        hashMap2.put("icon_url", icon_url);
+                        hashMap2.put("image_url", img_url);
 
-                                    }
+
+                        //kiểm tra dữ liệu game của người dùng trong Log
+                        //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                //nếu log của người dùng đã có game cần thêm record
+                                if (dataSnapshot.hasChild(id_game)) {
+                                    DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+                                } else {
+                                    //nếu chưa có game cần thêm record
+                                    databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            toast.cancel();
+                                            DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                            .show();
+                                                }
+                                            });
+                                        }
+                                    });
 
                                 }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
 
-                                }
-                            });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-
-
-                        }
-                    });
+                            }
+                        });
 
 
-                    close_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
+
+
+                    }
+                });
+
+
+                close_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 //}
             }
 
@@ -417,119 +405,137 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                /*
-                if (checkSameLog(backlogList, title)) {
-                    Toast.makeText(GameActivity.this,
-                            "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
 
-                 */
+                // tạo builder và các phần tử liên quan
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
 
-                    // tạo builder và các phần tử liên quan
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-
-                    LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
-                    final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
-
-                    FitButton accept_btn = view.findViewById(R.id.accept_btn);
-                    FitButton close_btn = view.findViewById(R.id.close_btn);
-
-                    final MaterialEditText note = view.findViewById(R.id.note);
-                    LinearLayout play_time = view.findViewById(R.id.play_time);
-                    TextView title_1 = view.findViewById(R.id.title_1);
-                    title_1.setVisibility(View.GONE);
-                    play_time.setVisibility(View.GONE);
-
-                    //hiển thị dialog
-                    builder.setTitle("Thêm bản ghi mới");
-                    builder.setView(view);
-                    builder.setCancelable(false);
-                    final AlertDialog dialog = builder.show();
-
-                    accept_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
-                            toast.show();
-
-                            Calendar calendar = Calendar.getInstance();
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
-                            String time = timeFormat.format(calendar.getTime());
-                            note_detail = note.getText().toString();
-                            date_created = time;
+                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
 
-                            final HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("game_title", title);
-                            hashMap.put("icon_url", icon_url);
-                            hashMap.put("image_url", img_url);
-                            hashMap.put("note", note_detail);
-                            hashMap.put("date_created", date_created);
-                            hashMap.put("date_modified", "");
-                            hashMap.put("status", "backlog");
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
-                            final HashMap<String, Object> hashMap2 = new HashMap<>();
-                            hashMap2.put("game_title", title);
-                            hashMap2.put("icon_url", icon_url);
-                            hashMap2.put("image_url", img_url);
-                            hashMap2.put("records", "");
+                final MaterialEditText hour = view.findViewById(R.id.hour);
+                final MaterialEditText minute = view.findViewById(R.id.minute);
+                final MaterialEditText second = view.findViewById(R.id.second);
+                final MaterialEditText note = view.findViewById(R.id.note);
 
-                            //kiểm tra dữ liệu game của người dùng trong Log
-                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
-                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    //nếu log của người dùng đã có game cần thêm record
-                                    if (dataSnapshot.hasChild(id_game)) {
-                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
-                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                        .show();
-                                            }
-                                        });
-                                    } else {
-                                        //nếu chưa có game cần thêm record
-                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                toast.cancel();
-                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
-                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),
-                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                                .show();
-                                                    }
-                                                });
-                                            }
-                                        });
+                //hiển thị dialog
+                builder.setTitle("Thêm bản ghi mới");
+                builder.setView(view);
+                builder.setCancelable(false);
+                final AlertDialog dialog = builder.show();
 
-                                    }
+                accept_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
+                        String time = timeFormat.format(calendar.getTime());
+                        note_detail = note.getText().toString();
+                        date_created = time;
+                        if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
+                            hour_value = "00";
+                        } else {
+                            hour_format = Integer.parseInt(hour.getText().toString());
+                        }
+                        if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
+                            minute_value = "00";
+                        } else {
+                            minute_format = Integer.parseInt(minute.getText().toString());
+                        }
+                        if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
+                            second_value = "00";
+                        } else {
+                            second_format = Integer.parseInt(second.getText().toString());
+                        }
+
+                        TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                        timeCorrect.correctTimeInput();
+
+                        hour_value = String.format("%02d", timeCorrect.getHour());
+                        minute_value = String.format("%02d", timeCorrect.getMinute());
+                        second_value = String.format("%02d", timeCorrect.getSecond());
+
+
+                        final HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("game_title", title);
+                        hashMap.put("icon_url", icon_url);
+                        hashMap.put("image_url", img_url);
+                        hashMap.put("hour", hour_value);
+                        hashMap.put("minute", minute_value);
+                        hashMap.put("second", second_value);
+                        hashMap.put("note", note_detail);
+                        hashMap.put("date_created", date_created);
+                        hashMap.put("date_modified", "");
+                        hashMap.put("status", "backlog");
+                        hashMap.put("finished_date", "");
+
+                        final HashMap<String, Object> hashMap2 = new HashMap<>();
+                        hashMap2.put("game_title", title);
+                        hashMap2.put("icon_url", icon_url);
+                        hashMap2.put("image_url", img_url);
+
+                        //kiểm tra dữ liệu game của người dùng trong Log
+                        //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                //nếu log của người dùng đã có game cần thêm record
+                                if (dataSnapshot.hasChild(id_game)) {
+                                    DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+                                } else {
+                                    //nếu chưa có game cần thêm record
+                                    databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            toast.cancel();
+                                            DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                            .show();
+                                                }
+                                            });
+                                        }
+                                    });
 
                                 }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
 
-                                }
-                            });
-                        }
-                    });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
 
 
-                    close_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-                }
+                close_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
             //}
 
         });
@@ -540,155 +546,144 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                /*
-                if (checkSameLog(finishedList, title)) {
-                    Toast.makeText(GameActivity.this,
-                            "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
+                // tạo builder và các phần tử liên quan
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
 
-                 */
+                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
-                    // tạo builder và các phần tử liên quan
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                final MaterialEditText hour = view.findViewById(R.id.hour);
+                final MaterialEditText minute = view.findViewById(R.id.minute);
+                final MaterialEditText second = view.findViewById(R.id.second);
+                final MaterialEditText note = view.findViewById(R.id.note);
+                final MaterialEditText date_completed = view.findViewById(R.id.finished_date);
 
-                    LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
-                    final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
-
-                    FitButton accept_btn = view.findViewById(R.id.accept_btn);
-                    FitButton close_btn = view.findViewById(R.id.close_btn);
-
-                    final MaterialEditText hour = view.findViewById(R.id.hour);
-                    final MaterialEditText minute = view.findViewById(R.id.minute);
-                    final MaterialEditText second = view.findViewById(R.id.second);
-                    final MaterialEditText note = view.findViewById(R.id.note);
-                    final MaterialEditText date_completed = view.findViewById(R.id.finished_date);
-
-                    date_completed.setVisibility(View.VISIBLE);
+                date_completed.setVisibility(View.VISIBLE);
 
 
-                    //hiển thị dialog
-                    builder.setTitle("Thêm bản ghi mới");
-                    builder.setView(view);
-                    builder.setCancelable(false);
-                    final AlertDialog dialog = builder.show();
+                //hiển thị dialog
+                builder.setTitle("Thêm bản ghi mới");
+                builder.setView(view);
+                builder.setCancelable(false);
+                final AlertDialog dialog = builder.show();
 
-                    accept_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                accept_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                            dialog.dismiss();
-                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
-                            toast.show();
+                        dialog.dismiss();
+                        toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                        toast.show();
 
-                            Calendar calendar = Calendar.getInstance();
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
-                            String time = timeFormat.format(calendar.getTime());
-                            note_detail = note.getText().toString();
-                            date_created = time;
-                            finished_date = date_completed.getText().toString();
-                            if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
-                                hour_value = "00";
-                            } else {
-                                hour_format = Integer.parseInt(hour.getText().toString());
-                            }
-                            if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
-                                minute_value = "00";
-                            } else {
-                                minute_format = Integer.parseInt(minute.getText().toString());
-                            }
-                            if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
-                                second_value = "00";
-                            } else {
-                                second_format = Integer.parseInt(second.getText().toString());
-                            }
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
+                        String time = timeFormat.format(calendar.getTime());
+                        note_detail = note.getText().toString();
+                        date_created = time;
+                        finished_date = date_completed.getText().toString();
+                        if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
+                            hour_value = "00";
+                        } else {
+                            hour_format = Integer.parseInt(hour.getText().toString());
+                        }
+                        if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
+                            minute_value = "00";
+                        } else {
+                            minute_format = Integer.parseInt(minute.getText().toString());
+                        }
+                        if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
+                            second_value = "00";
+                        } else {
+                            second_format = Integer.parseInt(second.getText().toString());
+                        }
 
-                            TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
-                            timeCorrect.correctTimeInput();
+                        TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                        timeCorrect.correctTimeInput();
 
-                            hour_value = String.format("%02d", timeCorrect.getHour());
-                            minute_value = String.format("%02d", timeCorrect.getMinute());
-                            second_value = String.format("%02d", timeCorrect.getSecond());
+                        hour_value = String.format("%02d", timeCorrect.getHour());
+                        minute_value = String.format("%02d", timeCorrect.getMinute());
+                        second_value = String.format("%02d", timeCorrect.getSecond());
 
 
-                            final HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("game_title", title);
-                            hashMap.put("icon_url", icon_url);
-                            hashMap.put("image_url", img_url);
-                            hashMap.put("hour", hour_value);
-                            hashMap.put("minute", minute_value);
-                            hashMap.put("second", second_value);
-                            hashMap.put("note", note_detail);
-                            hashMap.put("date_created", date_created);
-                            hashMap.put("date_modified", "");
-                            hashMap.put("status", "finished");
-                            hashMap.put("finished_date", finished_date);
+                        final HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("game_title", title);
+                        hashMap.put("icon_url", icon_url);
+                        hashMap.put("image_url", img_url);
+                        hashMap.put("hour", hour_value);
+                        hashMap.put("minute", minute_value);
+                        hashMap.put("second", second_value);
+                        hashMap.put("note", note_detail);
+                        hashMap.put("date_created", date_created);
+                        hashMap.put("date_modified", "");
+                        hashMap.put("status", "finished");
+                        hashMap.put("finished_date", finished_date);
 
-                            final HashMap<String, Object> hashMap2 = new HashMap<>();
-                            hashMap2.put("game_title", title);
-                            hashMap2.put("icon_url", icon_url);
-                            hashMap2.put("image_url", img_url);
-                            hashMap2.put("records", "");
+                        final HashMap<String, Object> hashMap2 = new HashMap<>();
+                        hashMap2.put("game_title", title);
+                        hashMap2.put("icon_url", icon_url);
+                        hashMap2.put("image_url", img_url);
 
-                            //kiểm tra dữ liệu game của người dùng trong Log
-                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
-                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //kiểm tra dữ liệu game của người dùng trong Log
+                        //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                    //nếu log của người dùng đã có game cần thêm record
-                                    if (dataSnapshot.hasChild(id_game)) {
-                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
-                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                        .show();
-                                            }
-                                        });
-                                    } else {
-                                        //nếu chưa có game cần thêm record
-                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                toast.cancel();
-                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
-                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),
-                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                                .show();
-                                                    }
-                                                });
-                                            }
-                                        });
-
-                                    }
+                                //nếu log của người dùng đã có game cần thêm record
+                                if (dataSnapshot.hasChild(id_game)) {
+                                    DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+                                } else {
+                                    //nếu chưa có game cần thêm record
+                                    databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            toast.cancel();
+                                            DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                            .show();
+                                                }
+                                            });
+                                        }
+                                    });
 
                                 }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
 
-                                }
-                            });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-
-
-                        }
-                    });
+                            }
+                        });
 
 
-                    close_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-                }
+
+
+                    }
+                });
+
+
+                close_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
             //}
 
         });
@@ -705,149 +700,148 @@ public class GameActivity extends AppCompatActivity {
                             "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
                             .show();
                 } else {
-
                  */
 
 
-                    // tạo builder và các phần tử liên quan
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                // tạo builder và các phần tử liên quan
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
 
-                    LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
-                    final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
+                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
 
-                    FitButton accept_btn = view.findViewById(R.id.accept_btn);
-                    FitButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
-                    final MaterialEditText hour = view.findViewById(R.id.hour);
-                    final MaterialEditText minute = view.findViewById(R.id.minute);
-                    final MaterialEditText second = view.findViewById(R.id.second);
-                    final MaterialEditText note = view.findViewById(R.id.note);
-
-
-                    //hiển thị dialog
-                    builder.setTitle("Thêm bản ghi mới");
-                    builder.setView(view);
-                    builder.setCancelable(false);
-                    final AlertDialog dialog = builder.show();
-
-                    accept_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
-                            toast.show();
-
-                            Calendar calendar = Calendar.getInstance();
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
-                            String time = timeFormat.format(calendar.getTime());
-                            note_detail = note.getText().toString();
-                            date_created = time;
+                final MaterialEditText hour = view.findViewById(R.id.hour);
+                final MaterialEditText minute = view.findViewById(R.id.minute);
+                final MaterialEditText second = view.findViewById(R.id.second);
+                final MaterialEditText note = view.findViewById(R.id.note);
 
 
-                            if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
-                                hour_value = "00";
-                            } else {
-                                hour_format = Integer.parseInt(hour.getText().toString());
-                            }
-                            if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
-                                minute_value = "00";
-                            } else {
-                                minute_format = Integer.parseInt(minute.getText().toString());
-                            }
-                            if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
-                                second_value = "00";
-                            } else {
-                                second_format = Integer.parseInt(second.getText().toString());
-                            }
+                //hiển thị dialog
+                builder.setTitle("Thêm bản ghi mới");
+                builder.setView(view);
+                builder.setCancelable(false);
+                final AlertDialog dialog = builder.show();
 
-                            TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
-                            timeCorrect.correctTimeInput();
+                accept_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        toast = Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                        toast.show();
 
-                            hour_value = String.format("%02d", timeCorrect.getHour());
-                            minute_value = String.format("%02d", timeCorrect.getMinute());
-                            second_value = String.format("%02d", timeCorrect.getSecond());
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
+                        String time = timeFormat.format(calendar.getTime());
+                        note_detail = note.getText().toString();
+                        date_created = time;
 
 
-                            final HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("game_title", title);
-                            hashMap.put("icon_url", icon_url);
-                            hashMap.put("image_url", img_url);
-                            hashMap.put("hour", hour_value);
-                            hashMap.put("minute", minute_value);
-                            hashMap.put("second", second_value);
-                            hashMap.put("note", note_detail);
-                            hashMap.put("date_created", date_created);
-                            hashMap.put("date_modified", "");
-                            hashMap.put("status", "retired");
-                            hashMap.put("finished_date", "");
+                        if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
+                            hour_value = "00";
+                        } else {
+                            hour_format = Integer.parseInt(hour.getText().toString());
+                        }
+                        if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
+                            minute_value = "00";
+                        } else {
+                            minute_format = Integer.parseInt(minute.getText().toString());
+                        }
+                        if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
+                            second_value = "00";
+                        } else {
+                            second_format = Integer.parseInt(second.getText().toString());
+                        }
 
-                            final HashMap<String, Object> hashMap2 = new HashMap<>();
-                            hashMap2.put("game_title", title);
-                            hashMap2.put("icon_url", icon_url);
-                            hashMap2.put("image_url", img_url);
-                            hashMap2.put("records", "");
+                        TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                        timeCorrect.correctTimeInput();
 
-                            //kiểm tra dữ liệu game của người dùng trong Log
-                            //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
-                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        hour_value = String.format("%02d", timeCorrect.getHour());
+                        minute_value = String.format("%02d", timeCorrect.getMinute());
+                        second_value = String.format("%02d", timeCorrect.getSecond());
 
-                                    //nếu log của người dùng đã có game cần thêm record
-                                    //bổ sung record mới trong records
-                                    if (dataSnapshot.hasChild(id_game)) {
-                                        DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
-                                        blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                        .show();
-                                            }
-                                        });
 
-                                    } else {
-                                        //nếu chưa có game cần thêm record
-                                        //thêm game và record tương ứng
-                                        databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                toast.cancel();
-                                                DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
-                                                blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(),
-                                                                "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                                .show();
-                                                    }
-                                                });
-                                            }
-                                        });
+                        final HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("game_title", title);
+                        hashMap.put("icon_url", icon_url);
+                        hashMap.put("image_url", img_url);
+                        hashMap.put("hour", hour_value);
+                        hashMap.put("minute", minute_value);
+                        hashMap.put("second", second_value);
+                        hashMap.put("note", note_detail);
+                        hashMap.put("date_created", date_created);
+                        hashMap.put("date_modified", "");
+                        hashMap.put("status", "retired");
+                        hashMap.put("finished_date", "");
 
-                                    }
+                        final HashMap<String, Object> hashMap2 = new HashMap<>();
+                        hashMap2.put("game_title", title);
+                        hashMap2.put("icon_url", icon_url);
+                        hashMap2.put("image_url", img_url);
+
+
+                        //kiểm tra dữ liệu game của người dùng trong Log
+                        //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                //nếu log của người dùng đã có game cần thêm record
+                                //bổ sung record mới trong records
+                                if (dataSnapshot.hasChild(id_game)) {
+                                    DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+
+                                } else {
+                                    //nếu chưa có game cần thêm record
+                                    //thêm game và record tương ứng
+                                    databaseReference.child(id_game).setValue(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            toast.cancel();
+                                            DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                            .show();
+                                                }
+                                            });
+                                        }
+                                    });
 
                                 }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
 
-                                }
-                            });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
+                            }
+                        });
 
-
-
-                    });
+                    }
 
 
-                    close_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-                }
+
+                });
+
+
+                close_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
             //}
 
         });
@@ -856,86 +850,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-    // kiểm tra xem game được chọn đã có trong log của người dùng hiện tại chưa
-    // nếu chưa trả về true
-    private boolean checkSameLog(ArrayList<Record> records, String game_title) {
-
-        for(int i = 0; i<records.size(); i++) {
-            if(records.get(i).getGame_title().equals(game_title)) {
-                return true;
-            }
-        }
-
-        return false;
-
-    }
-
-
-    // lấy ra danh sách game có trong danh sách của người dùng hiện tại
-    private void readLogList() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
-
-        // lấy ra danh sách GameLog và sử dụng LogAdapter
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("playing")) {
-                    playingList.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.child("playing").getChildren()) {
-
-                        Record record = snapshot.getValue(Record.class);
-                        record.setRecord_id(snapshot.getKey());
-                        playingList.add(record);
-
-                    }
-                }
-                if (dataSnapshot.hasChild("finished")) {
-                    finishedList.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.child("finished").getChildren()) {
-
-                        Record record = snapshot.getValue(Record.class);
-                        record.setRecord_id(snapshot.getKey());
-                        finishedList.add(record);
-
-                    }
-                }
-                if (dataSnapshot.hasChild("retired")) {
-                    retiredList.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.child("retired").getChildren()) {
-
-                        Record record = snapshot.getValue(Record.class);
-                        record.setRecord_id(snapshot.getKey());
-                        retiredList.add(record);
-
-                    }
-                }
-                if (dataSnapshot.hasChild("backlog")) {
-                    backlogList.clear();
-                    for(DataSnapshot snapshot : dataSnapshot.child("backlog").getChildren()) {
-
-                        Record record = snapshot.getValue(Record.class);
-                        record.setRecord_id(snapshot.getKey());
-                        backlogList.add(record);
-
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 
     //nhận biết thay đổi khi chọn button trong RadioGroup
     /*private void onChangeStatusPicked(CompoundButton compoundButton, boolean isChecked) {
         RadioButton radio = (RadioButton) compoundButton;
         Log.d("Trạng thái: ", radio.getText().toString() + isChecked);
     }
-
      */
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

@@ -10,63 +10,77 @@
 
     <!-- nội dung hiển thị trên card -->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/record_detail"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/record_detail"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/game_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/game_title"
                 android:layout_width="match_parent"
-                android:layout_height="125dp">
-
-                <ImageView
-                    android:id="@+id/game_image"
-                    android:background="#CED8DF"
-                    android:layout_width="match_parent"
-                    android:layout_height="125dp"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:id="@+id/game_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title"
-                    android:textSize="15sp"
-                    android:padding="10dp"
-                    android:textColor="#fff"
-                    android:layout_alignParentBottom="true"
-                    android:background="#B3000000" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/group_action"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.github.nikartm.button.FitButton
-                    android:id="@+id/edit_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fb_text="@string/edit"
-                    android:layout_toStartOf="@+id/delete_btn"
-                    android:padding="10dp"
-                    app:fb_textSize="15sp"/>
-
-                <com.github.nikartm.button.FitButton
-                    android:id="@+id/delete_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fb_text="@string/delete"
-                    android:layout_alignParentEnd="true"
-                    android:padding="10dp"
-                    app:fb_textSize="15sp"/>
-
-            </RelativeLayout>
-
+                android:layout_height="wrap_content"
+                android:text="@string/title"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/group_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#B3000000">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:visibility="gone">
+
+            </TextView>
+
+            <com.github.nikartm.button.FitButton
+                android:id="@+id/edit_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fb_text="@string/edit"
+                android:layout_toStartOf="@+id/delete_btn"
+                android:padding="10dp"
+                app:fb_textSize="15sp"
+                app:fb_textColor="#fff"/>
+
+            <com.github.nikartm.button.FitButton
+                android:id="@+id/delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fb_text="@string/delete"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp"
+                app:fb_textSize="15sp"
+                app:fb_textColor="#fff"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

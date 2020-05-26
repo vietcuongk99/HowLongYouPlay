@@ -76,8 +76,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         final String key = record.getRecord_id();
         //gán dữ liệu vào view
         holder.game_title.setText(record.getGame_title());
-//        Picasso.get().load(record.getIcon_url()).into(holder.icon_game);
-        Picasso.get().load(record.getImage_url()).into(holder.game_image);
+        Picasso.get().load(record.getIcon_url()).into(holder.game_icon);
+        holder.status.setText(record.getStatus());
 
         // xử lý sự kiện khi nhấn vào một record tương ứng
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,45 +99,27 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 ImageButton close_btn = view_header.findViewById(R.id.close_btn);
                 TextView finished_date = view.findViewById(R.id.finished_date);
 
-                if (record.getStatus().equals("backlog")) {
-                    play_time.setText("Chưa xác định");
-                    finished_date.setText("Chưa xác định");
-                    status.setText(record.getStatus());
-                    date_created.setText(record.getDate_created());
-                    if (record.getNote().equals("")) {
-                        note.setText("Không có ghi chú");
-                    } else {
-                        note.setText(record.getNote());
-                    }
-                    if(record.getDate_modified().equals("")) {
-                        date_modified.setText("Chưa xác định");
-                    } else {
-                        date_modified.setText(record.getDate_modified());
-                    }
+                status.setText(record.getStatus());
+                date_created.setText(record.getDate_created());
+                play_time.setText(mContext.getResources().getString(R.string.format_time,
+                        record.getHour(), record.getMinute(), record.getSecond()));
 
+                if(record.getDate_modified().equals("")) {
+                    date_modified.setText("Chưa xác định");
                 } else {
-                    status.setText(record.getStatus());
-                    date_created.setText(record.getDate_created());
-                    play_time.setText(mContext.getResources().getString(R.string.format_time,
-                            record.getHour(), record.getMinute(), record.getSecond()));
+                    date_modified.setText(record.getDate_modified());
+                }
 
-                    if(record.getDate_modified().equals("")) {
-                        date_modified.setText("Chưa xác định");
-                    } else {
-                        date_modified.setText(record.getDate_modified());
-                    }
+                if(record.getFinished_date().equals("")) {
+                    finished_date.setText("Chưa xác định");
+                } else {
+                    finished_date.setText(record.getFinished_date());
+                }
 
-                    if(record.getFinished_date().equals("")) {
-                        finished_date.setText("Chưa xác định");
-                    } else {
-                        finished_date.setText(record.getFinished_date());
-                    }
-
-                    if (record.getNote().equals("")) {
-                        note.setText("Không có ghi chú");
-                    } else {
-                        note.setText(record.getNote());
-                    }
+                if (record.getNote().equals("")) {
+                    note.setText("Không có ghi chú");
+                } else {
+                    note.setText(record.getNote());
                 }
 
                 builder.setCancelable(true);
@@ -395,14 +377,16 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     public static class RecordViewHolder extends RecyclerView.ViewHolder{
 
         private TextView game_title;
-        private ImageView game_image;
+        private ImageView game_icon;
+        private TextView status;
         private FitButton edit_btn;
         private FitButton delete_btn;
 
         public RecordViewHolder(View itemView) {
             super(itemView);
             game_title = itemView.findViewById(R.id.game_title);
-            game_image = itemView.findViewById(R.id.game_image);
+            game_icon = itemView.findViewById(R.id.game_icon);
+            status = itemView.findViewById(R.id.status);
             edit_btn = itemView.findViewById(R.id.edit_btn);
             delete_btn = itemView.findViewById(R.id.delete_btn);
         }

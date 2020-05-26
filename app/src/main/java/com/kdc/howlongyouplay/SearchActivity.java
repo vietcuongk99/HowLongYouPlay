@@ -145,7 +145,10 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

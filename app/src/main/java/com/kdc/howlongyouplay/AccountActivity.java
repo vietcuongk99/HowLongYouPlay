@@ -140,10 +140,8 @@ public class AccountActivity extends AppCompatActivity {
                             user_gender.setText(gender);
                         }
 
-                    }
-                    else {
+                    } else {
                         user_name.setText(username);
-
 
                         if (information.equals("")) {
                             user_infor.setText(getApplicationContext().getResources().getString(R.string.zero));
@@ -343,9 +341,13 @@ public class AccountActivity extends AppCompatActivity {
         user_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AccountActivity.this, ImageViewerActivity.class);
-                intent.putExtra("img_url", img_url);
-                startActivity(intent);
+                if (!img_url.equals("default")) {
+                    Intent intent = new Intent(AccountActivity.this, ImageViewerActivity.class);
+                    intent.putExtra("img_url", img_url);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(AccountActivity.this, "Chưa có ảnh đại diện", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -496,7 +498,6 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
-
     private boolean isNetworkConnected() {
         boolean connected = false;
 
@@ -509,5 +510,10 @@ public class AccountActivity extends AppCompatActivity {
         return connected;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AccountActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

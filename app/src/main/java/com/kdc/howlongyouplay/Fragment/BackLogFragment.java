@@ -62,7 +62,6 @@ public class BackLogFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
 
-
         resource = recyclerView.getResources();
 
         if (resource.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

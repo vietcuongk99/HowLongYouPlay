@@ -79,7 +79,6 @@ public class YourStatisticActivity extends AppCompatActivity {
         mData.put(listHeader.get(3), backlogList);
 
 
-
         statisticAdapter = new StatisticAdapter(this, listHeader, mData);
         expandableListView.setAdapter(statisticAdapter);
 
@@ -135,7 +134,6 @@ public class YourStatisticActivity extends AppCompatActivity {
 
     }
 
-    /*
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -144,5 +142,4 @@ public class YourStatisticActivity extends AppCompatActivity {
         finish();
     }
 
-     */
 }
