@@ -80,28 +80,31 @@
         android:id="@+id/group_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progress_horizontal"
-        android:background="#6A729C">
+        android:layout_below="@+id/progress_horizontal">
 
-        <ImageButton
-            android:id="@+id/add_btn"
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/accept_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/checked"
-            android:clickable="true"
-            android:focusable="true"
-            android:contentDescription="@string/submit_btn" />
+            app:fb_icon="@mipmap/checked"
+            android:contentDescription="@string/submit_btn"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            app:fb_rippleColor="#27AF2D"/>
 
-        <ImageButton
+
+
+        <com.github.nikartm.button.FitButton
             android:id="@+id/close_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/close"
-            android:clickable="true"
-            android:focusable="true"
-            android:contentDescription="@string/close" />
+            app:fb_icon="@mipmap/close"
+            android:contentDescription="@string/close"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            app:fb_rippleColor="#FF0000"/>
 
     </LinearLayout>
 

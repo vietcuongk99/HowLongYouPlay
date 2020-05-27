@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.nikartm.button.FitButton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -177,8 +178,10 @@ public class AccountActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater = LayoutInflater.from(AccountActivity.this);
                 View view = layoutInflater.from(AccountActivity.this).inflate(R.layout.dialog_edit_avatar, null);
 
-                ImageButton add_btn = view.findViewById(R.id.add_btn);
-                ImageButton close_btn = view.findViewById(R.id.close_btn);
+                View header_view = layoutInflater.from(AccountActivity.this).inflate(R.layout.dialog_edit_avatar_header, null);
+
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 //                Button choose_image = view.findViewById(R.id.choose_image);
                 final ProgressBar progressBar = view.findViewById(R.id.progress_horizontal);
                 new_avatar = view.findViewById(R.id.new_avatar);
@@ -186,18 +189,12 @@ public class AccountActivity extends AppCompatActivity {
                 action_choose_img = view.findViewById(R.id.action_choose_img);
 
                 //hiển thị dialog
-                builder.setTitle("Thay đổi ảnh đại diện");
+                builder.setCustomTitle(header_view);
                 builder.setView(view);
                 builder.setCancelable(false);
                  final AlertDialog dialog = builder.show();
 
-                // xử lý sự kiện khi click nút chọn ảnh
-//                choose_image.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        chooseImage();
-//                    }
-//                });
+
 
                 // xử lý sự kiện khi click vào khung ảnh
                 choose_img.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +214,7 @@ public class AccountActivity extends AppCompatActivity {
 
 
                 // xử lý sự kiện khi nhấn xác nhân/đóng
-                add_btn.setOnClickListener(new View.OnClickListener() {
+                accept_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (isNetworkConnected()) {
@@ -248,42 +245,18 @@ public class AccountActivity extends AppCompatActivity {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(AccountActivity.this);
                 final View view = LayoutInflater.from(AccountActivity.this).inflate(R.layout.dialog_edit_information, null);
 
+                View header_view = LayoutInflater.from(AccountActivity.this).inflate(R.layout.dialog_edit_information_header, null);
+
                 final MaterialEditText new_name = view.findViewById(R.id.new_username);
                 final MaterialEditText new_infor = view.findViewById(R.id.new_infor);
 
                 final RadioGroup genderGroup = view.findViewById(R.id.gender_group);
-                RadioButton male_picked = view.findViewById(R.id.male);
-                RadioButton female_picked = view.findViewById(R.id.female);
-                RadioButton other_gender_picked = view.findViewById(R.id.lgbt);
 
-                //kiểm tra thay đổi khi lựa chọn giới tính trong genderGroup
-                /*
-                male_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeGenderPicked(buttonView, isChecked);
-                    }
-                });
-                female_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeGenderPicked(buttonView, isChecked);
-                    }
-                });
-                other_gender_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onChangeGenderPicked(buttonView, isChecked);
-                    }
-                });
-
-                 */
-
-                ImageButton accept_btn = view.findViewById(R.id.accept_btn);
-                ImageButton close_btn = view.findViewById(R.id.close_btn);
+                FitButton accept_btn = view.findViewById(R.id.accept_btn);
+                FitButton close_btn = view.findViewById(R.id.close_btn);
 
                 //hiển thị dialog
-                builder.setTitle("Thay đổi thông tin cá nhân");
+                builder.setCustomTitle(header_view);
                 builder.setView(view);
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
@@ -356,10 +329,6 @@ public class AccountActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
 
 
 
@@ -462,13 +431,6 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-
-    //nhận biết thay đổi khi chọn button trong RadioGroup
-//    private void onChangeGenderPicked(CompoundButton compoundButton, boolean isChecked) {
-//        RadioButton radio = (RadioButton) compoundButton;
-//
-//        Log.d("Giới tính: ", radio.getText().toString() + isChecked);
-//    }
     private void requestStoragePermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             Toast.makeText(AccountActivity.this, "Ứng dụng yêu cầu quyền truy cập bộ nhớ. Vui lòng bật quyền này cho ứng dụng trong Cài đặt.", Toast.LENGTH_LONG).show();

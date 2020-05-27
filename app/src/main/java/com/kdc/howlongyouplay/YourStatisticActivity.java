@@ -109,13 +109,16 @@ public class YourStatisticActivity extends AppCompatActivity {
                             if (record.getStatus().contains("playing")) {
                                 record.setRecord_id(snapshot1.getKey());
                                 playingList.add(record);
-                            } else if (record.getStatus().contains("finished")) {
+                            }
+                            if (record.getStatus().contains("finished")) {
                                 record.setRecord_id(snapshot1.getKey());
                                 finishedList.add(record);
-                            } else if (record.getStatus().contains("retired")) {
+                            }
+                            if (record.getStatus().contains("retired")) {
                                 record.setRecord_id(snapshot1.getKey());
                                 retiredList.add(record);
-                            } else {
+                            }
+                            if (record.getStatus().contains("backlog")) {
                                 record.setRecord_id(snapshot1.getKey());
                                 backlogList.add(record);
                             }

@@ -21,7 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingHorizontal="20dp"
+                android:paddingBottom="10dp">
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/new_username"
@@ -29,20 +30,21 @@
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="normal"
                     android:layout_marginBottom="10dp"
-                    android:hint="Tên của bạn" />
+                    android:hint="Tên của bạn"
+                    android:textSize="15sp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:paddingVertical="20dp">
+                    android:paddingVertical="10dp">
 
                     <TextView
                         android:id="@+id/user_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/gender"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:layout_alignParentStart="true" />
 
                     <RadioGroup
@@ -57,7 +59,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nam"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             android:checked="true" />
 
 
@@ -66,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nữ"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
 
 
                         <RadioButton
@@ -74,7 +76,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Khác"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
 
                     </RadioGroup>
 
@@ -85,7 +87,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="normal"
-                    android:hint="Mô tả bản thân" />
+                    android:hint="Mô tả bản thân"
+                    android:textSize="15sp"/>
 
             </LinearLayout>
 
@@ -96,29 +99,31 @@
             android:id="@+id/group_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#6A729C">
+            android:layout_alignParentBottom="true">
 
-            <ImageButton
+            <com.github.nikartm.button.FitButton
                 android:id="@+id/accept_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/checked"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/submit_btn" />
+                app:fb_icon="@mipmap/checked"
+                android:contentDescription="@string/submit_btn"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_rippleColor="#27AF2D"/>
 
 
-            <ImageButton
+
+            <com.github.nikartm.button.FitButton
                 android:id="@+id/close_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/close"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/close" />
+                app:fb_icon="@mipmap/close"
+                android:contentDescription="@string/close"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:fb_rippleColor="#FF0000"/>
 
         </LinearLayout>
 

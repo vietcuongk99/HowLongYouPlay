@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +49,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     private Context mContext;
     private List<Record> recordList;
+
+    private CheckBox playing, finished, retired, backlog;
+    private MaterialEditText finished_date;
     private Toast toast;
     private int hour_format, minute_format, second_format;
 
@@ -78,7 +83,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         //gán dữ liệu vào view
         holder.game_title.setText(record.getGame_title());
         Picasso.get().load(record.getIcon_url()).into(holder.game_icon);
-        holder.status.setText(record.getStatus());
 
         // xử lý sự kiện khi nhấn vào một record tương ứng
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -92,14 +96,29 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 final View view = layoutInflater.inflate(R.layout.dialog_record, null);
                 final View view_header = layoutInflater.inflate(R.layout.dialog_record_header, null);
                 TextView play_time = view.findViewById(R.id.play_time);
-                TextView status = view.findViewById(R.id.status);
                 TextView note = view.findViewById(R.id.note);
                 TextView date_created = view.findViewById(R.id.date_created);
                 TextView date_modified = view.findViewById(R.id.date_modified);
                 FitButton close_btn = view_header.findViewById(R.id.close_btn);
-                TextView finished_date = view.findViewById(R.id.finished_date);
+                TextView finished_date_value = view.findViewById(R.id.finished_date);
+                TextView playing_status = view.findViewById(R.id.playing_status);
+                TextView finished_status = view.findViewById(R.id.finished_status);
+                TextView retired_status = view.findViewById(R.id.retired_status);
+                TextView backlog_status = view.findViewById(R.id.backlog_status);
 
-                status.setText(record.getStatus());
+                if (record.getStatus().contains("playing")) {
+                    playing_status.setVisibility(View.VISIBLE);
+                }
+                if (record.getStatus().contains("finished")) {
+                    finished_status.setVisibility(View.VISIBLE);
+                }
+                if (record.getStatus().contains("retired")) {
+                    retired_status.setVisibility(View.VISIBLE);
+                }
+                if (record.getStatus().contains("backlog")) {
+                    backlog_status.setVisibility(View.VISIBLE);
+                }
+
                 date_created.setText(record.getDate_created());
                 play_time.setText(mContext.getResources().getString(R.string.format_time,
                         record.getHour(), record.getMinute(), record.getSecond()));
@@ -111,9 +130,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 }
 
                 if(record.getFinished_date().equals("")) {
-                    finished_date.setText("Chưa xác định");
+                    finished_date_value.setText("Chưa xác định");
                 } else {
-                    finished_date.setText(record.getFinished_date());
+                    finished_date_value.setText(record.getFinished_date());
                 }
 
                 if (record.getNote().equals("")) {
@@ -159,23 +178,33 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 final MaterialEditText minute = view.findViewById(R.id.minute);
                 final MaterialEditText second = view.findViewById(R.id.second);
                 final MaterialEditText note = view.findViewById(R.id.note);
-                final MaterialEditText finished_date = view.findViewById(R.id.finished_date);
-                TextView title_1 = view.findViewById(R.id.title_1);
-                LinearLayout play_time = view.findViewById(R.id.play_time);
+                finished_date = view.findViewById(R.id.finished_date);
+
+                playing = view.findViewById(R.id.playing);
+                finished = view.findViewById(R.id.finished);
+                retired = view.findViewById(R.id.retired);
+                backlog = view.findViewById(R.id.backlog);
 
 
-                CheckBox playing = view.findViewById(R.id.playing);
-                CheckBox finished = view.findViewById(R.id.finished);
-                CheckBox retired = view.findViewById(R.id.retired);
-                CheckBox backlog = view.findViewById(R.id.backlog);
+                List<CheckBox> list = new ArrayList<CheckBox>();
+                list.add(playing);
+                list.add(finished);
+                list.add(retired);
+                list.add(backlog);
 
-
-                if (record.getStatus().equals("finished")) {
-                    finished_date.setVisibility(View.VISIBLE);
-                } else if (record.getStatus().equals("backlog")) {
-                    title_1.setVisibility(View.GONE);
-                    play_time.setVisibility(View.GONE);
+                String text = record.getStatus();
+                for (CheckBox item: list) {
+                    if (text.contains(item.getText().toString().toLowerCase())) {
+                        item.setChecked(true);
+                    }
                 }
+
+
+                final List<CheckBox> checkBoxList = new ArrayList<>();
+                checkBoxList.add(playing);
+                checkBoxList.add(finished);
+                checkBoxList.add(retired);
+                checkBoxList.add(backlog);
 
 
                 //hiển thị dialog
@@ -184,109 +213,112 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
 
+                if (record.getStatus().contains("finished")) {
+                    finished_date.setVisibility(View.VISIBLE);
+                }
+
                 // xử lý sự kiện khi nút xác nhận sửa record
                 accept_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
-                        toast = Toast.makeText(mContext, "Sửa thành công", Toast.LENGTH_SHORT);
-                        toast.show();
-                        String new_hour_value, new_minute_value, new_second_value, new_note_detail,  date_modified, new_finished_date;
 
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MM-yyyy" + ", " + "HH:mm:ss a");
-                        date_modified = timeFormat.format(calendar.getTime());
-                        new_note_detail = note.getText().toString();
-
-
-
-                        if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
-                            new_hour_value = "00";
+                        if (!playing.isChecked() && !finished.isChecked() && !retired.isChecked() && !backlog.isChecked()) {
+                            Toast.makeText(mContext, "Bạn chưa chọn box nào", Toast.LENGTH_SHORT).show();
                         } else {
-                            hour_format = Integer.parseInt(hour.getText().toString());
-                        }
-                        if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
-                            new_minute_value = "00";
-                        } else {
-                            minute_format = Integer.parseInt(minute.getText().toString());
-                        }
-                        if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
-                            new_second_value = "00";
-                        } else {
-                            second_format = Integer.parseInt(second.getText().toString());
-                        }
-
-                        TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
-                        timeCorrect.correctTimeInput();
-
-                        new_hour_value = String.format("%02d", timeCorrect.getHour());
-                        new_minute_value = String.format("%02d", timeCorrect.getMinute());
-                        new_second_value = String.format("%02d", timeCorrect.getSecond());
+                            StringBuilder status = new StringBuilder();
+                            attachCheckListener(checkBoxList);
+                            for (CheckBox item: checkBoxList) {
+                                if (item.isChecked()) {
+                                    status.append(item.getText().toString().toLowerCase());
+                                }
+                            }
 
 
-                        String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                                .child("Logs").child(user_id);
-
-                        if (record.getStatus().contains("finished")) {
-                            new_finished_date = finished_date.getText().toString();
-
-                            final HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("hour", new_hour_value);
-                            hashMap.put("minute", new_minute_value);
-                            hashMap.put("second", new_second_value);
-                            hashMap.put("note", new_note_detail);
-                            hashMap.put("date_modified", date_modified);
-                            hashMap.put("finished_date", new_finished_date);
-
-                            databaseReference.child(record.getGame_id()).child("records").child(key)
-                                    .updateChildren(hashMap)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            toast.cancel();
-                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                    .show();
-                                        }
-                                    });
-                        } else if (record.getStatus().contains("backlog")){
-
-                            final HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("note", new_note_detail);
-                            hashMap.put("date_modified", date_modified);
+                            dialog.dismiss();
+                            toast = Toast.makeText(mContext, "Sửa thành công", Toast.LENGTH_SHORT);
+                            toast.show();
 
 
-                            databaseReference.child(record.getGame_id()).child("records").child(key)
-                                    .updateChildren(hashMap)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            toast.cancel();
-                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                    .show();
-                                        }
-                                    });
+                            String new_hour_value, new_minute_value, new_second_value, new_note_detail,  date_modified, new_finished_date;
 
-                        }   else {
+                            Calendar calendar = Calendar.getInstance();
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/yyyy" + ", " + "HH:mm:ss a");
+                            date_modified = timeFormat.format(calendar.getTime());
+                            new_note_detail = note.getText().toString();
 
-                            final HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("hour", new_hour_value);
-                            hashMap.put("minute", new_minute_value);
-                            hashMap.put("second", new_second_value);
-                            hashMap.put("note", new_note_detail);
-                            hashMap.put("date_modified", date_modified);
 
-                            databaseReference.child(record.getGame_id()).child("records").child(key)
-                                    .updateChildren(hashMap)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            toast.cancel();
-                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                    .show();
-                                        }
-                                    });
+                            if (hour.getText().toString().equals("") || Integer.parseInt(hour.getText().toString()) == 0) {
+                                new_hour_value = "00";
+                            } else {
+                                hour_format = Integer.parseInt(hour.getText().toString());
+                            }
+                            if (minute.getText().toString().equals("") || Integer.parseInt(minute.getText().toString()) == 0) {
+                                new_minute_value = "00";
+                            } else {
+                                minute_format = Integer.parseInt(minute.getText().toString());
+                            }
+                            if (second.getText().toString().equals("") || Integer.parseInt(second.getText().toString()) == 0) {
+                                new_second_value = "00";
+                            } else {
+                                second_format = Integer.parseInt(second.getText().toString());
+                            }
 
+                            TimeCorrect timeCorrect = new TimeCorrect(hour_format, minute_format, second_format);
+                            timeCorrect.correctTimeInput();
+
+                            new_hour_value = String.format("%02d", timeCorrect.getHour());
+                            new_minute_value = String.format("%02d", timeCorrect.getMinute());
+                            new_second_value = String.format("%02d", timeCorrect.getSecond());
+
+
+                            String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                    .child("Logs").child(user_id);
+
+                            if (record.getStatus().contains("finished")) {
+                                new_finished_date = finished_date.getText().toString();
+
+                                final HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put("hour", new_hour_value);
+                                hashMap.put("minute", new_minute_value);
+                                hashMap.put("second", new_second_value);
+                                hashMap.put("note", new_note_detail);
+                                hashMap.put("status", status.toString());
+                                hashMap.put("date_modified", date_modified);
+                                hashMap.put("finished_date", new_finished_date);
+
+                                databaseReference.child(record.getGame_id()).child("records").child(key)
+                                        .updateChildren(hashMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                toast.cancel();
+                                                Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                        .show();
+                                            }
+                                        });
+                            } else {
+
+                                final HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put("hour", new_hour_value);
+                                hashMap.put("minute", new_minute_value);
+                                hashMap.put("second", new_second_value);
+                                hashMap.put("note", new_note_detail);
+                                hashMap.put("status", status.toString());
+                                hashMap.put("date_modified", date_modified);
+
+                                databaseReference.child(record.getGame_id()).child("records").child(key)
+                                        .updateChildren(hashMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                toast.cancel();
+                                                Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                        .show();
+                                            }
+                                        });
+
+                            }
                         }
 
                     }
@@ -386,7 +418,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
         private TextView game_title;
         private ImageView game_icon;
-        private TextView status;
         private FitButton edit_btn;
         private FitButton delete_btn;
 
@@ -394,11 +425,34 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             super(itemView);
             game_title = itemView.findViewById(R.id.game_title);
             game_icon = itemView.findViewById(R.id.game_icon);
-            status = itemView.findViewById(R.id.status);
             edit_btn = itemView.findViewById(R.id.edit_btn);
             delete_btn = itemView.findViewById(R.id.delete_btn);
         }
     }
 
 
+
+    CompoundButton.OnCheckedChangeListener m_listener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        }
+    };
+
+
+    public void attachCheckListener(List<CheckBox> checkBoxes) {
+
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setOnCheckedChangeListener(m_listener);
+        }
+
+
+    }
+
+    public void detachCheckListener(CheckBox playing, CheckBox finished, CheckBox retired, CheckBox backlog) {
+        playing.setOnCheckedChangeListener(null);
+        finished.setOnCheckedChangeListener(null);
+        retired.setOnCheckedChangeListener(null);
+        backlog.setOnCheckedChangeListener(null);
+    }
 }

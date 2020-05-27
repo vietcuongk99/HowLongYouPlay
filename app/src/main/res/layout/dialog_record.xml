@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/title_1"
@@ -38,22 +38,68 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/title_2"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Trạng thái:"
-                android:textSize="15sp"
-                android:textStyle="normal" />
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/title_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Trạng thái:"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="2.5">
+                    <TextView
+                        android:id="@+id/playing_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Playing"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/finished_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Finished"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/retired_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Retired"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/backlog_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Backlog"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/title_3"
