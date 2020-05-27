@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:id="@+id/title_1"
@@ -25,8 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Thời gian chơi:"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/play_time"
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/format_time"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,15 +44,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Trạng thái:"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -60,15 +61,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Ngày hoàn thành:"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/finished_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -77,15 +78,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Ghi chú:"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -94,32 +95,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Ngày tạo:"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/date_created"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/title_5"
+                android:id="@+id/title_6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Sửa lần cuối:"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/date_modified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
 

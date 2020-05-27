@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/user_name"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -91,7 +91,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="2.5"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
                             android:textAlignment="center"/>
                     </LinearLayout>
@@ -109,7 +109,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/gender"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -117,7 +117,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="2.5"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
                             android:text="%1$s"
                             android:textAlignment="center"/>
@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/user_infor"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -144,7 +144,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2.5"
-                            android:textSize="20sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
                             android:text="%1$s"
                             android:textAlignment="center"/>

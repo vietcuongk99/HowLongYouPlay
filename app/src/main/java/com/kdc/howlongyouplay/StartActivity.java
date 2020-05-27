@@ -13,7 +13,6 @@ public class StartActivity extends AppCompatActivity {
     Button login, register;
     ImageView background;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

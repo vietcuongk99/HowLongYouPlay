@@ -264,6 +264,7 @@ public class GameActivity extends AppCompatActivity {
 
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
+                final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
                 FitButton accept_btn = view.findViewById(R.id.accept_btn);
                 FitButton close_btn = view.findViewById(R.id.close_btn);
@@ -275,7 +276,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                 //hiển thị dialog
-                builder.setTitle("Thêm bản ghi mới");
+                builder.setCustomTitle(header_view);
                 builder.setView(view);
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
@@ -411,6 +412,7 @@ public class GameActivity extends AppCompatActivity {
 
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
+                final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
 
                 FitButton accept_btn = view.findViewById(R.id.accept_btn);
@@ -423,7 +425,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                 //hiển thị dialog
-                builder.setTitle("Thêm bản ghi mới");
+                builder.setCustomTitle(header_view);
                 builder.setView(view);
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
@@ -551,6 +553,7 @@ public class GameActivity extends AppCompatActivity {
 
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
+                final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
                 FitButton accept_btn = view.findViewById(R.id.accept_btn);
                 FitButton close_btn = view.findViewById(R.id.close_btn);
@@ -565,7 +568,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                 //hiển thị dialog
-                builder.setTitle("Thêm bản ghi mới");
+                builder.setCustomTitle(header_view);
                 builder.setView(view);
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
@@ -708,6 +711,7 @@ public class GameActivity extends AppCompatActivity {
 
                 LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
+                final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
                 FitButton accept_btn = view.findViewById(R.id.accept_btn);
                 FitButton close_btn = view.findViewById(R.id.close_btn);
@@ -719,7 +723,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                 //hiển thị dialog
-                builder.setTitle("Thêm bản ghi mới");
+                builder.setCustomTitle(header_view);
                 builder.setView(view);
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();

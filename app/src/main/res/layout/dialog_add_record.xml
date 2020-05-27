@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nhập thời gian chơi:"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_marginBottom="10dp">
 
                 </TextView>
@@ -46,7 +46,7 @@
                         app:met_floatingLabel="none"
                         android:hint="giờ"
                         android:inputType="number"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textAlignment="center"
                         android:padding="10dp"/>
 
@@ -66,7 +66,7 @@
                         app:met_floatingLabel="none"
                         android:hint="phút"
                         android:inputType="number"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textAlignment="center"
                         android:padding="10dp"/>
 
@@ -88,7 +88,7 @@
                         app:met_floatingLabel="none"
                         android:hint="giây"
                         android:inputType="number"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textAlignment="center"
                         android:padding="10dp"/>
 
@@ -110,7 +110,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:met_floatingLabel="normal"
-                    android:hint="Ghi chú khác" />
+                    android:hint="Ghi chú khác"
+                    android:textSize="15sp"/>
 
             </LinearLayout>
 

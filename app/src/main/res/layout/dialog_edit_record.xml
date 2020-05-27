@@ -28,9 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nhập thời gian chơi:"
-                    android:textSize="15sp">
-
-                </TextView>
+                    android:textSize="15sp"
+                    android:paddingVertical="10dp"/>
 
                 <LinearLayout
                     android:id="@+id/play_time"
@@ -43,11 +42,10 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
-                        android:hint="@string/zero_value"
+                        android:hint="giờ"
                         android:inputType="number"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textAlignment="center"/>
-
 
 
                     <TextView
@@ -56,17 +54,16 @@
                         android:text=":"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textAlignment="center">
+                        android:textAlignment="center" />
 
-                    </TextView>
                     <com.rengwuxian.materialedittext.MaterialEditText
                         android:id="@+id/minute"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
-                        android:hint="@string/zero_value"
+                        android:hint="phút"
                         android:inputType="number"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textAlignment="center"/>
 
                     <TextView
@@ -75,18 +72,16 @@
                         android:text=":"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textAlignment="center">
-
-                    </TextView>
+                        android:textAlignment="center" />
 
                     <com.rengwuxian.materialedittext.MaterialEditText
                         android:id="@+id/second"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         app:met_floatingLabel="none"
-                        android:hint="@string/zero_value"
+                        android:hint="giây"
                         android:inputType="number"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textAlignment="center"/>
 
                 </LinearLayout>

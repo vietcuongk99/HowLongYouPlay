@@ -257,24 +257,27 @@ public class AccountActivity extends AppCompatActivity {
                 RadioButton other_gender_picked = view.findViewById(R.id.lgbt);
 
                 //kiểm tra thay đổi khi lựa chọn giới tính trong genderGroup
-//                male_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        onChangeGenderPicked(buttonView, isChecked);
-//                    }
-//                });
-//                female_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        onChangeGenderPicked(buttonView, isChecked);
-//                    }
-//                });
-//                other_gender_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        onChangeGenderPicked(buttonView, isChecked);
-//                    }
-//                });
+                /*
+                male_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        onChangeGenderPicked(buttonView, isChecked);
+                    }
+                });
+                female_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        onChangeGenderPicked(buttonView, isChecked);
+                    }
+                });
+                other_gender_picked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        onChangeGenderPicked(buttonView, isChecked);
+                    }
+                });
+
+                 */
 
                 ImageButton accept_btn = view.findViewById(R.id.accept_btn);
                 ImageButton close_btn = view.findViewById(R.id.close_btn);
@@ -320,7 +323,6 @@ public class AccountActivity extends AppCompatActivity {
                             });
 
                         }
-
 
                     }
                 });

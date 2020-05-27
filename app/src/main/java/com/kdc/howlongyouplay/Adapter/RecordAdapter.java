@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -87,7 +88,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 // tạo builder và các phần tử liên quan
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
-
                 LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                 final View view = layoutInflater.inflate(R.layout.dialog_record, null);
                 final View view_header = layoutInflater.inflate(R.layout.dialog_record_header, null);
@@ -96,7 +96,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 TextView note = view.findViewById(R.id.note);
                 TextView date_created = view.findViewById(R.id.date_created);
                 TextView date_modified = view.findViewById(R.id.date_modified);
-                ImageButton close_btn = view_header.findViewById(R.id.close_btn);
+                FitButton close_btn = view_header.findViewById(R.id.close_btn);
                 TextView finished_date = view.findViewById(R.id.finished_date);
 
                 status.setText(record.getStatus());
@@ -150,6 +150,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
                 LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                 final View view = layoutInflater.inflate(R.layout.dialog_edit_record, null);
+                final View header_view = layoutInflater.inflate(R.layout.dialog_edit_record_header, null);
 
                 FitButton accept_btn = view.findViewById(R.id.accept_btn);
                 FitButton close_btn = view.findViewById(R.id.close_btn);
@@ -162,6 +163,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 TextView title_1 = view.findViewById(R.id.title_1);
                 LinearLayout play_time = view.findViewById(R.id.play_time);
 
+
+                CheckBox playing = view.findViewById(R.id.playing);
+                CheckBox finished = view.findViewById(R.id.finished);
+                CheckBox retired = view.findViewById(R.id.retired);
+                CheckBox backlog = view.findViewById(R.id.backlog);
+
+
                 if (record.getStatus().equals("finished")) {
                     finished_date.setVisibility(View.VISIBLE);
                 } else if (record.getStatus().equals("backlog")) {
@@ -171,7 +179,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
 
                 //hiển thị dialog
-                builder.setTitle("Thay đổi bản ghi");
+                builder.setCustomTitle(header_view);
                 builder.setView(view);
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
