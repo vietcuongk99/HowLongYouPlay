@@ -14,13 +14,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,18 +27,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.Adapter.RecordAdapter;
+import com.kdc.howlongyouplay.GameRecord;
 import com.kdc.howlongyouplay.R;
-import com.kdc.howlongyouplay.Record;
 
 import java.util.ArrayList;
-
-import io.opencensus.resource.Resource;
 
 
 public class BackLogFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecordAdapter recordAdapter;
-    private ArrayList<Record> backlogList;
+    private ArrayList<GameRecord> backlogList;
     private RelativeLayout loading_state_view;
     private RelativeLayout empty_state_view;
     private RelativeLayout error_state_view;
@@ -90,11 +85,11 @@ public class BackLogFragment extends Fragment {
 
                     if(snapshot.hasChild("records")) {
                         for (DataSnapshot snapshot1 : snapshot.child("records").getChildren()) {
-                            Record record = snapshot1.getValue(Record.class);
-                            record.setGame_id(snapshot.getKey());
-                            if (record.getStatus().contains("backlog")) {
-                                record.setRecord_id(snapshot1.getKey());
-                                backlogList.add(record);
+                            GameRecord gameRecord = snapshot1.getValue(GameRecord.class);
+                            gameRecord.setGame_id(snapshot.getKey());
+                            if (gameRecord.getStatus().contains("backlog")) {
+                                gameRecord.setRecord_id(snapshot1.getKey());
+                                backlogList.add(gameRecord);
                             }
                         }
                     }

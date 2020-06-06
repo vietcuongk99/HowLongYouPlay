@@ -1,4 +1,4 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kdc.howlongyouplay.R;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;

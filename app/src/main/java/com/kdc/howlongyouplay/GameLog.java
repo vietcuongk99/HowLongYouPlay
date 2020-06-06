@@ -1,30 +1,21 @@
 package com.kdc.howlongyouplay;
 
-// khai báo lớp GameLog
-
+import java.util.HashMap;
+import java.util.List;
 
 public class GameLog {
+
+    private String user_id;
     private String game_title;
-    //private String id_log;
+    private String image_url;
+    private String icon_url;
+    private HashMap<String, Object> records;
     private String year;
     private String id_game;
-    private String img_url;
-    private String icon_url;
-    private String pulisher;
-    private String developer;
-    private String playable_device;
-    private String genre;
 
     public GameLog() {
 
     }
-
-
-    public GameLog(String game_title, String year) {
-        this.game_title = game_title;
-        this.year  = year;
-    }
-
 
     public String getGame_title() {
         return game_title;
@@ -34,16 +25,6 @@ public class GameLog {
         this.game_title = game_title;
     }
 
-    /*
-    public String getId_log() {
-        return id_log;
-    }
-
-    public void setId_log(String id_log) {
-        this.id_log = id_log;
-    }
-
-     */
 
     public String getYear() {
         return year;
@@ -61,44 +42,21 @@ public class GameLog {
         this.id_game = id_game;
     }
 
-    public String getImg_url() {
-        return img_url;
+
+    public HashMap<String, Object> getRecords() {
+        return records;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setRecords(HashMap<String, Object> records) {
+        this.records = records;
     }
 
-    public String getPulisher() {
-        return pulisher;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setPulisher(String pulisher) {
-        this.pulisher = pulisher;
-    }
-
-    public String getDeveloper() {
-        return developer;
-    }
-
-    public void setDeveloper(String developer) {
-        this.developer = developer;
-    }
-
-    public String getPlayable_device() {
-        return playable_device;
-    }
-
-    public void setPlayable_device(String playable_device) {
-        this.playable_device = playable_device;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getIcon_url() {

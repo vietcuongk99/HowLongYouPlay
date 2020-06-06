@@ -1,17 +1,15 @@
 package com.kdc.howlongyouplay.Adapter;
 
 import android.content.Context;
-import android.speech.RecognizerResultsIntent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.kdc.howlongyouplay.GameRecord;
 import com.kdc.howlongyouplay.R;
-import com.kdc.howlongyouplay.Record;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,9 +17,9 @@ public class StatisticAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "StatisticAdapter";
     private Context mContext;
     private List<String> mHeaderGroup;
-    private HashMap<String, List<Record>> mDataChild;
+    private HashMap<String, List<GameRecord>> mDataChild;
 
-    public StatisticAdapter(Context context, List<String> headerGroup, HashMap<String, List<Record>> data) {
+    public StatisticAdapter(Context context, List<String> headerGroup, HashMap<String, List<GameRecord>> data) {
         mContext = context;
         mHeaderGroup = headerGroup;
         mDataChild = data;
@@ -88,12 +86,12 @@ public class StatisticAdapter extends BaseExpandableListAdapter {
 
         TextView game_title = convertView.findViewById(R.id.game_title);
         //TextView play_time = convertView.findViewById(R.id.play_time);
-        game_title.setText(((Record) getChild(groupPosition, childPosition)).getGame_title());
+        game_title.setText(((GameRecord) getChild(groupPosition, childPosition)).getGame_title());
         /*
         play_time.setText(mContext.getResources().getString(R.string.format_time,
-                ((Record) getChild(groupPosition, childPosition)).getHour(),
-                ((Record) getChild(groupPosition, childPosition)).getMinute(),
-                ((Record) getChild(groupPosition, childPosition)).getSecond()));
+                ((GameRecord) getChild(groupPosition, childPosition)).getHour(),
+                ((GameRecord) getChild(groupPosition, childPosition)).getMinute(),
+                ((GameRecord) getChild(groupPosition, childPosition)).getSecond()));
 
          */
 

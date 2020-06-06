@@ -3,45 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/gamelog"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
+    android:layout_marginHorizontal="20dp"
     app:cardPreventCornerOverlap="false">
 
-    <RelativeLayout
+    <!-- nội dung hiển thị trên card -->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/record_detail"
+        android:orientation="vertical">
 
-
-        <!-- background của card -->
-        <ImageView
-            android:id="@+id/item_bg"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="#CED8DF"
-            android:contentDescription="@string/card_background">
-        </ImageView>
+            android:layout_height="125dp">
 
-        <TextView
-            android:id="@+id/header_title_card"
+            <ImageView
+                android:id="@+id/game_image"
+                android:background="#CED8DF"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/game_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:layout_alignParentBottom="true"
+                android:background="#B3000000" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/group_action"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="header"
-            android:textColor="#fff"
-            android:textAlignment="center"
-            android:layout_alignParentBottom="true"
-            android:padding="5dp"
-            android:textSize="15sp"
-            android:background="#B3000000">
+            android:layout_height="wrap_content">
 
-        </TextView>
+            <TextView
+                android:id="@+id/playthrough"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:text="@string/playthrough">
 
-    </RelativeLayout>
+            </TextView>
+
+            <com.github.nikartm.button.FitButton
+                android:id="@+id/delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fb_text="@string/delete"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp"
+                app:fb_textSize="15sp"/>
+
+        </RelativeLayout>
 
 
-
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

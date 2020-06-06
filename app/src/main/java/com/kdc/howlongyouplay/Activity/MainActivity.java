@@ -1,4 +1,4 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +29,7 @@ import com.kdc.howlongyouplay.Fragment.BackLogFragment;
 import com.kdc.howlongyouplay.Fragment.FinishedListFragment;
 import com.kdc.howlongyouplay.Fragment.PlayingListFragment;
 import com.kdc.howlongyouplay.Fragment.RetiredListFragment;
+import com.kdc.howlongyouplay.R;
 
 
 public class MainActivity extends AppCompatActivity {

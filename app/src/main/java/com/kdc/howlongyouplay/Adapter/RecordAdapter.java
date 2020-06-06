@@ -5,15 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kdc.howlongyouplay.GameRecord;
 import com.kdc.howlongyouplay.R;
-import com.kdc.howlongyouplay.Record;
 import com.kdc.howlongyouplay.TimeCorrect;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
@@ -42,22 +39,20 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import io.opencensus.resource.Resource;
-
 //cmt tương tự với ListAdapter và LogAdapter
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewHolder> {
 
     private Context mContext;
-    private List<Record> recordList;
+    private List<GameRecord> gameRecordList;
 
     private CheckBox playing, finished, retired, backlog;
     private MaterialEditText finished_date;
     private Toast toast;
     private int hour_format, minute_format, second_format;
 
-    public RecordAdapter(Context mContext, List<Record> recordList) {
+    public RecordAdapter(Context mContext, List<GameRecord> gameRecordList) {
         this.mContext = mContext;
-        this.recordList = recordList;
+        this.gameRecordList = gameRecordList;
     }
 
     @NonNull
@@ -67,9 +62,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         View view = new View(mContext);
         Resources resource = view.getResources();
         if (resource.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.record_item_2, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.gamerecord_item_2, parent, false);
         } else {
-            view = LayoutInflater.from(mContext).inflate(R.layout.record_item, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.gamerecord_item, parent, false);
         }
         return new RecordAdapter.RecordViewHolder(view);
     }
@@ -77,14 +72,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     @Override
     public void onBindViewHolder(@NonNull RecordViewHolder holder, int position) {
 
-        final Record record = recordList.get(position);
-        // key của một bản record tương ứng
-        final String key = record.getRecord_id();
+        final GameRecord gameRecord = gameRecordList.get(position);
+        // key của một bản gameRecord tương ứng
+        final String key = gameRecord.getRecord_id();
         //gán dữ liệu vào view
-        holder.game_title.setText(record.getGame_title());
-        Picasso.get().load(record.getIcon_url()).into(holder.game_icon);
+        holder.game_title.setText(gameRecord.getGame_title());
+        Picasso.get().load(gameRecord.getIcon_url()).into(holder.game_icon);
 
-        // xử lý sự kiện khi nhấn vào một record tương ứng
+        // xử lý sự kiện khi nhấn vào một gameRecord tương ứng
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,39 +101,39 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 TextView retired_status = view.findViewById(R.id.retired_status);
                 TextView backlog_status = view.findViewById(R.id.backlog_status);
 
-                if (record.getStatus().contains("playing")) {
+                if (gameRecord.getStatus().contains("playing")) {
                     playing_status.setVisibility(View.VISIBLE);
                 }
-                if (record.getStatus().contains("finished")) {
+                if (gameRecord.getStatus().contains("finished")) {
                     finished_status.setVisibility(View.VISIBLE);
                 }
-                if (record.getStatus().contains("retired")) {
+                if (gameRecord.getStatus().contains("retired")) {
                     retired_status.setVisibility(View.VISIBLE);
                 }
-                if (record.getStatus().contains("backlog")) {
+                if (gameRecord.getStatus().contains("backlog")) {
                     backlog_status.setVisibility(View.VISIBLE);
                 }
 
-                date_created.setText(record.getDate_created());
+                date_created.setText(gameRecord.getDate_created());
                 play_time.setText(mContext.getResources().getString(R.string.format_time,
-                        record.getHour(), record.getMinute(), record.getSecond()));
+                        gameRecord.getHour(), gameRecord.getMinute(), gameRecord.getSecond()));
 
-                if(record.getDate_modified().equals("")) {
+                if(gameRecord.getDate_modified().equals("")) {
                     date_modified.setText("Chưa xác định");
                 } else {
-                    date_modified.setText(record.getDate_modified());
+                    date_modified.setText(gameRecord.getDate_modified());
                 }
 
-                if(record.getFinished_date().equals("")) {
+                if(gameRecord.getFinished_date().equals("")) {
                     finished_date_value.setText("Chưa xác định");
                 } else {
-                    finished_date_value.setText(record.getFinished_date());
+                    finished_date_value.setText(gameRecord.getFinished_date());
                 }
 
-                if (record.getNote().equals("")) {
+                if (gameRecord.getNote().equals("")) {
                     note.setText("Không có ghi chú");
                 } else {
-                    note.setText(record.getNote());
+                    note.setText(gameRecord.getNote());
                 }
 
                 builder.setCancelable(true);
@@ -159,7 +154,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         });
 
 
-        // xử lý sự kiện khi sửa 1 record trong danh sách
+        // xử lý sự kiện khi sửa 1 gameRecord trong danh sách
         holder.edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,7 +187,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 list.add(retired);
                 list.add(backlog);
 
-                String text = record.getStatus();
+                String text = gameRecord.getStatus();
                 for (CheckBox item: list) {
                     if (text.contains(item.getText().toString().toLowerCase())) {
                         item.setChecked(true);
@@ -213,11 +208,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 builder.setCancelable(false);
                 final AlertDialog dialog = builder.show();
 
-                if (record.getStatus().contains("finished")) {
+                if (gameRecord.getStatus().contains("finished")) {
                     finished_date.setVisibility(View.VISIBLE);
                 }
 
-                // xử lý sự kiện khi nút xác nhận sửa record
+                // xử lý sự kiện khi nút xác nhận sửa gameRecord
                 accept_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -225,7 +220,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                         if (!playing.isChecked() && !finished.isChecked() && !retired.isChecked() && !backlog.isChecked()) {
                             Toast.makeText(mContext, "Bạn chưa chọn box nào", Toast.LENGTH_SHORT).show();
                         } else {
-                            StringBuilder status = new StringBuilder();
+                            final StringBuilder status = new StringBuilder();
                             attachCheckListener(checkBoxList);
                             for (CheckBox item: checkBoxList) {
                                 if (item.isChecked()) {
@@ -237,7 +232,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                             dialog.dismiss();
                             toast = Toast.makeText(mContext, "Sửa thành công", Toast.LENGTH_SHORT);
                             toast.show();
-
 
                             String new_hour_value, new_minute_value, new_second_value, new_note_detail,  date_modified, new_finished_date;
 
@@ -275,7 +269,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                                     .child("Logs").child(user_id);
 
-                            if (record.getStatus().contains("finished")) {
+                            if (gameRecord.getStatus().contains("finished")) {
                                 new_finished_date = finished_date.getText().toString();
 
                                 final HashMap<String, Object> hashMap = new HashMap<>();
@@ -287,16 +281,35 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                 hashMap.put("date_modified", date_modified);
                                 hashMap.put("finished_date", new_finished_date);
 
-                                databaseReference.child(record.getGame_id()).child("records").child(key)
+                                final HashMap<String, Object> hashMap2 = new HashMap<>();
+                                hashMap2.put("status", status.toString());
+                                hashMap2.put("hour", new_hour_value);
+                                hashMap2.put("minute", new_minute_value);
+                                hashMap2.put("second", new_second_value);
+
+
+                                databaseReference.child(gameRecord.getGame_id()).child("records").child(key)
                                         .updateChildren(hashMap)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
-                                            public void onSuccess(Void aVoid) {
-                                                toast.cancel();
-                                                Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                        .show();
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    toast.cancel();
+
+                                                    DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                            .child(gameRecord.getGame_id()).child("records").child(key);
+
+                                                    blank_record.updateChildren(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                                    .show();
+                                                        }
+                                                    });
+                                                }
                                             }
                                         });
+
                             } else {
 
                                 final HashMap<String, Object> hashMap = new HashMap<>();
@@ -307,16 +320,35 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                                 hashMap.put("status", status.toString());
                                 hashMap.put("date_modified", date_modified);
 
-                                databaseReference.child(record.getGame_id()).child("records").child(key)
+                                final HashMap<String, Object> hashMap2 = new HashMap<>();
+                                hashMap2.put("status", status.toString());
+                                hashMap2.put("hour", new_hour_value);
+                                hashMap2.put("minute", new_minute_value);
+                                hashMap2.put("second", new_second_value);
+
+                                databaseReference.child(gameRecord.getGame_id()).child("records").child(key)
                                         .updateChildren(hashMap)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
-                                            public void onSuccess(Void aVoid) {
-                                                toast.cancel();
-                                                Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                        .show();
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    toast.cancel();
+
+                                                    DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                            .child(gameRecord.getGame_id()).child("records").child(key);
+
+                                                    blank_record.updateChildren(hashMap2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
+                                                                    .show();
+                                                        }
+                                                    });
+                                                }
+
                                             }
                                         });
+
 
                             }
                         }
@@ -324,7 +356,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                     }
                 });
 
-                // xử lý sự kiện cho nút hủy thay đổi record
+                // xử lý sự kiện cho nút hủy thay đổi gameRecord
                 close_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -338,7 +370,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         });
 
 
-        // xử lý sự kiện khi xóa 1 record trong danh sách
+        // xử lý sự kiện khi xóa 1 gameRecord trong danh sách
         holder.delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -348,9 +380,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
                 // tạo builder và các phần tử liên quan
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
-                alertDialog.setTitle("Xóa log").setMessage("Bạn muốn xóa bản record này ?");
+                alertDialog.setTitle("Xóa log").setMessage("Bạn muốn xóa bản gameRecord này ?");
 
-                //xử lý sự kiện khi đồng ý xóa record
+                //xử lý sự kiện khi đồng ý xóa gameRecord
                 alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialogInterface, int which) {
@@ -359,20 +391,30 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                         toast.show();
 
 
-                        databaseReference.child(record.getGame_id()).child("records").addValueEventListener(new ValueEventListener() {
+                        databaseReference.child(gameRecord.getGame_id()).child("records").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
 
                                     if(snapshot.getKey().equals(key)) {
-                                        databaseReference.child(record.getGame_id()).child("records").child(key)
+
+                                        databaseReference.child(gameRecord.getGame_id()).child("records").child(key)
                                                 .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
                                                     toast.cancel();
-                                                    Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT).show();
+                                                    DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                            .child(gameRecord.getGame_id()).child("records").child(key);
+
+                                                    blank_record.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            toast.cancel();
+                                                            Toast.makeText(mContext, "Cập nhật danh sách thành công", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
 
                                                 }
                                                 else {
@@ -395,7 +437,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 });
 
 
-                // xử lý sự kiện khi từ chối xóa record
+                // xử lý sự kiện khi từ chối xóa gameRecord
                 alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
@@ -411,7 +453,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     @Override
     public int getItemCount() {
-        return recordList.size();
+        return gameRecordList.size();
     }
 
     public static class RecordViewHolder extends RecyclerView.ViewHolder{

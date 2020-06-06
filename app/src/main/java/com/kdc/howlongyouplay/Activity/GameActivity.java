@@ -1,13 +1,10 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,40 +15,34 @@ import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.nikartm.button.FitButton;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kdc.howlongyouplay.R;
+import com.kdc.howlongyouplay.TimeCorrect;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.skydoves.transformationlayout.TransformationLayout;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-
-import io.opencensus.resource.Resource;
 
 // hiển thị nội dung khi click vào 1 log
 public class GameActivity extends AppCompatActivity {
 
-    private TextView title_value, game_title, year, genre, developer, pulisher, play_on;
+    private TextView title_value, game_title, year, genre, developer, pulisher, play_on, finished_time;
 
     private Intent intent;
 
@@ -64,11 +55,11 @@ public class GameActivity extends AppCompatActivity {
 
     private int hour_format, minute_format, second_format;
 
-    private FitButton add_playing, add_finished, add_retired, add_backlog, add_record_btn, btn_2;
+    private FitButton add_playing, add_finished, add_retired, add_backlog, add_record_btn, statistical_btn;
 
     private TransformationLayout button_1, button_2;
     private ConstraintLayout group_action, group_divider, view1, view2, view3, view4;
-    private RelativeLayout top_content;
+    private RelativeLayout top_content, finished_time_layout;
 
 
     private DatabaseReference databaseReference;
@@ -78,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_2);
+        setContentView(R.layout.activity_game);
 
 
         title_value = findViewById(R.id.title);
@@ -93,13 +84,16 @@ public class GameActivity extends AppCompatActivity {
         group_action = findViewById(R.id.group_action);
         group_divider = findViewById(R.id.group_divider);
         top_content = findViewById(R.id.top_content);
+        finished_time_layout = findViewById(R.id.finished_time_layout);
         view1 = findViewById(R.id.view1);
         view2 = findViewById(R.id.view2);
         view3 = findViewById(R.id.view3);
         view4 = findViewById(R.id.view4);
 
         button_1 = findViewById(R.id.button_transform_1);
+        button_2 = findViewById(R.id.button_transform_2);
         add_record_btn = findViewById(R.id.add_record_btn);
+        statistical_btn = findViewById(R.id.show_statistic_btn);
         FitButton cancel_button = findViewById(R.id.cancel_action);
 
         AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
@@ -168,6 +162,20 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        statistical_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button_2.startTransform();
+            }
+        });
+
+        finished_time_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button_2.finishTransform();
+            }
+        });
+
 
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,7 +206,7 @@ public class GameActivity extends AppCompatActivity {
         img_url = intent.getExtras().get("img_url").toString();
         icon_url = intent.getExtras().get("icon_url").toString();
 
-        //Hiển thị id của game đã chọn qua Log
+        //Hiển thị id của game đã chọn qua GameLog
         Log.d("ID Game", "ID game được chọn: " + id_game);
 
 
@@ -321,8 +329,14 @@ public class GameActivity extends AppCompatActivity {
                         hashMap2.put("icon_url", icon_url);
                         hashMap2.put("image_url", img_url);
 
+                        final HashMap<String, Object> hashMap3 = new HashMap<>();
+                        hashMap3.put("status", "playing");
+                        hashMap3.put("hour", hour_value);
+                        hashMap3.put("minute", minute_value);
+                        hashMap3.put("second", second_value);
 
-                        //kiểm tra dữ liệu game của người dùng trong Log
+
+                        //kiểm tra dữ liệu game của người dùng trong GameLog
                         //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -331,11 +345,20 @@ public class GameActivity extends AppCompatActivity {
                                 //nếu log của người dùng đã có game cần thêm record
                                 if (dataSnapshot.hasChild(id_game)) {
                                     DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    final String key_push = blank_record_3.getKey();
                                     blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                    .show();
+                                            DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                    .child(id_game).child("records").child(key_push);
+
+                                            blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                         }
                                     });
                                 } else {
@@ -345,12 +368,20 @@ public class GameActivity extends AppCompatActivity {
                                         public void onSuccess(Void aVoid) {
                                             toast.cancel();
                                             DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            final String key_push = blank_record_2.getKey();
                                             blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(getApplicationContext(),
-                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                            .show();
+                                                    DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                            .child(id_game).child("records").child(key_push);
+
+                                                    blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }
@@ -468,7 +499,13 @@ public class GameActivity extends AppCompatActivity {
                         hashMap2.put("icon_url", icon_url);
                         hashMap2.put("image_url", img_url);
 
-                        //kiểm tra dữ liệu game của người dùng trong Log
+                        final HashMap<String, Object> hashMap3 = new HashMap<>();
+                        hashMap3.put("status", "backlog");
+                        hashMap3.put("hour", hour_value);
+                        hashMap3.put("minute", minute_value);
+                        hashMap3.put("second", second_value);
+
+                        //kiểm tra dữ liệu game của người dùng trong GameLog
                         //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -477,11 +514,20 @@ public class GameActivity extends AppCompatActivity {
                                 //nếu log của người dùng đã có game cần thêm record
                                 if (dataSnapshot.hasChild(id_game)) {
                                     DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    final String key_push = blank_record_3.getKey();
                                     blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                    .show();
+                                            DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                    .child(id_game).child("records").child(key_push);
+
+                                            blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                         }
                                     });
                                 } else {
@@ -491,12 +537,20 @@ public class GameActivity extends AppCompatActivity {
                                         public void onSuccess(Void aVoid) {
                                             toast.cancel();
                                             DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            final String key_push = blank_record_2.getKey();
                                             blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(getApplicationContext(),
-                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                            .show();
+                                                    DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                            .child(id_game).child("records").child(key_push);
+
+                                                    blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }
@@ -613,7 +667,13 @@ public class GameActivity extends AppCompatActivity {
                         hashMap2.put("icon_url", icon_url);
                         hashMap2.put("image_url", img_url);
 
-                        //kiểm tra dữ liệu game của người dùng trong Log
+                        final HashMap<String, Object> hashMap3 = new HashMap<>();
+                        hashMap3.put("status", "finished");
+                        hashMap3.put("hour", hour_value);
+                        hashMap3.put("minute", minute_value);
+                        hashMap3.put("second", second_value);
+
+                        //kiểm tra dữ liệu game của người dùng trong GameLog
                         //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -622,11 +682,21 @@ public class GameActivity extends AppCompatActivity {
                                 //nếu log của người dùng đã có game cần thêm record
                                 if (dataSnapshot.hasChild(id_game)) {
                                     DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    final String key_push = blank_record_3.getKey();
                                     blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                    .show();
+                                            DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                    .child(id_game).child("records").child(key_push);
+
+                                            blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
                                         }
                                     });
                                 } else {
@@ -636,12 +706,20 @@ public class GameActivity extends AppCompatActivity {
                                         public void onSuccess(Void aVoid) {
                                             toast.cancel();
                                             DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            final String key_push = blank_record_2.getKey();
                                             blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(getApplicationContext(),
-                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                            .show();
+                                                    DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                            .child(id_game).child("records").child(key_push);
+
+                                                    blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }
@@ -768,8 +846,14 @@ public class GameActivity extends AppCompatActivity {
                         hashMap2.put("icon_url", icon_url);
                         hashMap2.put("image_url", img_url);
 
+                        final HashMap<String, Object> hashMap3 = new HashMap<>();
+                        hashMap3.put("status", "retired");
+                        hashMap3.put("hour", hour_value);
+                        hashMap3.put("minute", minute_value);
+                        hashMap3.put("second", second_value);
 
-                        //kiểm tra dữ liệu game của người dùng trong Log
+
+                        //kiểm tra dữ liệu game của người dùng trong GameLog
                         //dùng addListenerForSingleValueEvent để kiểm tra dữ liệu 1 lần
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -779,11 +863,21 @@ public class GameActivity extends AppCompatActivity {
                                 //bổ sung record mới trong records
                                 if (dataSnapshot.hasChild(id_game)) {
                                     DatabaseReference blank_record_3 = databaseReference.child(id_game).child("records").push();
+                                    final String key_push = blank_record_3.getKey();
                                     blank_record_3.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                    .show();
+                                            DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                    .child(id_game).child("records").child(key_push);
+
+                                            blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
                                         }
                                     });
 
@@ -795,12 +889,20 @@ public class GameActivity extends AppCompatActivity {
                                         public void onSuccess(Void aVoid) {
                                             toast.cancel();
                                             DatabaseReference blank_record_2 = databaseReference.child(id_game).child("records").push();
+                                            final String key_push = blank_record_2.getKey();
                                             blank_record_2.setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(getApplicationContext(),
-                                                            "Cập nhật danh sách thành công", Toast.LENGTH_SHORT)
-                                                            .show();
+                                                    DatabaseReference blank_record = FirebaseDatabase.getInstance().getReference("List")
+                                                            .child(id_game).child("records").child(key_push);
+
+                                                    blank_record.setValue(hashMap3).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getApplicationContext(), "Cập nhật danh sách thành công",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }
@@ -835,6 +937,12 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
+
+        finished_time = findViewById(R.id.finished_time);
+
+
+
+
     }
 
 
@@ -842,7 +950,7 @@ public class GameActivity extends AppCompatActivity {
     //nhận biết thay đổi khi chọn button trong RadioGroup
     /*private void onChangeStatusPicked(CompoundButton compoundButton, boolean isChecked) {
         RadioButton radio = (RadioButton) compoundButton;
-        Log.d("Trạng thái: ", radio.getText().toString() + isChecked);
+        GameLog.d("Trạng thái: ", radio.getText().toString() + isChecked);
     }
      */
 

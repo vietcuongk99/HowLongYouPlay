@@ -24,22 +24,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kdc.howlongyouplay.Log;
+import com.kdc.howlongyouplay.GameLog;
 import com.kdc.howlongyouplay.R;
-import com.kdc.howlongyouplay.Record;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     private Context mContext;
-    private List<Log> logList;
+    private List<GameLog> gameLogList;
     private Toast toast;
 
-    public LogAdapter(Context mContext, List<Log> logList) {
+    public LogAdapter(Context mContext, List<GameLog> gameLogList) {
         this.mContext = mContext;
-        this.logList = logList;
+        this.gameLogList = gameLogList;
     }
 
     @NonNull
@@ -49,9 +47,9 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
         Resources resource = view.getResources();
         if (resource.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.log_item_2, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.gamelog_item_2, parent, false);
         } else {
-            view = LayoutInflater.from(mContext).inflate(R.layout.log_item, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.gamelog_item, parent, false);
         }
         return new LogAdapter.LogViewHolder(view);
     }
@@ -59,12 +57,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull LogViewHolder holder, int position) {
 
-        final Log log = logList.get(position);
-        final String key = log.getId_game();
+        final GameLog gameLog = gameLogList.get(position);
+        final String key = gameLog.getId_game();
 
-        Picasso.get().load(log.getImage_url()).into(holder.game_image);
-        holder.game_title.setText(log.getGame_title());
-        holder.playthrough.setText(mContext.getResources().getString(R.string.playthrough, log.getRecords().size()));
+        Picasso.get().load(gameLog.getImage_url()).into(holder.game_image);
+        holder.game_title.setText(gameLog.getGame_title());
+        holder.playthrough.setText(mContext.getResources().getString(R.string.playthrough, gameLog.getRecords().size()));
 
         holder.delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +136,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
     @Override
     public int getItemCount() {
-        return logList.size();
+        return gameLogList.size();
     }
 
 

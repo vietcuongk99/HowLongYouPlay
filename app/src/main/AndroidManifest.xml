@@ -14,25 +14,25 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".YourListActivity"></activity>
-        <activity android:name=".YourStatisticActivity" />
-        <activity android:name=".ImageViewerActivity" />
-        <activity android:name=".AccountActivity" />
+        <activity android:name=".Activity.YourListActivity"></activity>
+        <activity android:name=".Activity.YourStatisticActivity" />
+        <activity android:name=".Activity.ImageViewerActivity" />
+        <activity android:name=".Activity.AccountActivity" />
         <activity
-            android:name=".StartActivity"
-            android:parentActivityName=".InternetReqActivity" />
-        <activity android:name=".GameActivity" />
-        <activity android:name=".SearchActivity" />
+            android:name=".Activity.StartActivity"
+            android:parentActivityName=".Activity.InternetReqActivity" />
+        <activity android:name=".Activity.GameActivity" />
+        <activity android:name=".Activity.SearchActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:configChanges="orientation" />
         <activity
-            android:name=".RegisterActivity"
-            android:parentActivityName=".StartActivity" />
+            android:name=".Activity.RegisterActivity"
+            android:parentActivityName=".Activity.StartActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:parentActivityName=".StartActivity" />
-        <activity android:name=".InternetReqActivity">
+            android:name=".Activity.LoginActivity"
+            android:parentActivityName=".Activity.StartActivity" />
+        <activity android:name=".Activity.InternetReqActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

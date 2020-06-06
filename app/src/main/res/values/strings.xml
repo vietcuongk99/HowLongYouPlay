@@ -17,7 +17,7 @@
     <string name="check_internet">Ứng dụng cần kết nối mạng, kiểm tra trước khi sử dụng để không làm ảnh hưởng trải nghiệm của bạn</string>
     <string name="start">Bắt đầu</string>
     <string name="list_title">Danh sách game của bạn</string>
-    <string name="edit_btn">Nút sửa log</string>
+    <string name="edit_btn">Nút sửa gameLog</string>
     <string name="delete_btn">Nút xóa Log</string>
     <string name="game">Game</string>
     <string name="time">Thời gian chơi: %1$s</string>

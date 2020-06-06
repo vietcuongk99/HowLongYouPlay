@@ -13,8 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kdc.howlongyouplay.GameActivity;
-import com.kdc.howlongyouplay.GameLog;
+import com.kdc.howlongyouplay.Activity.GameActivity;
+import com.kdc.howlongyouplay.GameDetail;
 import com.kdc.howlongyouplay.R;
 import com.squareup.picasso.Picasso;
 
@@ -28,23 +28,23 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> implements Filterable{
 
     private Context mContext;
-    private List<GameLog> gameLogList;
-    private List<GameLog> searchResultFull;
+    private List<GameDetail> gameDetailList;
+    private List<GameDetail> searchResultFull;
 
-    public ListAdapter(Context mContext, List<GameLog> gameLogList) {
+    public ListAdapter(Context mContext, List<GameDetail> gameDetailList) {
         this.mContext = mContext;
-        this.gameLogList = gameLogList;
-        searchResultFull = new ArrayList<>(gameLogList);
+        this.gameDetailList = gameDetailList;
+        searchResultFull = new ArrayList<>(gameDetailList);
     }
 
-    public ListAdapter(List<GameLog> gameLogList) {
-        this.gameLogList = gameLogList;
+    public ListAdapter(List<GameDetail> gameDetailList) {
+        this.gameDetailList = gameDetailList;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.gamelog_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.game_item, parent, false);
 
         return new ListAdapter.MyViewHolder(view);
     }
@@ -53,9 +53,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
 
-        final GameLog gameLog = gameLogList.get(position);
-        holder.header_title_card.setText(gameLog.getGame_title());
-        Picasso.get().load(gameLog.getImg_url()).into(holder.background);
+        final GameDetail gameDetail = gameDetailList.get(position);
+        holder.header_title_card.setText(gameDetail.getGame_title());
+        Picasso.get().load(gameDetail.getImg_url()).into(holder.background);
 
 
         // xử lý sự kiện khi click vào một game trong danh sách tìm kiếm
@@ -65,15 +65,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
                 // dùng intent để pass dữ liệu sang GameInfoActivity
                 Intent intent = new Intent(mContext, GameActivity.class);
-                intent.putExtra("game_title", gameLog.getGame_title());
-                intent.putExtra("year", gameLog.getYear());
-                intent.putExtra("genre", gameLog.getGenre());
-                intent.putExtra("developer", gameLog.getDeveloper());
-                intent.putExtra("pulisher", gameLog.getPulisher());
-                intent.putExtra("play_on", gameLog.getPlayable_device());
-                intent.putExtra("game_id", gameLog.getId_game());
-                intent.putExtra("img_url", gameLog.getImg_url());
-                intent.putExtra("icon_url", gameLog.getIcon_url());
+                intent.putExtra("game_title", gameDetail.getGame_title());
+                intent.putExtra("year", gameDetail.getYear());
+                intent.putExtra("genre", gameDetail.getGenre());
+                intent.putExtra("developer", gameDetail.getDeveloper());
+                intent.putExtra("pulisher", gameDetail.getPulisher());
+                intent.putExtra("play_on", gameDetail.getPlayable_device());
+                intent.putExtra("game_id", gameDetail.getId_game());
+                intent.putExtra("img_url", gameDetail.getImg_url());
+                intent.putExtra("icon_url", gameDetail.getIcon_url());
 
                 mContext.startActivity(intent);
 
@@ -84,7 +84,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return gameLogList.size();
+        return gameDetailList.size();
     }
 
     @Override
@@ -96,16 +96,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
-            List<GameLog> searchList = new ArrayList<>();
+            List<GameDetail> searchList = new ArrayList<>();
 
             if(constraint == null || constraint.length() == 0) {
                 searchList.addAll(searchResultFull);
             }
             else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (GameLog gameLog : searchResultFull) {
-                    if (gameLog.getGame_title().toLowerCase().contains(filterPattern)) {
-                        searchList.add(gameLog);
+                for (GameDetail gameDetail : searchResultFull) {
+                    if (gameDetail.getGame_title().toLowerCase().contains(filterPattern)) {
+                        searchList.add(gameDetail);
                     }
                 }
             }
@@ -119,8 +119,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
-            gameLogList.clear();
-            gameLogList.addAll((List) results.values);
+            gameDetailList.clear();
+            gameDetailList.addAll((List) results.values);
             notifyDataSetChanged();
         }
     };

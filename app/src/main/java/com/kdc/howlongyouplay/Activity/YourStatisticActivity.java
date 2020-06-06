@@ -1,13 +1,10 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -18,21 +15,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kdc.howlongyouplay.Adapter.RecordAdapter;
 import com.kdc.howlongyouplay.Adapter.StatisticAdapter;
+import com.kdc.howlongyouplay.GameRecord;
+import com.kdc.howlongyouplay.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.security.AccessController.getContext;
-
 public class YourStatisticActivity extends AppCompatActivity {
 
     private TextView user_name;
     private ExpandableListView expandableListView;
-    private HashMap<String, List<Record>> mData;
-    private ArrayList<Record> playingList, finishedList, retiredList, backlogList;
+    private HashMap<String, List<GameRecord>> mData;
+    private ArrayList<GameRecord> playingList, finishedList, retiredList, backlogList;
     private StatisticAdapter statisticAdapter;
 
     @Override
@@ -104,23 +100,23 @@ public class YourStatisticActivity extends AppCompatActivity {
 
                     if(snapshot.hasChild("records")) {
                         for (DataSnapshot snapshot1 : snapshot.child("records").getChildren()) {
-                            Record record = snapshot1.getValue(Record.class);
+                            GameRecord gameRecord = snapshot1.getValue(GameRecord.class);
 
-                            if (record.getStatus().contains("playing")) {
-                                record.setRecord_id(snapshot1.getKey());
-                                playingList.add(record);
+                            if (gameRecord.getStatus().contains("playing")) {
+                                gameRecord.setRecord_id(snapshot1.getKey());
+                                playingList.add(gameRecord);
                             }
-                            if (record.getStatus().contains("finished")) {
-                                record.setRecord_id(snapshot1.getKey());
-                                finishedList.add(record);
+                            if (gameRecord.getStatus().contains("finished")) {
+                                gameRecord.setRecord_id(snapshot1.getKey());
+                                finishedList.add(gameRecord);
                             }
-                            if (record.getStatus().contains("retired")) {
-                                record.setRecord_id(snapshot1.getKey());
-                                retiredList.add(record);
+                            if (gameRecord.getStatus().contains("retired")) {
+                                gameRecord.setRecord_id(snapshot1.getKey());
+                                retiredList.add(gameRecord);
                             }
-                            if (record.getStatus().contains("backlog")) {
-                                record.setRecord_id(snapshot1.getKey());
-                                backlogList.add(record);
+                            if (gameRecord.getStatus().contains("backlog")) {
+                                gameRecord.setRecord_id(snapshot1.getKey());
+                                backlogList.add(gameRecord);
                             }
                         }
                     }

@@ -1,4 +1,4 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.kdc.howlongyouplay.R;
 import com.naver.android.helloyako.imagecrop.view.ImageCropView;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +32,7 @@ public class ImageViewerActivity extends AppCompatActivity {
         Picasso.get().load(img_url).into(full_image);
 
 //        if(game_title.equals("")) {
-//            Log.d("avatar", "avatar");
+//            GameLog.d("avatar", "avatar");
 //        } else {
 //            Toast.makeText(ImageViewerActivity.this, "Game: " + game_title, Toast.LENGTH_SHORT).show();
 //        }

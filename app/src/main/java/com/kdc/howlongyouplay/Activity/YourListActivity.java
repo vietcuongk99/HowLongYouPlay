@@ -1,4 +1,4 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,17 +19,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.Adapter.LogAdapter;
+import com.kdc.howlongyouplay.GameLog;
+import com.kdc.howlongyouplay.R;
+import com.kdc.howlongyouplay.GameRecord;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.opencensus.resource.Resource;
-import me.ibrahimsn.lib.CirclesLoadingView;
-
 public class YourListActivity extends AppCompatActivity {
     private LogAdapter logAdapter;
-    private List<Log> logList;
+    private List<GameLog> gameLogList;
     private HashMap<String, Object> records;
 
     private RecyclerView recyclerView;
@@ -54,7 +53,7 @@ public class YourListActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new GridLayoutManager(YourListActivity.this, 1));
         }
 
-        logList = new ArrayList<>();
+        gameLogList = new ArrayList<>();
         records = new HashMap<>();
 
         getLog();
@@ -71,29 +70,26 @@ public class YourListActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                logList.clear();
+                gameLogList.clear();
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                     if (snapshot.hasChild("records")) {
-                        final Log log = snapshot.getValue(Log.class);
-                        log.setId_game(snapshot.getKey());
+                        final GameLog gameLog = snapshot.getValue(GameLog.class);
+                        gameLog.setId_game(snapshot.getKey());
 
-                        android.util.Log.d("GAME ID: ", log.getId_game());
-                        android.util.Log.d("GAME TITLE: ", log.getGame_title().toString());
-                        android.util.Log.d("IMG URL: ", log.getImage_url().toString());
-                        android.util.Log.d("ICON URL: ", log.getIcon_url().toString());
 
-                        DatabaseReference databaseReference1 = databaseReference.child(log.getId_game()).child("records");
+
+                        DatabaseReference databaseReference1 = databaseReference.child(gameLog.getId_game()).child("records");
                         databaseReference1.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 records.clear();
                                 for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                    Record record = snapshot1.getValue(Record.class);
-                                    records.put(log.getId_game(), record);
+                                    GameRecord gameRecord = snapshot1.getValue(GameRecord.class);
+                                    records.put(gameLog.getId_game(), gameRecord);
                                 }
 
-                                log.setRecords(records);
+                                gameLog.setRecords(records);
 
                             }
 
@@ -103,15 +99,15 @@ public class YourListActivity extends AppCompatActivity {
                             }
                         });
 
-                        logList.add(log);
+                        gameLogList.add(gameLog);
 
                     }
 
                 }
 
-                if (logList.size() != 0) {
+                if (gameLogList.size() != 0) {
                     loading_state_view.setVisibility(View.GONE);
-                    logAdapter = new LogAdapter(YourListActivity.this, logList);
+                    logAdapter = new LogAdapter(YourListActivity.this, gameLogList);
                     recyclerView.setAdapter(logAdapter);
 
                 }

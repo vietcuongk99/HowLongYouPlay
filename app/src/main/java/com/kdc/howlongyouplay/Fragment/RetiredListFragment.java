@@ -10,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -26,15 +25,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.Adapter.RecordAdapter;
+import com.kdc.howlongyouplay.GameRecord;
 import com.kdc.howlongyouplay.R;
-import com.kdc.howlongyouplay.Record;
 
 import java.util.ArrayList;
 
 public class RetiredListFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecordAdapter recordAdapter;
-    private ArrayList<Record> retiredList;
+    private ArrayList<GameRecord> retiredList;
     private RelativeLayout loading_state_view;
     private RelativeLayout empty_state_view;
     private RelativeLayout error_state_view;
@@ -94,11 +93,11 @@ public class RetiredListFragment extends Fragment {
 
                     if(snapshot.hasChild("records")) {
                         for (DataSnapshot snapshot1 : snapshot.child("records").getChildren()) {
-                            Record record = snapshot1.getValue(Record.class);
-                            record.setGame_id(snapshot.getKey());
-                            if (record.getStatus().contains("retired")) {
-                                record.setRecord_id(snapshot1.getKey());
-                                retiredList.add(record);
+                            GameRecord gameRecord = snapshot1.getValue(GameRecord.class);
+                            gameRecord.setGame_id(snapshot.getKey());
+                            if (gameRecord.getStatus().contains("retired")) {
+                                gameRecord.setRecord_id(snapshot1.getKey());
+                                retiredList.add(gameRecord);
                             }
                         }
                     }

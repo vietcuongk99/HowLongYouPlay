@@ -3,7 +3,7 @@ package com.kdc.howlongyouplay;
 import android.net.Uri;
 import android.widget.ScrollView;
 
-public class Record {
+public class GameRecord {
     private String record_id;
     private String game_id;
     private String game_title;
@@ -18,10 +18,10 @@ public class Record {
     private String finished_date;
     private String note;
 
-    public Record() {
+    public GameRecord() {
     }
 
-    public Record(String game_title, String hour, String minute, String second) {
+    public GameRecord(String game_title, String hour, String minute, String second) {
         this.game_title = game_title;
         this.hour = hour;
         this.minute = minute;

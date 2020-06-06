@@ -1,10 +1,9 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -12,30 +11,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.Adapter.ListAdapter;
+import com.kdc.howlongyouplay.GameDetail;
+import com.kdc.howlongyouplay.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.opencensus.resource.Resource;
-
 public class SearchActivity extends AppCompatActivity {
 
-    private List<GameLog> gameLogList;
+    private List<GameDetail> gameDetailList;
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
     private Resources resource;
@@ -71,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         }
-        gameLogList = new ArrayList<>();
+        gameDetailList = new ArrayList<>();
         readList();
 
 
@@ -121,20 +117,20 @@ public class SearchActivity extends AppCompatActivity {
     private void readList() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("List");
 
-        // lấy ra danh sách GameLog và sử dụng listAdapter
+        // lấy ra danh sách GameDetail và sử dụng listAdapter
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                gameLogList.clear();
+                gameDetailList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                    GameLog gameLog = snapshot.getValue(GameLog.class);
-                    gameLog.setId_game(snapshot.getKey());
-                    gameLogList.add(gameLog);
+                    GameDetail gameDetail = snapshot.getValue(GameDetail.class);
+                    gameDetail.setId_game(snapshot.getKey());
+                    gameDetailList.add(gameDetail);
 
                 }
 
-                listAdapter = new ListAdapter(SearchActivity.this, gameLogList);
+                listAdapter = new ListAdapter(SearchActivity.this, gameDetailList);
 
             }
 

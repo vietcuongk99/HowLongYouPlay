@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/gamelog"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
+    app:cardPreventCornerOverlap="false">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!-- background của card -->
+        <ImageView
+            android:id="@+id/item_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="#CED8DF"
+            android:contentDescription="@string/card_background">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/header_title_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="header"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:layout_alignParentBottom="true"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:background="#B3000000">
+
+        </TextView>
+
+    </RelativeLayout>
+
+
+
+
+
+</androidx.cardview.widget.CardView>
