@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kdc.howlongyouplay.GameRecord;
 import com.kdc.howlongyouplay.R;
 import com.kdc.howlongyouplay.TimeCorrect;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -36,11 +37,12 @@ import com.skydoves.transformationlayout.TransformationLayout;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 // hiển thị nội dung khi click vào 1 log
-public class GameActivity extends AppCompatActivity {
+public class GameDetailActivity extends AppCompatActivity {
 
     private TextView title_value, game_title, year, genre, developer, pulisher, play_on, finished_time;
 
@@ -51,15 +53,17 @@ public class GameActivity extends AppCompatActivity {
 
     private String title, year_release, user_id, id_game, img_url, icon_url,
             genre_name, developer_name, publisher_name, play_on_device,
-            hour_value, minute_value, second_value, note_detail, date_created, finished_date;
+            hour_value, minute_value, second_value, note_detail, date_created, finished_date,
+            finished_hour, finished_minute, finished_second;
 
     private int hour_format, minute_format, second_format;
 
-    private FitButton add_playing, add_finished, add_retired, add_backlog, add_record_btn, statistical_btn;
-
-    private TransformationLayout button_1, button_2;
-    private ConstraintLayout group_action, group_divider, view1, view2, view3, view4;
-    private RelativeLayout top_content, finished_time_layout;
+    private FitButton add_playing, add_finished, add_retired, add_backlog, add_record_btn, cancel_button;
+    private AppBarLayout appBarLayout;
+    private TransformationLayout button_1;
+    private ConstraintLayout group_divider;
+    private RelativeLayout top_content;
+    private ArrayList<GameRecord> finished_records;
 
 
     private DatabaseReference databaseReference;
@@ -71,6 +75,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        mAuth = FirebaseAuth.getInstance();
+        user_id = mAuth.getCurrentUser().getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
 
         title_value = findViewById(R.id.title);
         game_title = findViewById(R.id.game_title);
@@ -79,28 +86,21 @@ public class GameActivity extends AppCompatActivity {
         pulisher = findViewById(R.id.pulisher);
         play_on = findViewById(R.id.play_on);
         genre = findViewById(R.id.genre);
-        imageView = (ImageView) findViewById(R.id.image_game);
-
-        group_action = findViewById(R.id.group_action);
+        finished_time = findViewById(R.id.finished_time);
+        imageView = findViewById(R.id.image_game);
         group_divider = findViewById(R.id.group_divider);
         top_content = findViewById(R.id.top_content);
-        finished_time_layout = findViewById(R.id.finished_time_layout);
-        view1 = findViewById(R.id.view1);
-        view2 = findViewById(R.id.view2);
-        view3 = findViewById(R.id.view3);
-        view4 = findViewById(R.id.view4);
-
         button_1 = findViewById(R.id.button_transform_1);
-        button_2 = findViewById(R.id.button_transform_2);
         add_record_btn = findViewById(R.id.add_record_btn);
-        statistical_btn = findViewById(R.id.show_statistic_btn);
-        FitButton cancel_button = findViewById(R.id.cancel_action);
+        cancel_button = findViewById(R.id.cancel_action);
+        add_playing = findViewById(R.id.add_playing);
+        add_finished = findViewById(R.id.add_finished);
+        add_backlog = findViewById(R.id.add_backlog);
+        add_retired = findViewById(R.id.add_retired);
+        appBarLayout = findViewById(R.id.app_bar_layout);
 
-        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
+        // xử lý giao diện khi xoay màn hình ngang/dọc
         final Resources resource = appBarLayout.getResources();
-
-
-
         if (resource.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             Display display = getWindowManager().getDefaultDisplay();
@@ -111,9 +111,7 @@ public class GameActivity extends AppCompatActivity {
             top_content.getLayoutParams().height = height/3;
 
             ConstraintSet constraintSet = new ConstraintSet();
-
             constraintSet.clone(group_divider);
-
             group_divider.getLayoutParams().width = width;
             group_divider.getLayoutParams().height = width/6;
 
@@ -130,53 +128,35 @@ public class GameActivity extends AppCompatActivity {
             constraintSet.connect(R.id.view2,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
             constraintSet.connect(R.id.view2,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
             constraintSet.connect(R.id.view2,ConstraintSet.END,R.id.view3,ConstraintSet.START,0);
-
             constraintSet.setDimensionRatio(R.id.view2, "1");
 
             //view 3
-
             constraintSet.connect(R.id.view3,ConstraintSet.START,R.id.view2,ConstraintSet.END,0);
             constraintSet.connect(R.id.view3,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
             constraintSet.connect(R.id.view3,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
             constraintSet.connect(R.id.view3,ConstraintSet.END,R.id.view4,ConstraintSet.START,0);
-
             constraintSet.setDimensionRatio(R.id.view3, "1");
 
             //view 4
-            //view4.requestLayout();
             constraintSet.connect(R.id.view4,ConstraintSet.START,R.id.view3,ConstraintSet.END,0);
             constraintSet.connect(R.id.view4,ConstraintSet.TOP,R.id.group_divider,ConstraintSet.TOP,0);
             constraintSet.connect(R.id.view4,ConstraintSet.BOTTOM,R.id.group_divider,ConstraintSet.BOTTOM,0);
             constraintSet.connect(R.id.view4,ConstraintSet.END,R.id.group_divider,ConstraintSet.END,0);
-
             constraintSet.setDimensionRatio(R.id.view4, "1");
 
             constraintSet.applyTo(group_divider);
 
         }
 
+
+        // xử lý sự kiện cho transformation button
         add_record_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 button_1.startTransform();
             }
         });
-
-        statistical_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                button_2.startTransform();
-            }
-        });
-
-        finished_time_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                button_2.finishTransform();
-            }
-        });
-
-
+        // xử lý sự kiện cho cancel transformation button
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,17 +164,9 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        add_playing = findViewById(R.id.add_playing);
-        add_finished = findViewById(R.id.add_finished);
-        add_backlog = findViewById(R.id.add_backlog);
-        add_retired = findViewById(R.id.add_retired);
-
-        mAuth = FirebaseAuth.getInstance();
-        user_id = mAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Logs").child(user_id);
 
         // lấy dữ liệu khi click vào một game bất kì trong danh sách tìm kiếm
-        //ListAdapter
+        // ListAdapter
         intent = getIntent();
         title = intent.getExtras().get("game_title").toString();
         year_release = intent.getExtras().get("year").toString();
@@ -206,11 +178,45 @@ public class GameActivity extends AppCompatActivity {
         img_url = intent.getExtras().get("img_url").toString();
         icon_url = intent.getExtras().get("icon_url").toString();
 
-        //Hiển thị id của game đã chọn qua GameLog
+
+        //Hiển thị id của game đã chọn trong danh sách tìm kiếm
         Log.d("ID Game", "ID game được chọn: " + id_game);
 
 
-        // đặt nội dung cho TextView
+        // tính toán thời gian hoàn thành game trung bình
+        finished_records = new ArrayList<>();
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference("List")
+                .child(id_game).child("records");
+        dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                finished_records.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    GameRecord gameRecord = snapshot.getValue(GameRecord.class);
+                    if (gameRecord.getStatus().contains("finished")) {
+                        finished_records.add(gameRecord);
+                    }
+                }
+
+                // nếu có bản ghi finished
+                // tính toán thời gian và gán vào TextView tương ứng
+                if (finished_records.size() > 0) {
+                    caculateFinishedTime(finished_records);
+                    finished_time.setText(getApplicationContext().getResources().getString(R.string.finished_time,
+                            finished_hour, finished_minute, finished_second));
+                } else {
+                    finished_time.setText("Chưa xác định");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        // đặt nội dung cho TextView tương ứng còn lại
         game_title.setText(title);
         title_value.setText(title);
         year.setText(getApplicationContext().getResources().getString(R.string.year, year_release));
@@ -218,6 +224,7 @@ public class GameActivity extends AppCompatActivity {
         developer.setText(getApplicationContext().getResources().getString(R.string.developer, developer_name));
         pulisher.setText(getApplicationContext().getResources().getString(R.string.pulisher, publisher_name));
         play_on.setText(getApplicationContext().getResources().getString(R.string.play_on, play_on_device));
+
 
         //đặt hình ảnh cho ImageView
         Picasso.get().load(img_url).into(imageView);
@@ -227,7 +234,7 @@ public class GameActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GameActivity.this, ImageViewerActivity.class);
+                Intent intent = new Intent(GameDetailActivity.this, ImageViewerActivity.class);
                 intent.putExtra("img_url", img_url);
                 intent.putExtra("game_title", title);
 
@@ -236,25 +243,16 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-
-        // xử lý sự kiện cho nút add
+        // xử lý sự kiện cho add_playing button
         add_playing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /*
-                if (checkSameLog(playingList, title)) {
-                    Toast.makeText(GameActivity.this,
-                            "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                 */
-
 
                 // tạo builder và các phần tử liên quan
-                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameDetailActivity.this);
 
-                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                LayoutInflater layoutInflater = LayoutInflater.from(GameDetailActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
                 final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
@@ -416,16 +414,16 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-
+        // xử lý sự kiện cho add_backlog button
         add_backlog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 // tạo builder và các phần tử liên quan
-                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameDetailActivity.this);
 
-                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                LayoutInflater layoutInflater = LayoutInflater.from(GameDetailActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
                 final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
@@ -581,15 +579,15 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-
+        // xử lý sự kiện cho add_finished button
         add_finished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // tạo builder và các phần tử liên quan
-                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameDetailActivity.this);
 
-                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                LayoutInflater layoutInflater = LayoutInflater.from(GameDetailActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
                 final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
@@ -754,30 +752,19 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-
+        // xử lý sự kiện cho add_retired button
         add_retired.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /*
-                if (checkSameLog(retiredList, title)) {
-                    Toast.makeText(GameActivity.this,
-                            "Bạn đã thêm game này vào danh sách rồi, vui lòng kiểm tra lại", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                 */
-
-
                 // tạo builder và các phần tử liên quan
-                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-
-                LayoutInflater layoutInflater = LayoutInflater.from(GameActivity.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameDetailActivity.this);
+                LayoutInflater layoutInflater = LayoutInflater.from(GameDetailActivity.this);
                 final View view = layoutInflater.inflate(R.layout.dialog_add_record, null);
                 final View header_view = layoutInflater.inflate(R.layout.dialog_add_record_header, null);
 
                 FitButton accept_btn = view.findViewById(R.id.accept_btn);
                 FitButton close_btn = view.findViewById(R.id.close_btn);
-
                 final MaterialEditText hour = view.findViewById(R.id.hour);
                 final MaterialEditText minute = view.findViewById(R.id.minute);
                 final MaterialEditText second = view.findViewById(R.id.second);
@@ -937,25 +924,49 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-
-        finished_time = findViewById(R.id.finished_time);
-
-
-
-
     }
 
 
 
     //nhận biết thay đổi khi chọn button trong RadioGroup
-    /*private void onChangeStatusPicked(CompoundButton compoundButton, boolean isChecked) {
+    /*
+    private void onChangeStatusPicked(CompoundButton compoundButton, boolean isChecked) {
         RadioButton radio = (RadioButton) compoundButton;
         GameLog.d("Trạng thái: ", radio.getText().toString() + isChecked);
     }
      */
 
+    // tính toán thời gian trung bình để hoàn thành game
+    private void caculateFinishedTime(ArrayList<GameRecord> records) {
+
+        int total_hour = 0;
+        int total_minute = 0;
+        int total_second = 0;
+        int n = records.size();
+
+        for (int i = 0; i < n; i++) {
+            total_hour = total_hour + Integer.parseInt(records.get(i).getHour());
+            total_minute = total_minute + Integer.parseInt(records.get(i).getMinute());
+            total_second = total_second + Integer.parseInt(records.get(i).getSecond());
+        }
+
+        int total_time = total_hour * 3600 + total_minute * 60 + total_second;
+        Log.d("Total time", String.valueOf(total_time / n));
+
+        TimeCorrect finished_time = new TimeCorrect(0, 0, total_time / n);
+        finished_time.correctTimeInput();
+
+        finished_hour = String.format("%02d", finished_time.getHour());
+        finished_minute = String.format("%02d", finished_time.getMinute());
+        finished_second = String.format("%02d", finished_time.getSecond());
+
+    }
+
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent = new Intent(GameDetailActivity.this, SearchActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

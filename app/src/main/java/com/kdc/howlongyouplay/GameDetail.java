@@ -3,6 +3,8 @@ package com.kdc.howlongyouplay;
 // khai báo lớp GameDetail
 
 
+import java.util.HashMap;
+
 public class GameDetail {
     private String game_title;
     private String year;
@@ -116,4 +118,5 @@ public class GameDetail {
     public void setFinished_time(String finished_time) {
         this.finished_time = finished_time;
     }
+
 }

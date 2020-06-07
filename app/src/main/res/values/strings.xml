@@ -53,5 +53,6 @@
     <string name="note">Ghi chú: %1$s</string>
     <string name="header_group">%1$s (%2$s)</string>
     <string name="playthrough">Lượt chơi: %1$d</string>
+    <string name="finished_time">%1$s giờ %2$s phút %3$s giây</string>
 
 </resources>

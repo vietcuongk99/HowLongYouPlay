@@ -1,5 +1,6 @@
 package com.kdc.howlongyouplay.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kdc.howlongyouplay.Activity.GameActivity;
+import com.kdc.howlongyouplay.Activity.GameDetailActivity;
 import com.kdc.howlongyouplay.GameDetail;
 import com.kdc.howlongyouplay.R;
 import com.squareup.picasso.Picasso;
@@ -64,7 +65,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             public void onClick(View v) {
 
                 // dùng intent để pass dữ liệu sang GameInfoActivity
-                Intent intent = new Intent(mContext, GameActivity.class);
+                Intent intent = new Intent(mContext, GameDetailActivity.class);
                 intent.putExtra("game_title", gameDetail.getGame_title());
                 intent.putExtra("year", gameDetail.getYear());
                 intent.putExtra("genre", gameDetail.getGenre());
@@ -76,6 +77,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                 intent.putExtra("icon_url", gameDetail.getIcon_url());
 
                 mContext.startActivity(intent);
+                ((Activity) mContext).finish();
+
 
             }
         });
