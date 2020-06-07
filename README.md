@@ -26,7 +26,6 @@ _Ảnh chưa phải của phiên bản hoàn chỉnh._
   <img src="https://imgur.com/bsEScHH.jpg" width="200" />
   <img src="https://imgur.com/5CUJW6m.jpg" width="200" /> 
   <img src="https://imgur.com/5fZrFiU.jpg" width="200" />
-  <img src="https://imgur.com/ZcWdjX5.jpg" width="200" />
   <img src="https://imgur.com/kIW0ILO.jpg" width="200  />
 </p>
 
