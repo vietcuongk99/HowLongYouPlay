@@ -23,10 +23,11 @@
 _Ảnh chưa phải của phiên bản hoàn chỉnh._
 
 <p float="left">
-  <img src="https://i.imgur.com/G2WmOiO.png" width="200" />
-  <img src="https://i.imgur.com/qidC3mo.png" width="200" /> 
-  <img src="https://i.imgur.com/j4LsVvo.png" width="200" />
-  <img src="https://i.imgur.com/3HavPNV.png" width="200" /> 
+  <img src="https://imgur.com/bsEScHH.jpg" width="200" />
+  <img src="https://imgur.com/5CUJW6m.jpg" width="200" /> 
+  <img src="https://imgur.com/5fZrFiU.jpg" width="200" />
+  <img src="https://imgur.com/ZcWdjX5.jpg" width="200" />
+  <img src="https://imgur.com/kIW0ILO.jpg" width="200  />
 </p>
 
 _**Ứng dụng đang trong quá trình phát triển và hoàn thiện.**_
