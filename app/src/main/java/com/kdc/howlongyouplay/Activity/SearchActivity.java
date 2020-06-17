@@ -23,7 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.Adapter.ListAdapter;
-import com.kdc.howlongyouplay.GameDetail;
+import com.kdc.howlongyouplay.Model.GameDetail;
 import com.kdc.howlongyouplay.R;
 
 import java.util.ArrayList;

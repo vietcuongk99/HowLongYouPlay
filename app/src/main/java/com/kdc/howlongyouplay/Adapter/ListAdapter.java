@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kdc.howlongyouplay.Activity.GameDetailActivity;
-import com.kdc.howlongyouplay.GameDetail;
+import com.kdc.howlongyouplay.Model.GameDetail;
 import com.kdc.howlongyouplay.R;
 import com.squareup.picasso.Picasso;
 

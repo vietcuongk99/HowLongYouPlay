@@ -19,9 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kdc.howlongyouplay.Adapter.LogAdapter;
-import com.kdc.howlongyouplay.GameLog;
+import com.kdc.howlongyouplay.Model.GameLog;
 import com.kdc.howlongyouplay.R;
-import com.kdc.howlongyouplay.GameRecord;
+import com.kdc.howlongyouplay.Model.GameRecord;
 
 import java.util.ArrayList;
 import java.util.HashMap;

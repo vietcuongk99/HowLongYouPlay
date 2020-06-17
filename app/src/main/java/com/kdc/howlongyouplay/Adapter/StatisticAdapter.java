@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.kdc.howlongyouplay.GameRecord;
+import com.kdc.howlongyouplay.Model.GameRecord;
 import com.kdc.howlongyouplay.R;
 
 import java.util.HashMap;

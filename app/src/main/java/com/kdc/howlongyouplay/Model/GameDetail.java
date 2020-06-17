@@ -1,4 +1,4 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Model;
 
 // khai báo lớp GameDetail
 

@@ -1,4 +1,4 @@
-package com.kdc.howlongyouplay;
+package com.kdc.howlongyouplay.Model;
 
 public class TimeCorrect {
     private int hour;
