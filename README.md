@@ -4,7 +4,7 @@
 
 <p align="center"><b>HowLongYouPlay</b></p>
 
-**HowLongYouPlay** cung cấp một kho dữ liệu các tựa game phong phú, cho phép người dùng lựa chọn game mình muốn quản lý và thống kê thời gian chơi, đưa nó vào danh sách game cá nhân.
+**HowLongYouPlay** cung cấp một kho dữ liệu các tựa game, cho phép người dùng lựa chọn game mình muốn quản lý và thống kê thời gian chơi, đưa nó vào danh sách game cá nhân.
 
 **Các chức năng cơ bản của ứng dụng:** 
 
@@ -20,8 +20,6 @@
 
 **Ảnh minh họa:**
 
-_Ảnh chưa phải của phiên bản hoàn chỉnh._
-
 <p float="left">
   <img src="https://imgur.com/bsEScHH.jpg" width="200" />
   <img src="https://imgur.com/5CUJW6m.jpg" width="200" /> 
@@ -31,7 +29,11 @@ _Ảnh chưa phải của phiên bản hoàn chỉnh._
 
 _**Ứng dụng đang trong quá trình phát triển và hoàn thiện.**_
 
-Phát triển: **việt cường**
+_Số game hiện tại trong cơ sở dữ liệu: 5 game_
+
+Liên hệ: https://www.facebook.com/c.d.v.99/
+
+
 
 
 
