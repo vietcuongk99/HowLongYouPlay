@@ -1,39 +1,44 @@
-<p align="center">
-  <img src="https://i.imgur.com/BZha6Hg.png"/>
+<p align = "center">
+  <img src = "https://i.imgur.com/BZha6Hg.png" />
 </p>
 
-<p align="center"><b>HowLongYouPlay</b></p>
+<p align = "center"> <b> HowLongYouPlay </b> </p>
 
-**HowLongYouPlay** cung cấp một kho dữ liệu các tựa game, cho phép người dùng lựa chọn game mình muốn quản lý và thống kê thời gian chơi, đưa nó vào danh sách game cá nhân.
+Inspired by https://howlongtobeat.com/, **HowLongYouPlay** allows users to manage personal gaming time.
 
-**Các chức năng cơ bản của ứng dụng:** 
+**The functions of the application:**
 
-* cho phép người dùng **quản lý** và **thống kê thời gian chơi game** của bản thân.
+* allows users to **manage** game time statistics.
 
-* tùy chỉnh ảnh đại diện, thông tin cá nhân, cũng như thời gian chơi dành cho mỗi tựa game trong danh sách của mình.
+* Customize your avatar, profile info, and play time for each title on your list.
 
-* tham khảo thời gian chơi của những người dùng khác đối với từng game cụ thể.
+* Refer to other user's play time for specific games.
 
-**Một số yêu cầu quan trọng:**
-- Ứng dụng dành cho smartphone chạy hệ điều hành Android.
-- Ứng dụng yêu cầu quyền sử dụng internet cũng như truy cập vào bộ nhớ smartphone.
+**Some important requirements:**
+- Application for smartphones running Android operating system.
+- The app requires internet usage permissions as well as access to smartphone memory.
 
-**Ảnh minh họa:**
+**Illustration:**
 
-<p float="left">
-  <img src="https://imgur.com/bsEScHH.jpg" width="200" />
-  <img src="https://imgur.com/5CUJW6m.jpg" width="200" /> 
-  <img src="https://imgur.com/5fZrFiU.jpg" width="200" />
-  <img src="https://imgur.com/ZcWdjX5.jpg" width="200" />
+<p float = "left">
+  <img src = "https://imgur.com/bsEScHH.jpg" width = "200" />
+  <img src = "https://imgur.com/5CUJW6m.jpg" width = "200" />
+  <img src = "https://imgur.com/5fZrFiU.jpg" width = "200" />
+  <img src = "https://imgur.com/ZcWdjX5.jpg" width = "200" />
 </p>
 
-_**Ứng dụng đang trong quá trình phát triển và hoàn thiện.**_
+**List of current game title**
 
-_Số game hiện tại trong cơ sở dữ liệu: 5 game_
+* The Legend of Zelda: Breath of The Wild
 
-Liên hệ: https://www.facebook.com/c.d.v.99/
+* Pokemon Heart Gold and Soul Silver
 
+* Pokemon Black and White
 
+* Persona 5
 
+* Persona 4 Golden
 
+_If you are interested in the application and want to add more titles to the list, create an [issue](https://github.com/vietcuongk99/HowLongYouPlay/issues/new)_
 
+Contact me: https://www.facebook.com/c.d.v.99/
